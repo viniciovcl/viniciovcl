@@ -37,3 +37,4 @@ params:
     name: img/main.jpg
 sitemap:
   filename: sitemap.xml
+publishDir: "docs/"
