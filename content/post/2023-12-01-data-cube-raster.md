@@ -24,10 +24,10 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 ```r
 # ![My picture] (./img/fig-cube-1.png)
 # <img src="/img/fig-cube-1.png" alt=""/>
- knitr::include_graphics("../img/fig-cube-1.png", error = FALSE)
+ knitr::include_graphics("/img/fig-cube-1.png", error = FALSE)
 ```
 
-<img src="../img/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
+<img src="../../../../../../../img/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
 
 ```r
 # paste(file_path_prj,'img/fig-cube-1.png', sep = "")

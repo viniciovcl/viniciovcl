@@ -27,7 +27,7 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 
 # ![My picture] (./img/fig-cube-1.png)
 # <img src="/img/fig-cube-1.png" alt=""/>
- knitr::include_graphics("../img/fig-cube-1.png", error = FALSE)
+ knitr::include_graphics("/img/fig-cube-1.png", error = FALSE)
 
 # paste(file_path_prj,'img/fig-cube-1.png', sep = "")
 # getwd()
