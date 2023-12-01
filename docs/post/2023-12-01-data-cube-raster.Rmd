@@ -25,17 +25,23 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 
 
 
-# ![My picture] (./img/fig-cube-1.png)
-# <img src="/img/fig-cube-1.png" alt=""/>
- knitr::include_graphics("/img/fig-cube-1.png", error = FALSE)
 
-# paste(file_path_prj,'img/fig-cube-1.png', sep = "")
-# getwd()
-# list.files("./img")
+ knitr::include_graphics("./img/fig-cube-1.png", error = FALSE)
+
+
 
 ```
 
 Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
+
+
+```{r contr, include=TRUE, echo=TRUE}
+
+
+getwd()
+list.files("./img")
+
+```
 
 É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados. 
 

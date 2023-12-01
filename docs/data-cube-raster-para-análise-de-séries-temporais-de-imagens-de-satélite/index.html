@@ -135,15 +135,20 @@
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># data cube </span>
 </span></span><span style="display:flex;"><span>file_path_prj &lt;- <span style="color:#ed9d13">&#34;/home/vinicio/Documentos/Codigo/Data cube raster/&#34;</span>
 </span></span></code></pre></div><p>No contexto de sensoriamento remoto e observação da Terra, <em>spatiotemporal array</em> refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões  espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># ![My picture] (./img/fig-cube-1.png)</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># &lt;img src=&#34;/img/fig-cube-1.png&#34; alt=&#34;&#34;/&gt;</span>
-</span></span><span style="display:flex;"><span> knitr::<span style="color:#447fcf">include_graphics</span>(<span style="color:#ed9d13">&#34;/img/fig-cube-1.png&#34;</span>, error = <span style="color:#6ab825;font-weight:bold">FALSE</span>)
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span> knitr::<span style="color:#447fcf">include_graphics</span>(<span style="color:#ed9d13">&#34;./img/fig-cube-1.png&#34;</span>, error = <span style="color:#6ab825;font-weight:bold">FALSE</span>)
 </span></span></code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># paste(file_path_prj,&#39;img/fig-cube-1.png&#39;, sep = &#34;&#34;)</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># getwd()</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># list.files(&#34;./img&#34;)</span>
-</span></span></code></pre></div><p>Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</p>
-<p>É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados.</p>
+<p>Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">getwd</span>()
+</span></span></code></pre></div><pre tabindex="0"><code>## [1] &#34;/home/vinicio/Documentos/Codigo/viniciovcl/content/post&#34;
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">list.files</span>(<span style="color:#ed9d13">&#34;./img&#34;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>##  [1] &#34;cube.png&#34;                      &#34;estao-agua-clara-a756 (1).png&#34;
+##  [3] &#34;estao-agua-clara-a756 (2).png&#34; &#34;estao-agua-clara-a756 (3).png&#34;
+##  [5] &#34;estao-agua-clara-a756 (4).png&#34; &#34;estao-agua-clara-a756 (6).png&#34;
+##  [7] &#34;estao-agua-clara-a756.png&#34;     &#34;fig-cube-1.png&#34;               
+##  [9] &#34;L2A.png&#34;                       &#34;mult-array.png&#34;               
+## [11] &#34;paper_illustration.png&#34;        &#34;readme_fig.png&#34;               
+## [13] &#34;SCL band.png&#34;
+</code></pre><p>É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados.</p>
 <p>A seguir iremos explorar a biblioteca gdalcubes para analisar um conjunto de imagens do sensor MSI a bordo dos satélites Sentinel-2A e Sentinel-2B.</p>
 <h1 id="r-markdown">R Markdown</h1>
 <p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com">http://rmarkdown.rstudio.com</a>.</p>

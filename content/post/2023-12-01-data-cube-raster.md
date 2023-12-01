@@ -22,20 +22,36 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 
 
 ```r
-# ![My picture] (./img/fig-cube-1.png)
-# <img src="/img/fig-cube-1.png" alt=""/>
- knitr::include_graphics("/img/fig-cube-1.png", error = FALSE)
+ knitr::include_graphics("./img/fig-cube-1.png", error = FALSE)
 ```
 
-<img src="../../../../../../../img/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
-
-```r
-# paste(file_path_prj,'img/fig-cube-1.png', sep = "")
-# getwd()
-# list.files("./img")
-```
+<img src="./img/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
 
 Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
+
+
+
+```r
+getwd()
+```
+
+```
+## [1] "/home/vinicio/Documentos/Codigo/viniciovcl/content/post"
+```
+
+```r
+list.files("./img")
+```
+
+```
+##  [1] "cube.png"                      "estao-agua-clara-a756 (1).png"
+##  [3] "estao-agua-clara-a756 (2).png" "estao-agua-clara-a756 (3).png"
+##  [5] "estao-agua-clara-a756 (4).png" "estao-agua-clara-a756 (6).png"
+##  [7] "estao-agua-clara-a756.png"     "fig-cube-1.png"               
+##  [9] "L2A.png"                       "mult-array.png"               
+## [11] "paper_illustration.png"        "readme_fig.png"               
+## [13] "SCL band.png"
+```
 
 É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados. 
 
