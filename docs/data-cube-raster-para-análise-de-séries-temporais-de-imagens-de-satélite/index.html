@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1"><title>Data cube raster para análise de séries temporais de imagens de satélite - Vinicio Coelho Lima</title>
+<meta property="og:title" content="Data cube raster para análise de séries temporais de imagens de satélite - Vinicio Coelho Lima">
+<meta property="og:type" content="article">
+
+
+<meta property="og:image" content="img/main.png">
+
+<meta property="og:url" content="https://viniciovcl.github.io/viniciovcl/data-cube-raster-para-an%C3%A1lise-de-s%C3%A9ries-temporais-de-imagens-de-sat%C3%A9lite/"><meta property="og:description" content="">
+<meta name="Description" property="description" content="">
+
+
+<meta property="keywords" content ="time-series, gdalcubes, data-cube, raster">
+
+
+
+<link rel="stylesheet" href="https://viniciovcl.github.io/viniciovcl/css/style.min.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://viniciovcl.github.io/viniciovcl/index.xml" type="application/atom+xml" rel="alternate" title="Sitewide Atom feed" />
+<meta name="theme-color" content="#ffffff">
+
+
+<script>function updateMode(){localStorage.theme==="dark"||!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: light)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")}function toggleMode(){localStorage.theme==="dark"?localStorage.theme="light":localStorage.theme="dark",updateMode()}window.onload=updateMode();function toggleMenu(){let e=document.getElementById("navbar-default");e.classList.contains("hidden")?e.classList.remove("hidden"):e.classList.add("hidden")}</script>
+
+  </head>
+  <body>
+    <header class="md:px-0 px-2">
+        <nav >
+  <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="nav-main my-2.5">
+      <a href="https://viniciovcl.github.io/viniciovcl/" class="nav-title py-2.5 text-2xl
+               text-zinc-600 dark:text-zinc-300 hover:border-b-0">Vinicio Coelho Lima</a>
+    </div>
+    <button type="button"
+            onclick="toggleMenu()"
+            class="inline-flex items-center p-2 ml-3
+                  text-sm text-gray-500
+                  rounded-lg md:hidden hover:bg-gray-100
+                  focus:outline-none focus:ring-2
+                  focus:ring-gray-200 dark:text-gray-400
+                  dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-default"
+            aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor"
+             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1
+                           0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1z" clip-rule="evenodd"></path>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="grid md:grid-flow-col items-center justify-between text-lg
+                 my-2.5 grid-cols-1 pl-0 text-center">
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/post/">Posts</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/categories/">Categories</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/tags/">Tags</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/about/">About</a>
+        </li>
+        
+        <li class="h-7 pl-2.5 pr-0 list-none">
+          <button type="button" onclick="toggleMode()" class="h-full"  aria-label="Toggle between dark and light mode">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 hidden dark:inline"
+                 id="ligh-mode-button-img"
+                 alt="A sun icon for switching to light mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/light_mode.svg">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 inline dark:hidden"
+                 id="dark-mode-button-img"
+                 alt="A moon icon for switching to dark mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/dark_mode.svg">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    </header>
+    <main class="content h-card container mt-2 m-auto
+                 leading-loose md:px-0 px-2 z-0"
+          role="main">
+    
+<article class="article h-entry" itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="title-container">
+        <h1 class="article-title p-name" itemprop="name">Data cube raster para análise de séries temporais de imagens de satélite</h1>
+        
+        <div class="flex justify-between items-center">
+            
+            <a class="text-lg text-gray-600 dark:text-gray-400 border-none u-url" href="https://viniciovcl.github.io/viniciovcl/data-cube-raster-para-an%C3%A1lise-de-s%C3%A9ries-temporais-de-imagens-de-sat%C3%A9lite/">
+                <time itemprop="datePublished" class="dt-published"
+                    datetime="2023-12-01T00:00:00Z"
+                    content="2023-12-01T00:00:00Z">
+                    2023.12.01
+                </time>
+            </a>
+            
+            
+                
+                <a class="text-gray-600 dark:text-gray-400 text-right border-none p-author h-card" rel="author" href="https://viniciovcl.github.io/viniciovcl/" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"> </span></a>
+                
+            
+        </div>
+        
+    </div>
+
+    <div class="article-content e-content" itemprop="articleBody">
+        <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Sentinel</span>
+</span></span><span style="display:flex;"><span>file_path_s2 &lt;- <span style="color:#ed9d13">&#34;/home/vinicio/Documentos/Codigo/TS_gdalcubes/Sentinel2_15bands/raw/&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># data cube </span>
+</span></span><span style="display:flex;"><span>file_path_prj &lt;- <span style="color:#ed9d13">&#34;/home/vinicio/Documentos/Codigo/Data cube raster/&#34;</span>
+</span></span></code></pre></div><p>No contexto de sensoriamento remoto e observação da Terra, <em>spatiotemporal array</em> refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões  espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># ![My picture] (./img/fig-cube-1.png)</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># &lt;img src=&#34;/img/fig-cube-1.png&#34; alt=&#34;&#34;/&gt;</span>
+</span></span><span style="display:flex;"><span> knitr::<span style="color:#447fcf">include_graphics</span>(<span style="color:#ed9d13">&#34;img/fig-cube-1.png&#34;</span>, error = <span style="color:#6ab825;font-weight:bold">FALSE</span>)
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># paste(file_path_prj,&#39;img/fig-cube-1.png&#39;, sep = &#34;&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># getwd()</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># list.files(&#34;./img&#34;)</span>
+</span></span></code></pre></div><p>Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</p>
+<p>É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados.</p>
+<p>A seguir iremos explorar a biblioteca gdalcubes para analisar um conjunto de imagens do sensor MSI a bordo dos satélites Sentinel-2A e Sentinel-2B.</p>
+<h1 id="r-markdown">R Markdown</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com">http://rmarkdown.rstudio.com</a>.</p>
+<p>Teste editar post.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">list.files</span>(<span style="color:#ed9d13">&#34;/home/vinicio/Documentos/Codigo/TS_gdalcubes/Sentinel2_15bands/raw/&#34;</span>,
+</span></span><span style="display:flex;"><span>           full.names = <span style="color:#6ab825;font-weight:bold">FALSE</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>##  [1] &#34;S2A_MSIL2A_20200215T134201_N0214_R124_T22KCD_20200215T161217.zip&#34;
+##  [2] &#34;S2A_MSIL2A_20200306T134211_N0214_R124_T22KCD_20200306T160502.zip&#34;
+##  [3] &#34;S2A_MSIL2A_20200316T134211_N0214_R124_T22KCD_20200316T192808.zip&#34;
+##  [4] &#34;S2A_MSIL2A_20200326T134211_N0214_R124_T22KCD_20200326T160948.zip&#34;
+##  [5] &#34;S2A_MSIL2A_20200405T134211_N0214_R124_T22KCD_20200405T161002.zip&#34;
+##  [6] &#34;S2A_MSIL2A_20200425T134211_N0214_R124_T22KCD_20200425T161132.zip&#34;
+##  [7] &#34;S2A_MSIL2A_20200614T134221_N0214_R124_T22KCD_20200614T174720.zip&#34;
+##  [8] &#34;S2A_MSIL2A_20200714T134221_N0214_R124_T22KCD_20200714T210626.zip&#34;
+##  [9] &#34;S2B_MSIL2A_20200311T134209_N0214_R124_T22KCD_20200311T204936.zip&#34;
+## [10] &#34;S2B_MSIL2A_20200331T134209_N0214_R124_T22KCD_20200331T173754.zip&#34;
+## [11] &#34;S2B_MSIL2A_20200410T134209_N0214_R124_T22KCD_20200410T174302.zip&#34;
+## [12] &#34;S2B_MSIL2A_20200420T134209_N0214_R124_T22KCD_20200420T174701.zip&#34;
+## [13] &#34;S2B_MSIL2A_20200430T134209_N0214_R124_T22KCD_20200430T160218.zip&#34;
+## [14] &#34;S2B_MSIL2A_20200510T134209_N0214_R124_T22KCD_20200510T174712.zip&#34;
+## [15] &#34;S2B_MSIL2A_20200520T134209_N0214_R124_T22KCD_20200520T173910.zip&#34;
+## [16] &#34;S2B_MSIL2A_20200530T134209_N0214_R124_T22KCD_20200530T155919.zip&#34;
+## [17] &#34;S2B_MSIL2A_20200609T134219_N0214_R124_T22KCD_20200609T174956.zip&#34;
+## [18] &#34;S2B_MSIL2A_20200619T134219_N0214_R124_T22KCD_20200619T175114.zip&#34;
+## [19] &#34;S2B_MSIL2A_20200719T134209_N0214_R124_T22KCD_20200719T174410.zip&#34;
+</code></pre>
+    </div>
+
+    
+<ul class="list-none pl-0 font-sm align-left">
+
+<hr>
+<li class="list-none">
+    Categories:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/categories/r">
+    <span class="tag-item dark:bg-zinc-900 dark:hover:bg-zinc-700
+                 hover:bg-zinc-200 bg-zinc-100
+                 dark:border-zinc-600 py-0.5
+                 px-1 rounded-t border-b-2 border-zinc-300
+                 hover:border-zinc-500">
+    R
+    </span>
+</a>
+</li >
+
+
+<li class="list-none">
+    Tags:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/time-series">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            time-series
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/gdalcubes">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            gdalcubes
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/data-cube">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            data-cube
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/raster">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            raster
+        </span>
+    </a>
+    
+</li>
+
+</ul>
+
+
+    
+
+    
+    <div class="text-neutral-500 mb-4">
+        Last modified <span itemprop="dateModified"
+                            datetime="2023-12-01T00:00:00Z"
+                            content="2023-12-01T00:00:00Z">
+        2023.12.01
+        </span>
+    </div>
+    
+</article>
+
+    </main>
+    <footer class="footer container h-10 text-center mt-1">
+<hr class="my-4">
+  <ul class="pl-0 mt-1">
+    
+    <li class="ml-2 first:before:content-none before:content-['•']
+               inline-block list-none">
+      <a class="ml-2 text-neutral-800
+                dark:text-neutral-400 border-none"
+          href="https://github.com/hugcis/hugo-astatine-theme">Code</a>
+    </li>
+    <li class="ml-2 first:before:content-none before:content-['•']
+                text-neutral-800 dark:text-neutral-400 inline-block list-none">
+      <span class="ml-2">© viniciovcl 2023</span>
+    </li>
+  </ul>
+</footer>
+
+
+
+  </body>
+</html>

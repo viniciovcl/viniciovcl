@@ -1,0 +1,56 @@
+---
+title: "Data cube raster para análise de séries temporais de imagens de satélite"
+author: " "
+date: 2023-12-01
+categories: ["R"]
+tags: ["time-series", "gdalcubes", "data-cube", "raster"]
+---
+
+
+```{r file.path}
+
+# Sentinel
+file_path_s2 <- "/home/vinicio/Documentos/Codigo/TS_gdalcubes/Sentinel2_15bands/raw/"
+
+# data cube 
+file_path_prj <- "/home/vinicio/Documentos/Codigo/Data cube raster/"
+
+```
+
+
+No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal array_ refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões  espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.
+
+
+```{r fig_cube, include=TRUE, echo=TRUE, out.width = '60%', fig.align='center'}
+
+
+
+# ![My picture] (./img/fig-cube-1.png)
+# <img src="/img/fig-cube-1.png" alt=""/>
+ knitr::include_graphics("../img/fig-cube-1.png", error = FALSE)
+
+# paste(file_path_prj,'img/fig-cube-1.png', sep = "")
+# getwd()
+# list.files("./img")
+
+```
+
+Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
+
+É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados. 
+
+A seguir iremos explorar a biblioteca gdalcubes para analisar um conjunto de imagens do sensor MSI a bordo dos satélites Sentinel-2A e Sentinel-2B. 
+
+
+# R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+Teste editar post. 
+
+```{r list}
+
+list.files("/home/vinicio/Documentos/Codigo/TS_gdalcubes/Sentinel2_15bands/raw/",
+           full.names = FALSE)
+
+```

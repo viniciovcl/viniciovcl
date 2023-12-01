@@ -4,17 +4,52 @@
     
     <url>
         <loc>https://viniciovcl.github.io/viniciovcl/</loc>
-        <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
     </url>
     
     <url>
         <loc>https://viniciovcl.github.io/viniciovcl/post/</loc>
-        <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
     </url>
     
     <url>
         <loc>https://viniciovcl.github.io/viniciovcl/categories/</loc>
-        <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/data-cube-raster-para-an%C3%A1lise-de-s%C3%A9ries-temporais-de-imagens-de-sat%C3%A9lite/</loc>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/data-cube/</loc>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/gdalcubes/</loc>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/categories/r/</loc>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/raster/</loc>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/</loc>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/time-series/</loc>
+        <lastmod>2023-12-01T00:00:00+00:00</lastmod>
     </url>
     
     <url>
@@ -28,22 +63,12 @@
     </url>
     
     <url>
-        <loc>https://viniciovcl.github.io/viniciovcl/categories/r/</loc>
-        <lastmod>2020-12-01T21:13:14-05:00</lastmod>
-    </url>
-    
-    <url>
         <loc>https://viniciovcl.github.io/viniciovcl/tags/r-markdown/</loc>
         <lastmod>2020-12-01T21:13:14-05:00</lastmod>
     </url>
     
     <url>
         <loc>https://viniciovcl.github.io/viniciovcl/tags/regression/</loc>
-        <lastmod>2020-12-01T21:13:14-05:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://viniciovcl.github.io/viniciovcl/tags/</loc>
         <lastmod>2020-12-01T21:13:14-05:00</lastmod>
     </url>
     
