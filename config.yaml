@@ -1,6 +1,6 @@
 baseurl: https://hugcis.github.io/hugo-astatine-theme/
 languageCode: en-us
-title: Astatine Theme
+title: Vinicio Coelho Lima
 theme: hugo-astatine-theme
 preserveTaxonomyNames: yes
 rssLimit: 10
@@ -28,7 +28,7 @@ menu:
       url: /categories/
       weight: -130
 params:
-  authorName: Jack Harkness
+  authorName: viniciovcl
   description: The homepage of Astatine. This website is a demo the of the Hugo theme
     Astatine.
   imgname:
