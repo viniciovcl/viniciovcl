@@ -22,10 +22,10 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 
 
 ```r
- knitr::include_graphics("./img/fig-cube-1.png", error = FALSE)
+ knitr::include_graphics("/img/fig-cube-1.png", error = FALSE)
 ```
 
-<img src="./img/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
+<img src="../../../../../../../img/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
 
 Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
 
