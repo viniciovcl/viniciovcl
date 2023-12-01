@@ -25,12 +25,15 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 
 
 
-
- knitr::include_graphics("/img/fig-cube-1.png", error = FALSE)
+# ./img/fig-cube-1.png
+ knitr::include_graphics("./img/fig-cube-1.png", error = FALSE)
 
 
 
 ```
+
+
+
 
 Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
 
@@ -47,6 +50,7 @@ list.files("./img")
 
 A seguir iremos explorar a biblioteca gdalcubes para analisar um conjunto de imagens do sensor MSI a bordo dos satélites Sentinel-2A e Sentinel-2B. 
 
+![caption text](./img/fig-cube-1.png){width=50%}
 
 # R Markdown
 
