@@ -29,8 +29,7 @@ menu:
       weight: -130
 params:
   authorName: viniciovcl
-  description: The homepage of Astatine. This website is a demo the of the Hugo theme
-    Astatine.
+  description:
   imgname:
     alt:
     blogrss: yes
