@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Vinicio Coelho Lima</title>
+    <link>https://hugcis.github.io/hugo-astatine-theme/tags/</link>
+    <description>Recent content in Tags on Vinicio Coelho Lima</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 18 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hugcis.github.io/hugo-astatine-theme/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>changedetection</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/changedetection/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/changedetection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data-cube</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/data-cube/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/data-cube/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gdalcubes</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/gdalcubes/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/gdalcubes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>image-processing</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/image-processing/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/image-processing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Markdown</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/r-markdown/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/r-markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>time-series</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/time-series/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/time-series/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>plot</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/plot/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/plot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>regression</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/regression/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Actor</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/actor/</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/actor/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Interest</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/tags/interest/</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/tags/interest/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

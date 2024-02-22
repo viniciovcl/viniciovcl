@@ -1,0 +1,40 @@
+baseurl: https://viniciovcl.github.io/viniciovcl/
+languageCode: en-us
+title: Vinicio Coelho Lima
+theme: hugo-astatine-theme
+preserveTaxonomyNames: yes
+rssLimit: 10
+paginate: 10
+pygmentsCodefences: yes
+pygmentsStyle: native
+publishDir: "docs/"
+taxonomies:
+  category: categories
+  tag: tags
+permalinks:
+  page: /:slug/
+  post: /:slug/
+menu:
+  main:
+    - name: Posts
+      url: /post/
+      weight: -150
+    - name: About
+      url: /about/
+      weight: -110
+    - name: Tags
+      url: /tags/
+      weight: -120
+    - name: Categories
+      url: /categories/
+      weight: -130
+params:
+  authorName: Jack Harkness
+  description: The homepage of Astatine. This website is a demo the of the Hugo theme
+    Astatine.
+  imgname:
+    alt: Profile picture
+    blogrss: yes
+    name: img/main.jpg
+sitemap:
+  filename: sitemap.xml

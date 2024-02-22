@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1"><title>Hello R Markdown - Vinicio Coelho Lima</title>
+<meta property="og:title" content="Hello R Markdown - Vinicio Coelho Lima">
+<meta property="og:type" content="article">
+
+
+<meta property="og:image" content="img/main.jpg">
+
+<meta property="og:url" content="https://viniciovcl.github.io/viniciovcl/hello-r-markdown/"><meta property="og:description" content="The homepage of Astatine. This website is a demo the of the Hugo theme Astatine.">
+<meta name="Description" property="description" content="The homepage of Astatine. This website is a demo the of the Hugo theme Astatine.">
+
+
+<meta property="keywords" content ="r markdown, plot, regression">
+
+
+
+<link rel="stylesheet" href="https://viniciovcl.github.io/viniciovcl/css/style.min.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://viniciovcl.github.io/viniciovcl/index.xml" type="application/atom+xml" rel="alternate" title="Sitewide Atom feed" />
+<meta name="theme-color" content="#ffffff">
+
+
+<script>function updateMode(){localStorage.theme==="dark"||!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")}function toggleMode(){localStorage.theme==="dark"?localStorage.theme="light":localStorage.theme="dark",updateMode()}window.onload=updateMode();function toggleMenu(){let e=document.getElementById("navbar-default");e.classList.contains("hidden")?e.classList.remove("hidden"):e.classList.add("hidden")}</script>
+
+  </head>
+  <body>
+    <header class="md:px-0 px-2">
+        <nav >
+  <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="nav-main my-2.5">
+      <a href="https://viniciovcl.github.io/viniciovcl/" class="nav-title py-2.5 text-2xl
+               text-zinc-600 dark:text-zinc-300 hover:border-b-0">Vinicio Coelho Lima</a>
+    </div>
+    <button type="button"
+            onclick="toggleMenu()"
+            class="inline-flex items-center p-2 ml-3
+                  text-sm text-gray-500
+                  rounded-lg md:hidden hover:bg-gray-100
+                  focus:outline-none focus:ring-2
+                  focus:ring-gray-200 dark:text-gray-400
+                  dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-default"
+            aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor"
+             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1
+                           0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1z" clip-rule="evenodd"></path>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="grid md:grid-flow-col items-center justify-between text-lg
+                 my-2.5 grid-cols-1 pl-0 text-center">
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/post/">Posts</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/categories/">Categories</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/tags/">Tags</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/about/">About</a>
+        </li>
+        
+        <li class="h-7 pl-2.5 pr-0 list-none">
+          <button type="button" onclick="toggleMode()" class="h-full"  aria-label="Toggle between dark and light mode">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 hidden dark:inline"
+                 id="ligh-mode-button-img"
+                 alt="A sun icon for switching to light mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/light_mode.svg">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 inline dark:hidden"
+                 id="dark-mode-button-img"
+                 alt="A moon icon for switching to dark mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/dark_mode.svg">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    </header>
+    <main class="content h-card container mt-2 m-auto
+                 leading-loose md:px-0 px-2 z-0"
+          role="main">
+    
+<article class="article h-entry" itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="title-container">
+        <h1 class="article-title p-name" itemprop="name">Hello R Markdown</h1>
+        
+        <div class="flex justify-between items-center">
+            
+            <a class="text-lg text-gray-600 dark:text-gray-400 border-none u-url" href="https://viniciovcl.github.io/viniciovcl/hello-r-markdown/">
+                <time itemprop="datePublished" class="dt-published"
+                    datetime="2020-12-01T21:13:14-0500"
+                    content="2020-12-01T21:13:14-0500">
+                    2020.12.01
+                </time>
+            </a>
+            
+            
+                
+                <a class="text-gray-600 dark:text-gray-400 text-right border-none p-author h-card" rel="author" href="https://viniciovcl.github.io/viniciovcl/" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Frida Gomam</span></a>
+                
+            
+        </div>
+        
+    </div>
+
+    <div class="article-content e-content" itemprop="articleBody">
+        
+
+
+<div id="r-markdown" class="section level1">
+<h1>R Markdown</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>You can embed an R code chunk like this:</p>
+<pre class="r"><code>summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932</code></pre>
+</div>
+<div id="including-plots" class="section level1">
+<h1>Including Plots</h1>
+<p>You can also embed plots. See Figure <a href="#fig:pie">1</a> for example:</p>
+<pre class="r"><code>par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
+  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
+  init.angle = -50, border = NA
+)</code></pre>
+<div class="figure"><span style="display:block;" id="fig:pie"></span>
+<img src="https://viniciovcl.github.io/viniciovcl/hello-r-markdown/index_files/figure-html/pie-1.png" alt="A fancy pie chart." width="672" />
+<p class="caption">
+Figure 1: A fancy pie chart.
+</p>
+</div>
+</div>
+
+    </div>
+
+    
+<ul class="list-none pl-0 font-sm align-left">
+
+<hr>
+<li class="list-none">
+    Categories:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/categories/r">
+    <span class="tag-item dark:bg-zinc-900 dark:hover:bg-zinc-700
+                 hover:bg-zinc-200 bg-zinc-100
+                 dark:border-zinc-600 py-0.5
+                 px-1 rounded-t border-b-2 border-zinc-300
+                 hover:border-zinc-500">
+    R
+    </span>
+</a>
+</li >
+
+
+<li class="list-none">
+    Tags:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/r-markdown">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            R Markdown
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/plot">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            plot
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/regression">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            regression
+        </span>
+    </a>
+    
+</li>
+
+</ul>
+
+
+    
+
+    
+    <div class="text-neutral-500 mb-4">
+        Last modified <span itemprop="dateModified"
+                            datetime="2020-12-01T21:13:14-0500"
+                            content="2020-12-01T21:13:14-0500">
+        2020.12.01
+        </span>
+    </div>
+    
+</article>
+
+    </main>
+    <footer class="footer container h-10 text-center mt-1">
+<hr class="my-4">
+  <ul class="pl-0 mt-1">
+    
+    <li class="ml-2 first:before:content-none before:content-['•']
+               inline-block list-none">
+      <a class="ml-2 text-neutral-800
+                dark:text-neutral-400 border-none"
+          href="https://github.com/hugcis/hugo-astatine-theme">Code</a>
+    </li>
+    <li class="ml-2 first:before:content-none before:content-['•']
+                text-neutral-800 dark:text-neutral-400 inline-block list-none">
+      <span class="ml-2">© Jack Harkness 2024</span>
+    </li>
+  </ul>
+</footer>
+
+
+
+  </body>
+</html>

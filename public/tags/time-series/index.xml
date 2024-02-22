@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>time-series on Vinicio Coelho Lima</title>
+    <link>https://hugcis.github.io/hugo-astatine-theme/tags/time-series/</link>
+    <description>Recent content in time-series on Vinicio Coelho Lima</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 18 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hugcis.github.io/hugo-astatine-theme/tags/time-series/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cubos de dados para análise de séries de imagens de satélite</title>
+      <link>https://hugcis.github.io/hugo-astatine-theme/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://hugcis.github.io/hugo-astatine-theme/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/</guid>
+      <description>No contexto de sensoriamento remoto e observação da Terra, spatiotemporal array refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.
+Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Markdown on Vinicio Coelho Lima</title>
+    <link>https://viniciovcl.github.io/viniciovcl/tags/r-markdown/</link>
+    <description>Recent content in R Markdown on Vinicio Coelho Lima</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 18 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://viniciovcl.github.io/viniciovcl/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cubos de dados para análise de séries de imagens de satélite</title>
+      <link>https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/</link>
+      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/</guid>
+      <description>No contexto de sensoriamento remoto e observação da Terra, spatiotemporal array refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.
+Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>https://viniciovcl.github.io/viniciovcl/hello-r-markdown/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      
+      <guid>https://viniciovcl.github.io/viniciovcl/hello-r-markdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+  </channel>
+</rss>
