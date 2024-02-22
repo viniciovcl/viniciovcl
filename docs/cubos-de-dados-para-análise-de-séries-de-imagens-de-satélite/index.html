@@ -134,8 +134,8 @@
 
 <p>No contexto de sensoriamento remoto e observação da Terra, <em>spatiotemporal array</em> refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.</p>
 <p><img src="images/fig-cube-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</p>
-<p><img src="images/cube.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Na estrutura de um cubo de dados raster também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</p>
+<p><img src="images/cube.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados.</p>
 <p>A seguir iremos explorar a biblioteca gdalcubes para analisar um conjunto de imagens do sensor MSI a bordo dos satélites Sentinel-2A e Sentinel-2B.</p>
 <div id="conjunto-de-dados" class="section level2">
@@ -346,7 +346,7 @@ month_euc_ndvi %&gt;%  filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;% # filtra o
 </div>
 <p>Dado esse contexto, uma pergunta interessante de ser respondida é se:</p>
 <p>Mesmo havendo uma tendência de global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por vento, pragas ou doenças ou fatores fisiológicos da planta?</p>
-<p>Ao analisar o comportamento da média e da mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo Abril-Junho, com uma inflexão no mês de maio.</p>
+<p>Ao analisar o comportamento da média e da mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo abril-junho, com uma inflexão no mês de maio.</p>
 <div class="figure" style="text-align: center">
 <img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/reduce_space_ndvi2-1.png" alt="Média e a mediana da série mensal." width="75%" />
 <p class="caption">
@@ -369,11 +369,11 @@ month_euc_ndvi %&gt;%  filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;%
 (#fig:reduce_space_change)Média e a Mediana da diferença simples para a série mensal Tt - T(t-1)
 </p>
 </div>
-<p>A média e a mediana da diferença simples mostram uma estagnação da tendência de diminuição do NDVI, com o valor da média da diferença superior a mediana da diferença no mês de junho. Esse comportamento aponta para a diminuição da magnitude da taxa de mudança que pode indicar uma redução na intensidade dessa tendência, o que ser observado no gráfico entre os mêses de Maio e Junho.</p>
-<p>A mudança positiva no intervalo Fevereiro-Março pode ser decorrente das chuvas que ocorreram durante o período, o que não pode ser observado para o intervalo seguinte mesmo com a continuação de eventos de chuva no mês de abril. Isso poderia estar relacionado a algum ‘fator externo’ aos dados analisados até aqui?</p>
-<p>Observando o gráfico da média e da mediana da diferença podemos considerar três padrões de tendência, representados no gráfico pelos intervalos (1) Março-Abril, (2) Abril-junho, (3) Junho-Julho.</p>
-<p>A inclinação do intervalo (3) Junho-Julho é menor que a do intervalo (1) Março-Abril, o que é contrário a tendência das variáveis climáticas, enquanto a série avança para o auge do período seco do ano, com os mínimos da umidade do ar entre agosto e outubro.</p>
-<p>Diferenças abslutas menores do NDVI ocorreram de maneira significativa na área analisada, entre os meses de abril e junho, consecutivamente (Maio - Abril ; Junho - Maio). Existe algum padrão ou arranjo espacial dos valores da diferença simples. Orientação preferencial SO-NE?</p>
+<p>A média e a mediana da diferença simples mostram uma estagnação da tendência de diminuição do NDVI, com o valor da média da diferença superior a mediana da diferença no mês de junho. Esse comportamento aponta para a diminuição da magnitude da taxa de mudança que pode indicar uma redução na intensidade dessa tendência, o que ser observado no gráfico entre os mêses de maio e junho.</p>
+<p>A mudança positiva no intervalo fevereiro-março pode ser decorrente das chuvas que ocorreram durante o período, o que não pode ser observado para o intervalo seguinte mesmo com a continuação de eventos de chuva no mês de abril. Isso poderia estar relacionado a algum ‘fator externo’ aos dados analisados até aqui?</p>
+<p>Observando o gráfico da média e da mediana da diferença podemos considerar três padrões de tendência, representados no gráfico pelos intervalos (1) março-abril, (2) abril-junho, (3) junho-julho.</p>
+<p>A inclinação do intervalo (3) junho-julho é menor que a do intervalo (1) março-abril, o que é contrário a tendência das variáveis climáticas, enquanto a série avança para o auge do período seco do ano, com os mínimos da umidade do ar entre agosto e outubro.</p>
+<p>Diferenças abslutas menores do NDVI ocorreram de maneira significativa na área analisada, entre os meses de abril e junho, consecutivamente (maio - abril ; junho - maio). Existe algum padrão ou arranjo espacial dos valores da diferença simples. Orientação preferencial SO-NE?</p>
 <pre class="r"><code>month_euc_ndvi %&gt;%  filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;% 
   window_time(kernel=c(-1,1), window=c(1,0)) %&gt;%
   filter_pixel(&quot;NDVI &gt; 0.0&quot;) %&gt;% 
@@ -386,7 +386,7 @@ month_euc_ndvi %&gt;%  filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;%
 <p>° Em uma coleção de imagens aplicou-se uma redução temporal da série para um intervalo mensal.</p>
 <p>° Foi criado um cubo de dados raster contendo 6 imagens correspondendo ao intervalo mês a mês da série e calculado o índice de vegetação de diferença normalizada NDVI.</p>
 <p>° No cubo de dados foi aplicado uma função redutora em uma janela móvel sobre a dimensão do tempo. Filtro de kernel da diferença simples Tt - T (t-1).</p>
-<p>A diferença consecutiva mês a mês para o intervalo mostrou uma atenuação na intensidade de tendência de diminuição do NDVI, com inflexão para o mês de junho. Uma análise de tendências e anomalias pode fornecer uma abordagem complementar de maneira a validar os valores para a diferença simples.</p>
+<p>A diferença consecutiva mês a mês para o intervalo mostrou uma atenuação na intensidade de tendência de diminuição do NDVI, com inflexões em maio e junho. Uma análise de tendências e anomalias pode fornecer uma abordagem complementar de maneira a validar os valores encontrados para a diferença simples.</p>
 </div>
 
     </div>

@@ -16,11 +16,11 @@ knitr::include_graphics("./images/fig-cube-1.png", error = FALSE)
 ```
 
 
-Na estrutura de um cubo de dados raster, entretanto, também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
+Na estrutura de um cubo de dados raster também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
 
 
 
-```{r fig_gdalcube, include=TRUE, echo=FALSE, out.width = '80%', fig.align='center'}
+```{r fig_gdalcube, include=TRUE, echo=FALSE, out.width = '100%', fig.align='center'}
 knitr::include_graphics('./images/cube.png')
 ```
 
@@ -285,7 +285,7 @@ Dado esse contexto, uma pergunta interessante de ser respondida é se:
 Mesmo havendo uma tendência de global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por vento, pragas ou doenças ou fatores fisiológicos da planta?
 
 
-Ao analisar o comportamento da média e da  mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo Abril-Junho, com uma inflexão no mês de maio. 
+Ao analisar o comportamento da média e da  mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo abril-junho, com uma inflexão no mês de maio. 
 
 
 ```{r reduce_space_ndvi2, include=TRUE, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, fig.align='center', out.width = '75%', fig.cap= 'Média e a mediana da série mensal.'}
@@ -355,19 +355,19 @@ plot(join.timeseries = TRUE)
 ```
 
 
-A média e a mediana da diferença simples mostram uma estagnação da tendência de diminuição do NDVI, com o valor da média da diferença superior a mediana da diferença no mês de junho. Esse comportamento aponta para a diminuição da magnitude da taxa de mudança que pode indicar uma redução na intensidade dessa tendência, o que ser observado no gráfico entre os mêses de Maio e Junho. 
+A média e a mediana da diferença simples mostram uma estagnação da tendência de diminuição do NDVI, com o valor da média da diferença superior a mediana da diferença no mês de junho. Esse comportamento aponta para a diminuição da magnitude da taxa de mudança que pode indicar uma redução na intensidade dessa tendência, o que ser observado no gráfico entre os mêses de maio e junho. 
 
 
-A mudança positiva no intervalo Fevereiro-Março pode ser decorrente das chuvas que ocorreram durante o período, o que não pode ser observado para o intervalo seguinte mesmo com a continuação de eventos de chuva no mês de abril. Isso poderia estar relacionado a algum 'fator externo' aos dados analisados até aqui?
+A mudança positiva no intervalo fevereiro-março pode ser decorrente das chuvas que ocorreram durante o período, o que não pode ser observado para o intervalo seguinte mesmo com a continuação de eventos de chuva no mês de abril. Isso poderia estar relacionado a algum 'fator externo' aos dados analisados até aqui?
 
 
-Observando o gráfico da média e da mediana da diferença podemos considerar três padrões de tendência, representados no gráfico pelos intervalos (1) Março-Abril, (2) Abril-junho, (3) Junho-Julho. 
+Observando o gráfico da média e da mediana da diferença podemos considerar três padrões de tendência, representados no gráfico pelos intervalos (1) março-abril, (2) abril-junho, (3) junho-julho. 
 
 
-A inclinação do intervalo (3) Junho-Julho  é menor que a do intervalo (1) Março-Abril, o que é contrário a tendência das variáveis climáticas, enquanto a série avança para o auge do período seco do ano, com os mínimos da umidade do ar entre agosto e outubro. 
+A inclinação do intervalo (3) junho-julho  é menor que a do intervalo (1) março-abril, o que é contrário a tendência das variáveis climáticas, enquanto a série avança para o auge do período seco do ano, com os mínimos da umidade do ar entre agosto e outubro. 
 
 
-Diferenças abslutas menores do NDVI ocorreram de maneira significativa na área analisada, entre os meses de abril e junho, consecutivamente (Maio - Abril ; Junho - Maio). Existe algum padrão ou arranjo espacial dos valores da diferença simples. Orientação preferencial SO-NE?
+Diferenças abslutas menores do NDVI ocorreram de maneira significativa na área analisada, entre os meses de abril e junho, consecutivamente (maio - abril ; junho - maio). Existe algum padrão ou arranjo espacial dos valores da diferença simples. Orientação preferencial SO-NE?
 
 
 
@@ -396,7 +396,7 @@ Essa análise foi motivada por uma intervenção de manejo em um povoamento adul
 ° No cubo de dados foi aplicado uma função redutora em uma janela móvel sobre a dimensão do tempo. Filtro de kernel da diferença simples Tt - T (t-1). 
 
 
-A diferença consecutiva mês a mês para o intervalo mostrou uma atenuação na intensidade de tendência de diminuição do NDVI, com inflexão para o mês de junho. Uma análise de tendências e anomalias pode fornecer uma abordagem complementar de maneira a validar os valores para a diferença simples.  
+A diferença consecutiva mês a mês para o intervalo mostrou uma atenuação na intensidade de tendência de diminuição do NDVI, com inflexões em maio e junho. Uma análise de tendências e anomalias pode fornecer uma abordagem complementar de maneira a validar os valores encontrados para a diferença simples.  
 
 
 
