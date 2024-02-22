@@ -19,9 +19,9 @@ menu:
     - name: Posts
       url: /post/
       weight: -150
-    - name: About
-      url: /about/
-      weight: -110
+    # - name: About
+    #   url: /about/
+    #   weight: -110
     - name: Tags
       url: /tags/
       weight: -120
@@ -29,12 +29,11 @@ menu:
       url: /categories/
       weight: -130
 params:
-  authorName: Jack Harkness
-  description: The homepage of Astatine. This website is a demo the of the Hugo theme
-    Astatine.
-  imgname:
-    alt: Profile picture
-    blogrss: yes
-    name: img/main.jpg
+  authorName: viniciovcl
+  description: Página pessoal
+  # imgname:
+  #   alt: Profile picture
+  #   blogrss: yes
+  #   name: img/main.jpg
 sitemap:
   filename: sitemap.xml
