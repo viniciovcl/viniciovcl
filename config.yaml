@@ -5,6 +5,11 @@ theme: hugo-astatine-theme
 preserveTaxonomyNames: yes
 rssLimit: 10
 paginate: 10
+katex: true
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
 pygmentsCodefences: yes
 pygmentsStyle: native
 publishDir: "docs/"

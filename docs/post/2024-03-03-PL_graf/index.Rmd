@@ -1,0 +1,43 @@
+---
+title: "Programação Linear: exemplo de solução pelo método gráfico"
+author: "Vinicio C. Lima "
+date: 2024-03-03
+categories: ["R"]
+tags: ["linear-programming", "modeling", "solver", "r-markdown"]
+---
+
+
+Problema adaptado de Buongiorno e Gilles utilizado como exemplo.
+
+
+Uma fábrica de pasta celulósica localizada em uma pequena cidade (...)
+
+
+
+
+  |______________|____($) Venda    |__Poulição |_____Mão-de-obra    |______Cap.instalada____|
+  |--------------|:---------------:|:---------:|:------------------:|:---------------------:|
+  |Unidades      |      [R$/t]     |  [DBO/t]  |     [homem-dia/t]  |         [t/dia]       |
+  |Pasta Química |      100        |    1      |         1          |           300         |
+  |Pasta mecânica|      200        |    1.5    |         1          |           200         |
+
+
+
+
+  Sendo a cooperativa uma empresa com responsabilidade social, os diretores desejam manter pelo menos 300 empregados. Além disso, devido a questões financeiras, é necessária a geração de uma receita bruta diária de pelo menos R$ 40.000,00 para honrar os compromissos assumidos com a instituição que financiou a compra da fábrica. Os diretores desejam determinar os níveis diários de produção de cada tipo de pasta celulósica, atendendo às questões ambientais, ou seja, minimizando a poluição.
+
+
+
+### Modelagem conceitual do problema:
+
+
+Modelo (forma canônica):
+
+
+```{r canoni, include=TRUE, echo=FALSE, out.width = '100%', fig.align='center', fig.pos='h'}
+knitr::include_graphics('/images/canonica.png', error = FALSE)
+```
+
+# Método Gráfico
+
+O primeiro passo para traçar as linhas correspondentes a cada restrição é transformá-las em igualdades:

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linear-programming on Vinicio Coelho Lima</title>
+    <link>https://viniciovcl.github.io/viniciovcl/tags/linear-programming/</link>
+    <description>Recent content in linear-programming on Vinicio Coelho Lima</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://viniciovcl.github.io/viniciovcl/tags/linear-programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programação Linear: exemplo de solução pelo método gráfico</title>
+      <link>https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/</guid>
+      <description>Esse caderno contém um exemplo de solução de um problema de programação linear pelo método gráfico. O Problema utilizado como exemplo foi apresentado na disciplina PCF508 (Pesquisa operacional para fins florestais).
+Sou iniciante em Pesquisa Operacional, ficarei grato se puder contribuir caso encontre algum equívoco.
+Em fábrica de pasta celulósica localizada em uma pequena cidade&amp;hellip; (adaptado de Buongiorno e Gilles):
+Preço de venda Poulição Mão de obra Capacidade instalada Unidades [R$/t] [dbo/t] [homem-dia/t] [t/dia] Pasta química 100 1 1 300 Pasta mecânica 200 1.</description>
+    </item>
+    
+  </channel>
+</rss>

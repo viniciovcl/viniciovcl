@@ -30,6 +30,20 @@
 
 <script>function updateMode(){localStorage.theme==="dark"||!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")}function toggleMode(){localStorage.theme==="dark"?localStorage.theme="light":localStorage.theme="dark",updateMode()}window.onload=updateMode();function toggleMenu(){let e=document.getElementById("navbar-default");e.classList.contains("hidden")?e.classList.remove("hidden"):e.classList.add("hidden")}</script>
 
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+
   </head>
   <body>
     <header class="md:px-0 px-2">
@@ -129,12 +143,17 @@
     </div>
 
     <div class="article-content e-content" itemprop="articleBody">
-        <p>Olá, sou o Vinicio. Gosto de usar ferramentas de software que são livres e de código aberto.</p>
-<p>Possuo familiaridade com fluxo de trabalho de ciência de dados. Tenho adquirido conhecimento com ferramentas para resumir e interpretar dados e comunicar resultados, buscando facilitar a tomada de decisão.</p>
+        <p>Olá, sou o Vinicio. Gosto de trabalhar com ferramentas de software livres e de código aberto.</p>
 <p>Essa página foi construida usando o Rstudio e a biblioteca blogdown em um tema Hugo.</p>
-<p>Atualmente sou Analista Florestal e tenho atuado no mapeamento de áreas para plantio, alocação de áreas de manejo florestal e auxílio na definição de práticas operacionais.</p>
-<h1 id="resumo-cv">Resumo CV</h1>
+<p>Atualmente sou Analista no setor Florestal.</p>
+<h3 id="resumo-cv">Resumo CV</h3>
 <p>Uma versão PDF do meu currículo está disponivel <a href="https://github.com/viniciovcl/Vinicio-Vitae/blob/master/Vitae%20Vinicio/Vitae-Vinicio.pdf">aqui</a> para download.</p>
+<h4 id="contato">Contato</h4>
+<p>email:viniciovcl@gmail.com</p>
+<p>Github: <a href="https://github.com/viniciovcl">viniciovcl</a></p>
+<p>StackExchange: <a href="https://gis.stackexchange.com/users/129911/viniciovcl">viniciovcl</a></p>
+<p>Instagram: <a href="https://www.instagram.com/viniciovcl?utm_source=qr&amp;igsh=MWswdmMzbGxoNHQ1eA==">viniciovcl</a></p>
+<p>Linkedin: <a href="https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3Bl1%2FEX52aQzu496LdsjovLA%3D%3D">Vinicio Lima</a></p>
 
     </div>
 

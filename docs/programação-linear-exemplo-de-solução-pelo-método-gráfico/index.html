@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1"><title>Programação Linear: exemplo de solução pelo método gráfico - Vinicio Coelho Lima</title>
+<meta property="og:title" content="Programação Linear: exemplo de solução pelo método gráfico - Vinicio Coelho Lima">
+<meta property="og:type" content="article">
+
+
+<meta property="og:image" content="">
+
+<meta property="og:url" content="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/"><meta property="og:description" content="Página pessoal">
+<meta name="Description" property="description" content="Página pessoal">
+
+
+<meta property="keywords" content ="linear-programming, modeling, ggplot, lpsolve">
+
+
+
+<link rel="stylesheet" href="https://viniciovcl.github.io/viniciovcl/css/style.min.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://viniciovcl.github.io/viniciovcl/index.xml" type="application/atom+xml" rel="alternate" title="Sitewide Atom feed" />
+<meta name="theme-color" content="#ffffff">
+
+
+<script>function updateMode(){localStorage.theme==="dark"||!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")}function toggleMode(){localStorage.theme==="dark"?localStorage.theme="light":localStorage.theme="dark",updateMode()}window.onload=updateMode();function toggleMenu(){let e=document.getElementById("navbar-default");e.classList.contains("hidden")?e.classList.remove("hidden"):e.classList.add("hidden")}</script>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+
+  </head>
+  <body>
+    <header class="md:px-0 px-2">
+        <nav >
+  <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="nav-main my-2.5">
+      <a href="https://viniciovcl.github.io/viniciovcl/" class="nav-title py-2.5 text-2xl
+               text-zinc-600 dark:text-zinc-300 hover:border-b-0">Vinicio Coelho Lima</a>
+    </div>
+    <button type="button"
+            onclick="toggleMenu()"
+            class="inline-flex items-center p-2 ml-3
+                  text-sm text-gray-500
+                  rounded-lg md:hidden hover:bg-gray-100
+                  focus:outline-none focus:ring-2
+                  focus:ring-gray-200 dark:text-gray-400
+                  dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-default"
+            aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor"
+             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1
+                           0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1z" clip-rule="evenodd"></path>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="grid md:grid-flow-col items-center justify-between text-lg
+                 my-2.5 grid-cols-1 pl-0 text-center">
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/post/">Posts</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/categories/">Categories</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/tags/">Tags</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/about/">About</a>
+        </li>
+        
+        <li class="h-7 pl-2.5 pr-0 list-none">
+          <button type="button" onclick="toggleMode()" class="h-full"  aria-label="Toggle between dark and light mode">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 hidden dark:inline"
+                 id="ligh-mode-button-img"
+                 alt="A sun icon for switching to light mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/light_mode.svg">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 inline dark:hidden"
+                 id="dark-mode-button-img"
+                 alt="A moon icon for switching to dark mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/dark_mode.svg">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    </header>
+    <main class="content h-card container mt-2 m-auto
+                 leading-loose md:px-0 px-2 z-0"
+          role="main">
+    
+<article class="article h-entry" itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="title-container">
+        <h1 class="article-title p-name" itemprop="name">Programação Linear: exemplo de solução pelo método gráfico</h1>
+        
+        <div class="flex justify-between items-center">
+            
+            <a class="text-lg text-gray-600 dark:text-gray-400 border-none u-url" href="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/">
+                <time itemprop="datePublished" class="dt-published"
+                    datetime="2024-03-03T00:00:00Z"
+                    content="2024-03-03T00:00:00Z">
+                    2024.03.03
+                </time>
+            </a>
+            
+            
+                
+                <a class="text-gray-600 dark:text-gray-400 text-right border-none p-author h-card" rel="author" href="https://viniciovcl.github.io/viniciovcl/" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Vinicio C. Lima</span></a>
+                
+            
+        </div>
+        
+    </div>
+
+    <div class="article-content e-content" itemprop="articleBody">
+        <script src="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/index_files/kePrint/kePrint.js"></script>
+<link href="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/index_files/lightable/lightable.css" rel="stylesheet" />
+<p>Esse caderno contém um exemplo de solução de um problema de programação linear pelo método gráfico.
+O Problema utilizado como exemplo foi apresentado na disciplina PCF508 (Pesquisa operacional para fins florestais).</p>
+<p>Sou iniciante em Pesquisa Operacional, ficarei grato se puder contribuir caso encontre algum equívoco.</p>
+<p>Em fábrica de pasta celulósica localizada em uma pequena cidade&hellip; (adaptado de <em>Buongiorno e Gilles</em>):</p>
+<table class=" lightable-material lightable-striped lightable-hover" style='font-family: "Source Sans Pro", helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:left;"> Preço de venda </th>
+   <th style="text-align:left;"> Poulição </th>
+   <th style="text-align:left;"> Mão de obra </th>
+   <th style="text-align:left;"> Capacidade instalada </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Unidades </td>
+   <td style="text-align:left;"> [R$/t] </td>
+   <td style="text-align:left;"> [dbo/t] </td>
+   <td style="text-align:left;"> [homem-dia/t] </td>
+   <td style="text-align:left;"> [t/dia] </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pasta química </td>
+   <td style="text-align:left;"> 100 </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> 300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Pasta mecânica </td>
+   <td style="text-align:left;"> 200 </td>
+   <td style="text-align:left;"> 1.5 </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> 200 </td>
+  </tr>
+</tbody>
+</table>
+<p>Sendo a cooperativa uma empresa com responsabilidade social, os diretores desejam manter pelo menos 300 empregados. Além disso, devido a questões financeiras, é necessária a geração de uma receita bruta diária de pelo menos R$ 40.000,00 para honrar os compromissos assumidos com a instituição que financiou a compra da fábrica. Os diretores desejam determinar os níveis diários de produção de cada tipo de pasta celulósica, atendendo às questões ambientais, ou seja, minimizando a poluição.</p>
+<h4 id="modelo-conceitual">Modelo conceitual:</h4>
+<p>Modelo (forma canônica):</p>
+<img src="./images/canonica.png" width="100%" style="display: block; margin: auto;" />
+<h3 id="método-gráfico">Método Gráfico</h3>
+<p>O primeiro passo para traçar as linhas correspondentes a cada restrição é transformá-las em igualdades:</p>
+<p><img src="images/igualdades_3.png" alt=""></p>
+<h4 id="plot-das-equações">Plot das equações</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cons.1 = <span style="color:#447fcf">function</span>(x) <span style="color:#3677a9">300</span> - x
+</span></span><span style="display:flex;"><span>cons.2 = <span style="color:#447fcf">function</span>(x) <span style="color:#3677a9">200</span> - <span style="color:#3677a9">0.5</span>*x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ggplot2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p &lt;- <span style="color:#447fcf">ggplot</span>(data = <span style="color:#447fcf">data.frame</span>(x = <span style="color:#3677a9">0</span>), <span style="color:#447fcf">aes</span>(x = x)) +
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_vline</span>(xintercept = <span style="color:#3677a9">0</span>) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_hline</span>(yintercept = <span style="color:#3677a9">0</span>) +
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">stat_function</span>( fun = cons.1, geom=<span style="color:#ed9d13">&#34;line&#34;</span>, <span style="color:#447fcf">aes</span>(col = <span style="color:#ed9d13">&#39;y=300-x&#39;</span>)) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">stat_function</span>( fun = cons.2,geom=<span style="color:#ed9d13">&#34;line&#34;</span>, <span style="color:#447fcf">aes</span>(col=  <span style="color:#ed9d13">&#39;y= 200 - 0.5x&#39;</span>)) +
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic"># stat_function( fun=function(y) 0*y, geom=&#34;line&#34;, aes(col= &#39;x=300&#39;)) +</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">stat_function</span>( fun=<span style="color:#447fcf">function</span>(x)<span style="color:#3677a9">200</span>, geom=<span style="color:#ed9d13">&#34;line&#34;</span>, <span style="color:#447fcf">aes</span>(col= <span style="color:#ed9d13">&#39;y=200&#39;</span>)) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_vline</span>(xintercept = <span style="color:#3677a9">300</span>, colour = <span style="color:#ed9d13">&#34;grey35&#34;</span>) +
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic">#scale_color_manual(name = &#34;Restrições&#34;, values = c(&#39;y=300-x&#39; = &#34;blue&#34;, &#39;y= 200 - 0.5x&#39; = &#34;red&#34;, &#39;y=200&#39; = &#34;lightblue&#34;, &#34;x_300&#34; = &#34;grey35&#34;)) +</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic"># geom_vline(xintercept = 300, colour = &#34;lightgreen&#34;) +</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#999;font-style:italic"># geom_hline(yintercept = 200, colour = &#34;grey35&#34;) +</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">scale_x_continuous</span>(breaks = <span style="color:#447fcf">seq</span>(<span style="color:#3677a9">0</span>, <span style="color:#3677a9">500</span>, <span style="color:#3677a9">100</span>), lim = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">0</span>, <span style="color:#3677a9">500</span>)) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">scale_y_continuous</span>(breaks = <span style="color:#447fcf">seq</span>(<span style="color:#3677a9">0</span>, <span style="color:#3677a9">400</span>, <span style="color:#3677a9">100</span>), lim = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">0</span>, <span style="color:#3677a9">400</span>)) +
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">labs</span>(title = <span style="color:#ed9d13">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       subtitle = <span style="color:#ed9d13">&#34;Restrições&#34;</span>,
+</span></span><span style="display:flex;"><span>       x = <span style="color:#ed9d13">&#34;x1&#34;</span>,
+</span></span><span style="display:flex;"><span>       y = <span style="color:#ed9d13">&#34;x2&#34;</span>,
+</span></span><span style="display:flex;"><span>       color = <span style="color:#ed9d13">&#34;&#34;</span>) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">theme_classic</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">print</span>(p)
+</span></span></code></pre></div><pre tabindex="0"><code>## Warning: Removed 40 rows containing missing values or values outside the scale range
+## (`geom_line()`).
+</code></pre><pre tabindex="0"><code>## Warning: Removed 20 rows containing missing values or values outside the scale range
+## (`geom_line()`).
+</code></pre><img src="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/index_files/figure-html/equacoes-1.png" width="672" />
+<p>O próximo passo consiste em definir a região viável para o problema, que é dada pela área (região rachurada) onde todas as restrições são atendidas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ggplot2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Define feasible region polygon</span>
+</span></span><span style="display:flex;"><span>feasible_region = <span style="color:#447fcf">data.frame</span>(x = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">300</span>, <span style="color:#3677a9">300</span>, <span style="color:#3677a9">100</span>, <span style="color:#3677a9">200</span>),
+</span></span><span style="display:flex;"><span>                             y = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">50</span>, <span style="color:#3677a9">200</span>, <span style="color:#3677a9">200</span>, <span style="color:#3677a9">100</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Add feasible region to current plot</span>
+</span></span><span style="display:flex;"><span>p1 &lt;-
+</span></span><span style="display:flex;"><span>  p + <span style="color:#447fcf">geom_polygon</span>(data = feasible_region,
+</span></span><span style="display:flex;"><span>                   mapping = <span style="color:#447fcf">aes</span>(x = x, y = y),
+</span></span><span style="display:flex;"><span>                   fill = <span style="color:#ed9d13">&#34;#dddddd&#34;</span>) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_point</span>(data = feasible_region, <span style="color:#447fcf">aes</span>(x = x, y = y), color = <span style="color:#ed9d13">&#34;Black&#34;</span>) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">labs</span>(title = <span style="color:#ed9d13">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>       subtitle = <span style="color:#ed9d13">&#34;Região factível&#34;</span>,
+</span></span><span style="display:flex;"><span>       x = <span style="color:#ed9d13">&#34;x1&#34;</span>,
+</span></span><span style="display:flex;"><span>       y = <span style="color:#ed9d13">&#34;x2&#34;</span>) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">theme_classic</span>() +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">theme</span>(legend.position = <span style="color:#ed9d13">&#34;none&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Print plot</span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">print</span>(p1)
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/index_files/figure-html/fact-1.png" width="672" />
+<p>A região factível acima contém todas as combinações possíveis de x1 e x2 que satisfazem as restrições. No
+entanto, a solução ótima para o problema é dada por um dos quatro pontos que restrigem a região factível
+(300,50), (300,200), (100,200) ou (200,100).</p>
+<p>Para determinar qual corner é a solução ótima do problema, o próximo passo é traçar a função objetivo e
+desloca-la de acordo com o gradiente da função. Com isso, a função objetivo será gradualmente deslocada
+para a esquerda (minimizar) até o corner limite antes de sair da região viável, o que representa a solução
+ótima para o problema.</p>
+<p>De acordo com a equação (1) a função objetivo é dada por:</p>
+<p><code>$$f(x)=\quad-0.66*x$$</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>z1 &lt;- <span style="color:#447fcf">function</span>(x) <span style="color:#3677a9">-0.66</span>*x <span style="color:#3677a9">+400</span> <span style="color:#999;font-style:italic"># (função objetivo do problema + offset)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Adicionando a função objetivo e o vetor gradiente da função</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p2 &lt;- p1+ <span style="color:#447fcf">stat_function</span>(colour = <span style="color:#ed9d13">&#34;Black&#34;</span>, fun = z1, lty=<span style="color:#3677a9">2</span>) + <span style="color:#447fcf">labs</span>(subtitle = <span style="color:#ed9d13">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p2.1= p2 + <span style="color:#447fcf">geom_segment</span>(<span style="color:#447fcf">aes</span>(x = <span style="color:#3677a9">200</span>, y = <span style="color:#3677a9">300</span>, xend = <span style="color:#3677a9">50</span>, yend = <span style="color:#3677a9">75</span>, alpha = <span style="color:#3677a9">.15</span>),
+</span></span><span style="display:flex;"><span>                        arrow = <span style="color:#447fcf">arrow</span>(length = <span style="color:#447fcf">unit</span>(<span style="color:#3677a9">0.5</span>, <span style="color:#ed9d13">&#34;cm&#34;</span>))) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">annotate</span>(<span style="color:#ed9d13">&#34;text&#34;</span>, x = <span style="color:#3677a9">125</span>, y = <span style="color:#3677a9">250</span>, label = <span style="color:#ed9d13">&#34;Gradiente&#34;</span>, alpha=<span style="color:#3677a9">.5</span>) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">labs</span>( subtitle = <span style="color:#ed9d13">&#34;Função objetivo + vetor gradiente&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Print plot</span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">print</span>(p2.1)
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/index_files/figure-html/grad-1.png" width="672" />
+<p>Com base no gráfico acima, a função objetivo pode ser deslocada ainda mais para a esquerda, de acordo com o gradinte da função, no caso minimização. Adicionando os offsets de 250 e 235 temos respectivamente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>z2 &lt;- <span style="color:#447fcf">function</span>(x) <span style="color:#3677a9">-0.66</span>*x <span style="color:#3677a9">+250</span> <span style="color:#999;font-style:italic"># (adicionando offset a função objetivo)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#  Função objetivo deslocada (250)</span>
+</span></span><span style="display:flex;"><span>p3 &lt;- p2 + <span style="color:#447fcf">stat_function</span>(colour = <span style="color:#ed9d13">&#34;Black&#34;</span>, fun = z2, lty=<span style="color:#3677a9">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>z.solution &lt;- <span style="color:#447fcf">function</span>(x) <span style="color:#3677a9">-0.66</span>*x <span style="color:#3677a9">+235</span> <span style="color:#999;font-style:italic"># (adicionando offset a função objetivo)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Função objetivo deslocada (235)</span>
+</span></span><span style="display:flex;"><span>p4 &lt;- p3 + <span style="color:#447fcf">stat_function</span>(colour = <span style="color:#ed9d13">&#34;Black&#34;</span>, fun = z.solution, lty=<span style="color:#3677a9">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Plotagem</span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(grid)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(gridExtra)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">grid.arrange</span>(p3, p4, ncol = <span style="color:#3677a9">2</span>,
+</span></span><span style="display:flex;"><span>             top=<span style="color:#447fcf">textGrob</span>(<span style="color:#ed9d13">&#34;Deslocando a função até encontrar a solução ótima&#34;</span>, y=<span style="color:#3677a9">0.5</span>,
+</span></span><span style="display:flex;"><span>                          x = <span style="color:#3677a9">0.05</span>, hjust = <span style="color:#3677a9">0</span>, gp=<span style="color:#447fcf">gpar</span>(fontsize=<span style="color:#3677a9">10</span>,font=<span style="color:#3677a9">1</span>)))
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/index_files/figure-html/offset-1.png" width="672" />
+<p>Com isso tem-se que o menor valor dentro da região factível pode ser identificado graficamente pelo ponto (200,100).</p>
+<h3 id="validando-a-solução-gráfica-com-o-solver">Validando a solução gráfica com o solver.</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(lpSolve)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f.obj &lt;- <span style="color:#447fcf">c</span>(<span style="color:#3677a9">1</span>, <span style="color:#3677a9">1.5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f.con &lt;- <span style="color:#447fcf">matrix</span>(<span style="color:#447fcf">c</span>(<span style="color:#3677a9">1</span>, <span style="color:#3677a9">1</span>,
+</span></span><span style="display:flex;"><span>                  <span style="color:#3677a9">100</span>, <span style="color:#3677a9">200</span>,
+</span></span><span style="display:flex;"><span>                  <span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>,
+</span></span><span style="display:flex;"><span>                  <span style="color:#3677a9">1</span>,<span style="color:#3677a9">0</span>), nrow = <span style="color:#3677a9">4</span>, byrow = <span style="color:#6ab825;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f.dir &lt;- <span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;&gt;=&#34;</span>, <span style="color:#ed9d13">&#34;&gt;=&#34;</span>, <span style="color:#ed9d13">&#34;&lt;=&#34;</span>, <span style="color:#ed9d13">&#34;&lt;=&#34;</span> )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f.rhs &lt;- <span style="color:#447fcf">c</span>(<span style="color:#3677a9">300</span>, <span style="color:#3677a9">40000</span>, <span style="color:#3677a9">300</span>, <span style="color:#3677a9">200</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Valor de (z)</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#lp(&#34;min&#34;, f.obj, f.con, f.dir, f.rhs)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Valor das variáveis</span>
+</span></span><span style="display:flex;"><span>solution &lt;- <span style="color:#447fcf">lp</span>(<span style="color:#ed9d13">&#34;min&#34;</span>, f.obj, f.con, f.dir, f.rhs)$solution
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">print</span>(solution)
+</span></span></code></pre></div><pre tabindex="0"><code>## [1] 200 100
+</code></pre><p>O resultado é o mesmo que o encontrado pela análise gráfica.</p>
+<img src="https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/index_files/figure-html/sol_graf-1.png" width="672" />
+<p>A solução ótima para o nível de produção diário da pasta química é de 200 t/dia e o da pasta mecânica é 100 t/dia, em ambos os métodos.</p>
+
+    </div>
+
+    
+<ul class="list-none pl-0 font-sm align-left">
+
+<hr>
+<li class="list-none">
+    Categories:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/categories/r">
+    <span class="tag-item dark:bg-zinc-900 dark:hover:bg-zinc-700
+                 hover:bg-zinc-200 bg-zinc-100
+                 dark:border-zinc-600 py-0.5
+                 px-1 rounded-t border-b-2 border-zinc-300
+                 hover:border-zinc-500">
+    R
+    </span>
+</a>
+</li >
+
+
+<li class="list-none">
+    Tags:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/linear-programming">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            linear-programming
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/modeling">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            modeling
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/ggplot">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            ggplot
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/lpsolve">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            lpsolve
+        </span>
+    </a>
+    
+</li>
+
+</ul>
+
+
+    
+
+    
+    <div class="text-neutral-500 mb-4">
+        Last modified <span itemprop="dateModified"
+                            datetime="2024-03-03T00:00:00Z"
+                            content="2024-03-03T00:00:00Z">
+        2024.03.03
+        </span>
+    </div>
+    
+</article>
+
+    </main>
+    <footer class="footer container h-10 text-center mt-1">
+<hr class="my-4">
+  <ul class="pl-0 mt-1">
+    
+    <li class="ml-2 first:before:content-none before:content-['•']
+               inline-block list-none">
+      <a class="ml-2 text-neutral-800
+                dark:text-neutral-400 border-none"
+          href="https://github.com/hugcis/hugo-astatine-theme">Code</a>
+    </li>
+    <li class="ml-2 first:before:content-none before:content-['•']
+                text-neutral-800 dark:text-neutral-400 inline-block list-none">
+      <span class="ml-2">© viniciovcl 2024</span>
+    </li>
+  </ul>
+</footer>
+
+
+
+  </body>
+</html>

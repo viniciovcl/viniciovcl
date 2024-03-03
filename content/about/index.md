@@ -1,7 +1,7 @@
 ---
 address:
 - locality: Aparecida do Taboado
-  name: Free and open source software (FOSS)
+  name: 
   postal_code: "79570-000"
   street: Mato Grosso do Sul
 imgname:
@@ -9,23 +9,31 @@ imgname:
   name: img/main.jpg
   type: image/jpeg
 name: Vinício C. Lima 
-personal_title: Analista Florestal
+personal_title: Analista 
 ---
 
-Olá, sou o Vinicio. Gosto de usar ferramentas de software que são livres e de código aberto.
+Olá, sou o Vinicio. Gosto de trabalhar com ferramentas de software livres e de código aberto. Essa página foi construida usando o Rstudio e a biblioteca blogdown em um tema Hugo.  
 
-Possuo familiaridade com fluxo de trabalho de ciência de dados. Tenho adquirido conhecimento com ferramentas para resumir e interpretar dados e comunicar resultados, buscando facilitar a tomada de decisão.
+Sou Analista Florestal no setor de celulose e tenho aplicado ferramentas de geoprocessamento, sensoriamento remoto e ciência de dados em desafios relacionados a expansão de bases florestais, dentre outros.
 
-Essa página foi construida usando o Rstudio e a biblioteca blogdown em um tema Hugo.  
+Anteriormente atuei como pesquisador em temas de gênese, classsificação e mapeamento digital de solos.
 
-Atualmente sou Analista Florestal e tenho atuado no mapeamento de áreas para plantio, alocação de áreas de manejo florestal e auxílio na definição de práticas operacionais.
-
-
-# Resumo CV
+### Resumo CV
 
 Uma versão PDF do meu currículo está disponivel [aqui](https://github.com/viniciovcl/Vinicio-Vitae/blob/master/Vitae%20Vinicio/Vitae-Vinicio.pdf) para download. 
 
 
+#### Contato
+
+email:viniciovcl@gmail.com
+
+Github: [viniciovcl](https://github.com/viniciovcl)
+
+StackExchange: [viniciovcl](https://gis.stackexchange.com/users/129911/viniciovcl)
+
+Linkedin: [Vinicio Lima](https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3Bl1%2FEX52aQzu496LdsjovLA%3D%3D)
+
+Instagram: [viniciovcl](https://www.instagram.com/viniciovcl?utm_source=qr&igsh=MWswdmMzbGxoNHQ1eA==)
 
 
 

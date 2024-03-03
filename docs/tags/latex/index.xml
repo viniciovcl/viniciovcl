@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Latex on Vinicio Coelho Lima</title>
+    <link>https://viniciovcl.github.io/viniciovcl/tags/latex/</link>
+    <description>Recent content in Latex on Vinicio Coelho Lima</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://viniciovcl.github.io/viniciovcl/tags/latex/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programação Linear - solução pelo método gráfico</title>
+      <link>https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/</guid>
+      <description>Problema proposto Problema adaptado de Buongiorno e Gilles utilizado como exemplo.
+Uma fábrica de pasta celulósica localizada em uma pequena cidade (&amp;hellip;)
+______________ ____($) Venda __Poulição _____Mão-de-obra __Cap.instalada Unidades [R$/t] [DBO/t] [homem-dia/t] [t/dia] Pasta Química 100 1 1 300 Pasta mecânica 200 1.5 1 200 Sendo a cooperativa uma empresa com responsabilidade social, os diretores desejam manter pelo menos 300 empregados. Além disso, devido a questões financeiras, é necessária a geração de uma receita bruta diária de pelo menos R$ 40.</description>
+    </item>
+    
+  </channel>
+</rss>

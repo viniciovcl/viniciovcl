@@ -6,7 +6,19 @@
     <description>Recent content in R on Vinicio Coelho Lima</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://viniciovcl.github.io/viniciovcl/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://viniciovcl.github.io/viniciovcl/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programação Linear: exemplo de solução pelo método gráfico</title>
+      <link>https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://viniciovcl.github.io/viniciovcl/programa%C3%A7%C3%A3o-linear-exemplo-de-solu%C3%A7%C3%A3o-pelo-m%C3%A9todo-gr%C3%A1fico/</guid>
+      <description>Esse caderno contém um exemplo de solução de um problema de programação linear pelo método gráfico. O Problema utilizado como exemplo foi apresentado na disciplina PCF508 (Pesquisa operacional para fins florestais).
+Sou iniciante em Pesquisa Operacional, ficarei grato se puder contribuir caso encontre algum equívoco.
+Em fábrica de pasta celulósica localizada em uma pequena cidade&amp;hellip; (adaptado de Buongiorno e Gilles):
+Preço de venda Poulição Mão de obra Capacidade instalada Unidades [R$/t] [dbo/t] [homem-dia/t] [t/dia] Pasta química 100 1 1 300 Pasta mecânica 200 1.</description>
+    </item>
+    
     <item>
       <title>Cubos de dados para análise de séries de imagens de satélite</title>
       <link>https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/</link>
