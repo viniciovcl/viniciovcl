@@ -9,12 +9,24 @@ imgname:
   name: img/main.jpg
   type: image/jpeg
 name: Vinício C. Lima 
-personal_title: ScB - Geógrafo; Analista de Geoprocessamento
+personal_title: Analista Florestal
 ---
 
 # Bio
+Olá, sou o Vinicio. Gosto de usar ferramentas de software que são livres e de código aberto.
 
-Atuação na área de geoprocessamento e sensoriamento remoto, experiência em mapeamento de áreas para plantio, alocação de áreas de manejo florestal e auxílio na definição de práticas operacionais.
+Possuo familiaridade com fluxo de trabalho de ciência de dados. Experiência com ferramentas para resumir e interpretar dados e comunicar resultados, buscando facilitar a tomada de decisão.
+
+Essa página pessoal foi construida usando R e um tema Hugo.  
+
+Atualmente tenho atuado no mapeamento de áreas para plantio, alocação de áreas de manejo florestal e auxílio na definição de práticas operacionais.
 
 
-Familiaridade com fluxo de trabalho de ciência de dados. Experiência com ferramentas para resumir e interpretar dados e comunicar resultados, buscando facilitar a tomada de decisão.
+# Resumo cv
+
+Uma versão PDF do meu currículo está disponivel [aqui](https://github.com/viniciovcl/Vinicio-Vitae/blob/master/Vitae%20Vinicio/Vitae-Vinicio.pdf) para download. 
+
+
+
+
+

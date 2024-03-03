@@ -19,9 +19,9 @@ menu:
     - name: Posts
       url: /post/
       weight: -150
-    # - name: About
-    #   url: /about/
-    #   weight: -110
+    - name: About
+      url: /about/
+      weight: -110
     - name: Tags
       url: /tags/
       weight: -120
