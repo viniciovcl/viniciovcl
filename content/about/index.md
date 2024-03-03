@@ -12,14 +12,13 @@ name: Vinício C. Lima
 personal_title: Analista Florestal
 ---
 
-# Bio
 Olá, sou o Vinicio. Gosto de usar ferramentas de software que são livres e de código aberto.
 
 Possuo familiaridade com fluxo de trabalho de ciência de dados. Experiência com ferramentas para resumir e interpretar dados e comunicar resultados, buscando facilitar a tomada de decisão.
 
 Essa página foi construida usando o Rstudio e a biblioteca blogdown em um tema Hugo.  
 
-Atualmente tenho atuado no mapeamento de áreas para plantio, alocação de áreas de manejo florestal e auxílio na definição de práticas operacionais.
+Atualmente sou Analista Florestal e tenho atuado no mapeamento de áreas para plantio, alocação de áreas de manejo florestal e auxílio na definição de práticas operacionais.
 
 
 # Resumo cv
