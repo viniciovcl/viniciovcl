@@ -230,11 +230,11 @@ O Problema utilizado como exemplo foi apresentado na disciplina PCF508 (Pesquisa
 <p>O próximo passo consiste em definir a região viável para o problema, que é dada pela área (região rachurada) onde todas as restrições são atendidas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ggplot2)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Define feasible region polygon</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Define região factivel</span>
 </span></span><span style="display:flex;"><span>feasible_region = <span style="color:#447fcf">data.frame</span>(x = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">300</span>, <span style="color:#3677a9">300</span>, <span style="color:#3677a9">100</span>, <span style="color:#3677a9">200</span>),
 </span></span><span style="display:flex;"><span>                             y = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">50</span>, <span style="color:#3677a9">200</span>, <span style="color:#3677a9">200</span>, <span style="color:#3677a9">100</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Add feasible region to current plot</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Add região no plot</span>
 </span></span><span style="display:flex;"><span>p1 &lt;-
 </span></span><span style="display:flex;"><span>  p + <span style="color:#447fcf">geom_polygon</span>(data = feasible_region,
 </span></span><span style="display:flex;"><span>                   mapping = <span style="color:#447fcf">aes</span>(x = x, y = y),
