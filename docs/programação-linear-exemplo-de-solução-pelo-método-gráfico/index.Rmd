@@ -104,11 +104,11 @@ O próximo passo consiste em definir a região viável para o problema, que é d
 
 library(ggplot2)
 
-# Define feasible region polygon
+# Define região factivel
 feasible_region = data.frame(x = c(300, 300, 100, 200),
                              y = c(50, 200, 200, 100))
 
-# Add feasible region to current plot
+# Add região no plot
 p1 <-
   p + geom_polygon(data = feasible_region,
                    mapping = aes(x = x, y = y),

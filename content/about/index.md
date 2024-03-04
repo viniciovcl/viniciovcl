@@ -12,9 +12,11 @@ name: Vinício C. Lima
 personal_title: Analista 
 ---
 
-Olá, sou o Vinicio. Gosto de trabalhar com ferramentas de software livres e de código aberto. Essa página foi construida usando o Rstudio e a biblioteca blogdown em um tema Hugo.  
+Olá, sou o Vinicio. Gosto de trabalhar com ferramentas de software livres e de código aberto. Essa página foi construida usando o Rstudio e a biblioteca blogdown.  
 
-Sou Analista Florestal no setor de celulose e tenho aplicado ferramentas de geoprocessamento, sensoriamento remoto e ciência de dados em desafios relacionados a expansão de bases florestais, dentre outros.
+
+Trabalho como Analista em uma empresa florestal, onde aplico ferramentas de geoprocessamento e sensoriamento remoto para auxiliar na implantação, cadastro, mensuração, monitoramento e manutenção de áreas de plantio comercial.
+
 
 Anteriormente atuei como pesquisador em temas de gênese, classsificação e mapeamento digital de solos.
 
