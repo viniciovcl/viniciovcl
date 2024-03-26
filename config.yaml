@@ -24,15 +24,15 @@ menu:
     - name: Posts
       url: /post/
       weight: -150
-    - name: About
-      url: /about/
+    - name: contato
+      url: /contato/
       weight: -110
     - name: Tags
       url: /tags/
       weight: -120
-    - name: Categories
-      url: /categories/
-      weight: -130
+    # - name: Categories
+    #   url: /categories/
+    #   weight: -130
 params:
   authorName: viniciovcl
   description: Página pessoal
