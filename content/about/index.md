@@ -12,19 +12,6 @@ name: Vinício C. Lima
 personal_title: Analista 
 ---
 
-Olá, sou o Vinicio. Gosto de trabalhar com ferramentas de software livres e de código aberto.
-Criei essa página para compartilhar coisas relacionadas a isso. Se desejar comentar algum post ou dar alguma contribuição, por favor me mande uma mensagem.
-
-
-Trabalho como Analista onde aplico ferramentas de geoprocessamento e sensoriamento remoto para auxiliar na implantação, cadastro, mensuração, monitoramento e manutenção de áreas de plantio florestal.
-
-
-Anteriormente atuei em pesquisas na área de Ciência do Solo em temas de Gênese, Classsificação e Mapeamento Digital de Solos.
-
-### Resumo CV
-
-Uma versão PDF do meu currículo está disponivel [aqui](https://github.com/viniciovcl/Vinicio-Vitae/blob/master/Vitae%20Vinicio/Vitae-Vinicio.pdf) para download. 
-
 
 #### Contato
 
@@ -40,7 +27,7 @@ Linkedin: [Vinicio Lima](https://www.linkedin.com/public-profile/settings?lipi=u
 
 
 
-
+Uma versão PDF do meu currículo está disponivel [aqui](https://github.com/viniciovcl/Vinicio-Vitae/blob/master/Vitae%20Vinicio/Vitae-Vinicio.pdf) para download. 
 
 
 
