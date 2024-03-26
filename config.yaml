@@ -27,7 +27,7 @@ menu:
     - name: contato
       url: /about/
       weight: -110
-    - name: Tags
+    - name: Interesses
       url: /tags/
       weight: -120
     # - name: Categories
