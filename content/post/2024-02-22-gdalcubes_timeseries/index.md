@@ -96,7 +96,7 @@ packageVersion("gdalcubes")
 ```
 
 ```
-## [1] '0.6.4'
+## [1] '0.7.0'
 ```
 
 
@@ -319,7 +319,7 @@ month_euc_ndvi %>% filter_pixel("NDVI > 0.7") %>%
 Os dados do NDVI seguem a tendência esperada para o período seco caracteristico da região para o intervalo analisado. É de se esperar que quanto mais próximo do auge do período seco os fatores climáticos afetem o metabolismo das plantas, resultando em valores menores para o NDVI.
 
 
-Os [dados do INMET](https://tempo.inmet.gov.br/GraficosAnuais) apontam para uma condição típica do clima da região, onde os máximos da temperatura são alcançados no inverno do hemisfério sul, coincindindo com os mínimos de umidade do ar e longos períodos de estiagem.
+Os [dados do INMET](https://tempo.inmet.gov.br/GraficosAnuais) apontam para uma condição típica do clima da região para o período, coincindindo com os mínimos de umidade do ar e longos períodos de estiagem.
 
 
 
