@@ -138,71 +138,65 @@
     </div>
 
     <div class="article-content e-content" itemprop="articleBody">
-        
-
-
-<p>No contexto de sensoriamento remoto e observação da Terra, <em>spatiotemporal array</em> refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.</p>
-<p><img src="images/fig-cube-1.png" width="100%" style="display: block; margin: auto;" /></p>
+        <p>No contexto de sensoriamento remoto e observação da Terra, <em>spatiotemporal array</em> refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões  espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.</p>
+<img src="./images/fig-cube-1.png" width="100%" style="display: block; margin: auto;" />
 <p>Na estrutura de um cubo de dados raster também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</p>
-<p><img src="images/cube.png" width="100%" style="display: block; margin: auto;" /></p>
+<img src="./images/cube.png" width="100%" style="display: block; margin: auto;" />
 <p>É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados.</p>
-<p>A seguir iremos explorar a biblioteca gdalcubes para analisar um conjunto de imagens do sensor MSI a bordo dos satélites Sentinel-2A e Sentinel-2B.</p>
-<div id="conjunto-de-dados" class="section level2">
-<h2>Conjunto de dados</h2>
+<p>Como exemplo utilizei a biblioteca gdalcubes para analisar um conjunto de imagens do sensor MSI a bordo dos satélites Sentinel-2A e Sentinel-2B.</p>
+<h2 id="conjunto-de-dados">Conjunto de dados</h2>
 <p>O conjunto de dados contém 19 cenas de uma área de Cerrado do Estado de Mato Grosso do Sul adquiridas entre fevereiro e julho de 2020.</p>
-<pre class="r"><code>path_file &lt;- &quot;/home/vinicio/Documentos/Codigo/TS_gdalcubes/Sentinel2_15bands/&quot;
-
-s2_files &lt;- list.files( paste(path_file,  &quot;raw&quot;, sep=&quot;/&quot;),
-    pattern = &quot;.zip$&quot;, recursive = TRUE )
-
-s2_files</code></pre>
-<pre><code>##  [1] &quot;S2A_MSIL2A_20200215T134201_N0214_R124_T22KCD_20200215T161217.zip&quot;
-##  [2] &quot;S2A_MSIL2A_20200306T134211_N0214_R124_T22KCD_20200306T160502.zip&quot;
-##  [3] &quot;S2A_MSIL2A_20200316T134211_N0214_R124_T22KCD_20200316T192808.zip&quot;
-##  [4] &quot;S2A_MSIL2A_20200326T134211_N0214_R124_T22KCD_20200326T160948.zip&quot;
-##  [5] &quot;S2A_MSIL2A_20200405T134211_N0214_R124_T22KCD_20200405T161002.zip&quot;
-##  [6] &quot;S2A_MSIL2A_20200425T134211_N0214_R124_T22KCD_20200425T161132.zip&quot;
-##  [7] &quot;S2A_MSIL2A_20200614T134221_N0214_R124_T22KCD_20200614T174720.zip&quot;
-##  [8] &quot;S2A_MSIL2A_20200714T134221_N0214_R124_T22KCD_20200714T210626.zip&quot;
-##  [9] &quot;S2B_MSIL2A_20200311T134209_N0214_R124_T22KCD_20200311T204936.zip&quot;
-## [10] &quot;S2B_MSIL2A_20200331T134209_N0214_R124_T22KCD_20200331T173754.zip&quot;
-## [11] &quot;S2B_MSIL2A_20200410T134209_N0214_R124_T22KCD_20200410T174302.zip&quot;
-## [12] &quot;S2B_MSIL2A_20200420T134209_N0214_R124_T22KCD_20200420T174701.zip&quot;
-## [13] &quot;S2B_MSIL2A_20200430T134209_N0214_R124_T22KCD_20200430T160218.zip&quot;
-## [14] &quot;S2B_MSIL2A_20200510T134209_N0214_R124_T22KCD_20200510T174712.zip&quot;
-## [15] &quot;S2B_MSIL2A_20200520T134209_N0214_R124_T22KCD_20200520T173910.zip&quot;
-## [16] &quot;S2B_MSIL2A_20200530T134209_N0214_R124_T22KCD_20200530T155919.zip&quot;
-## [17] &quot;S2B_MSIL2A_20200609T134219_N0214_R124_T22KCD_20200609T174956.zip&quot;
-## [18] &quot;S2B_MSIL2A_20200619T134219_N0214_R124_T22KCD_20200619T175114.zip&quot;
-## [19] &quot;S2B_MSIL2A_20200719T134209_N0214_R124_T22KCD_20200719T174410.zip&quot;</code></pre>
-<pre class="r"><code>files.size &lt;- sum(file.size(s2_files)) / 1000^3 # gigabytes
-
-files.size # gigabytes</code></pre>
-<pre><code>## [1] 21.2</code></pre>
-</div>
-<div id="gdalcubes" class="section level2">
-<h2>gdalcubes</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>path_file &lt;- <span style="color:#ed9d13">&#34;/home/vinicio/Documentos/Codigo/TS_gdalcubes/Sentinel2_15bands/&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s2_files &lt;- <span style="color:#447fcf">list.files</span>( <span style="color:#447fcf">paste</span>(path_file,  <span style="color:#ed9d13">&#34;raw&#34;</span>, sep=<span style="color:#ed9d13">&#34;/&#34;</span>),
+</span></span><span style="display:flex;"><span>    pattern = <span style="color:#ed9d13">&#34;.zip$&#34;</span>, recursive = <span style="color:#6ab825;font-weight:bold">TRUE</span> )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s2_files
+</span></span></code></pre></div><pre tabindex="0"><code>##  [1] &#34;S2A_MSIL2A_20200215T134201_N0214_R124_T22KCD_20200215T161217.zip&#34;
+##  [2] &#34;S2A_MSIL2A_20200306T134211_N0214_R124_T22KCD_20200306T160502.zip&#34;
+##  [3] &#34;S2A_MSIL2A_20200316T134211_N0214_R124_T22KCD_20200316T192808.zip&#34;
+##  [4] &#34;S2A_MSIL2A_20200326T134211_N0214_R124_T22KCD_20200326T160948.zip&#34;
+##  [5] &#34;S2A_MSIL2A_20200405T134211_N0214_R124_T22KCD_20200405T161002.zip&#34;
+##  [6] &#34;S2A_MSIL2A_20200425T134211_N0214_R124_T22KCD_20200425T161132.zip&#34;
+##  [7] &#34;S2A_MSIL2A_20200614T134221_N0214_R124_T22KCD_20200614T174720.zip&#34;
+##  [8] &#34;S2A_MSIL2A_20200714T134221_N0214_R124_T22KCD_20200714T210626.zip&#34;
+##  [9] &#34;S2B_MSIL2A_20200311T134209_N0214_R124_T22KCD_20200311T204936.zip&#34;
+## [10] &#34;S2B_MSIL2A_20200331T134209_N0214_R124_T22KCD_20200331T173754.zip&#34;
+## [11] &#34;S2B_MSIL2A_20200410T134209_N0214_R124_T22KCD_20200410T174302.zip&#34;
+## [12] &#34;S2B_MSIL2A_20200420T134209_N0214_R124_T22KCD_20200420T174701.zip&#34;
+## [13] &#34;S2B_MSIL2A_20200430T134209_N0214_R124_T22KCD_20200430T160218.zip&#34;
+## [14] &#34;S2B_MSIL2A_20200510T134209_N0214_R124_T22KCD_20200510T174712.zip&#34;
+## [15] &#34;S2B_MSIL2A_20200520T134209_N0214_R124_T22KCD_20200520T173910.zip&#34;
+## [16] &#34;S2B_MSIL2A_20200530T134209_N0214_R124_T22KCD_20200530T155919.zip&#34;
+## [17] &#34;S2B_MSIL2A_20200609T134219_N0214_R124_T22KCD_20200609T174956.zip&#34;
+## [18] &#34;S2B_MSIL2A_20200619T134219_N0214_R124_T22KCD_20200619T175114.zip&#34;
+## [19] &#34;S2B_MSIL2A_20200719T134209_N0214_R124_T22KCD_20200719T174410.zip&#34;
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>files.size &lt;- <span style="color:#447fcf">sum</span>(<span style="color:#447fcf">file.size</span>(s2_files)) / <span style="color:#3677a9">1000</span>^3 <span style="color:#999;font-style:italic"># gigabytes</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>files.size <span style="color:#999;font-style:italic"># gigabytes</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## [1] 21.2
+</code></pre><h2 id="gdalcubes">gdalcubes</h2>
 <p><a href="https://gdalcubes.github.io/">gdalcubes</a> é um pacote R e uma biblioteca C++ para o processamento de grandes coleções de imagens de satélite.</p>
-<pre class="r"><code>library(magrittr)
-library(gdalcubes)
-packageVersion(&quot;gdalcubes&quot;)</code></pre>
-<pre><code>## [1] &#39;0.6.4&#39;</code></pre>
-<pre class="r"><code># Cria uma coleção de imagens gdalcubes
-
-if(!file.exists(file.path(path_file, &quot;S2_collection.db&quot; ))){
- S2_download_zip = list.files( paste(path_file, &quot;raw&quot;, sep = &quot;/&quot;),
-                     pattern = &quot;.zip$&quot;,  full.names = TRUE, recursive = TRUE )
-
- create_image_collection(
-   files = S2_download_zip, format=&#39;Sentinel2_L2A&#39;,
-   unroll_archives=TRUE, out_file=file.path(
-     path_file,  &quot;S2_collection.db&quot;))
-}</code></pre>
-<pre class="r"><code>S2_collection &lt;- image_collection(file.path(
-  path_file, &quot;S2_collection.db&quot;))  
-
-S2_collection</code></pre>
-<pre><code>## Image collection object, referencing 19 images with 15 bands
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(magrittr)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(gdalcubes)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">packageVersion</span>(<span style="color:#ed9d13">&#34;gdalcubes&#34;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>## [1] &#39;0.7.0&#39;
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Cria uma coleção de imagens gdalcubes</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">if</span>(!<span style="color:#447fcf">file.exists</span>(<span style="color:#447fcf">file.path</span>(path_file, <span style="color:#ed9d13">&#34;S2_collection.db&#34;</span> ))){
+</span></span><span style="display:flex;"><span> S2_download_zip = <span style="color:#447fcf">list.files</span>( <span style="color:#447fcf">paste</span>(path_file, <span style="color:#ed9d13">&#34;raw&#34;</span>, sep = <span style="color:#ed9d13">&#34;/&#34;</span>),
+</span></span><span style="display:flex;"><span>                     pattern = <span style="color:#ed9d13">&#34;.zip$&#34;</span>,  full.names = <span style="color:#6ab825;font-weight:bold">TRUE</span>, recursive = <span style="color:#6ab825;font-weight:bold">TRUE</span> )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#447fcf">create_image_collection</span>(
+</span></span><span style="display:flex;"><span>   files = S2_download_zip, format=<span style="color:#ed9d13">&#39;Sentinel2_L2A&#39;</span>,
+</span></span><span style="display:flex;"><span>   unroll_archives=<span style="color:#6ab825;font-weight:bold">TRUE</span>, out_file=<span style="color:#447fcf">file.path</span>(
+</span></span><span style="display:flex;"><span>     path_file,  <span style="color:#ed9d13">&#34;S2_collection.db&#34;</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>S2_collection &lt;- <span style="color:#447fcf">image_collection</span>(<span style="color:#447fcf">file.path</span>(
+</span></span><span style="display:flex;"><span>  path_file, <span style="color:#ed9d13">&#34;S2_collection.db&#34;</span>))  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>S2_collection
+</span></span></code></pre></div><pre tabindex="0"><code>## Image collection object, referencing 19 images with 15 bands
 ## Images:
 ##                                                           name      left
 ## 1 S2A_MSIL2A_20200215T134201_N0214_R124_T22KCD_20200215T161217 -52.91137
@@ -236,21 +230,21 @@ S2_collection</code></pre>
 ## 12  B12      0 1e-04      0.000000          19
 ## 13  B8A      0 1e-04      0.000000          19
 ## 14  SCL      0 1e+00                        19
-## 15  WVP      0 1e+00                        19</code></pre>
-<p>Uma view define a geometria espaço-temporal sem conectá-la ao conjuntos de dados específicos. Isso é especialmente útil quando se trabalha com grandes volumes de dados raster. É uma representação específica da série temporal que pode ser definida pela geometria do cubo.</p>
+## 15  WVP      0 1e+00                        19
+</code></pre><p>Uma view define a geometria espaço-temporal sem conectá-la ao conjuntos de dados específicos. Isso é especialmente útil quando se trabalha com grandes volumes de dados raster. É uma representação específica da série temporal que pode ser definida pela geometria do cubo.</p>
 <p>Uma view do cubo de dados contém o sistema de referência espacial (SRS), a extensão espaçotemporal (esquerda, direita, inferior, superior, data/hora de início, data/hora de término) e o tamanho espaçotemporal dos pixels (tamanho espacial, duração temporal).</p>
 <p>Por exemplo, podemos criar uma view que aplica uma reamostragem dos pixels para 250 m e uma agragação temporal pela mediana de um intervalo mensal para obter uma visão geral da série.</p>
-<pre class="r"><code> # Visão geral da cena
-v.overview = cube_view(
-  extent=S2_collection, 
-  dx=250, dy=250, # 250 m x 250 m
-  resampling = &quot;bilinear&quot;, # interpolador da reamostragem
-  srs=&quot;EPSG:31982&quot;, # projeção de destino
-  dt=&quot;P1M&quot;, aggregation = &quot;median&quot; # mediana para o mês.
-  )
-
-v.overview </code></pre>
-<pre><code>## A data cube view object
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span> <span style="color:#999;font-style:italic"># Visão geral da cena</span>
+</span></span><span style="display:flex;"><span>v.overview = <span style="color:#447fcf">cube_view</span>(
+</span></span><span style="display:flex;"><span>  extent=S2_collection, 
+</span></span><span style="display:flex;"><span>  dx=<span style="color:#3677a9">250</span>, dy=<span style="color:#3677a9">250</span>, <span style="color:#999;font-style:italic"># 250 m x 250 m</span>
+</span></span><span style="display:flex;"><span>  resampling = <span style="color:#ed9d13">&#34;bilinear&#34;</span>, <span style="color:#999;font-style:italic"># interpolador da reamostragem</span>
+</span></span><span style="display:flex;"><span>  srs=<span style="color:#ed9d13">&#34;EPSG:31982&#34;</span>, <span style="color:#999;font-style:italic"># projeção de destino</span>
+</span></span><span style="display:flex;"><span>  dt=<span style="color:#ed9d13">&#34;P1M&#34;</span>, aggregation = <span style="color:#ed9d13">&#34;median&#34;</span> <span style="color:#999;font-style:italic"># mediana para o mês.</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>v.overview 
+</span></span></code></pre></div><pre tabindex="0"><code>## A data cube view object
 ## 
 ## Dimensions:
 ##                low             high count pixel_size
@@ -258,14 +252,14 @@ v.overview </code></pre>
 ## y 7789200.49146679 7900950.49146679   447        250
 ## x 298688.080453591 410438.080453591   447        250
 ## 
-## SRS: &quot;EPSG:31982&quot;
-## Temporal aggregation method: &quot;median&quot;
-## Spatial resampling method: &quot;bilinear&quot;</code></pre>
-<p>A combinação de uma visualização <code>cube_view()</code> da geometria do cubo com a coleção de imagens produz um cubo de dados raster regular contendo os metadados da coleção de imagens e a geometria da view <code>raster_cube()</code> .</p>
-<pre class="r"><code> cube.overview &lt;-  raster_cube(S2_collection, v.overview) 
-
- cube.overview</code></pre>
-<pre><code>## A data cube proxy object
+## SRS: &#34;EPSG:31982&#34;
+## Temporal aggregation method: &#34;median&#34;
+## Spatial resampling method: &#34;bilinear&#34;
+</code></pre><p>A combinação de uma visualização <code>cube_view()</code> da geometria do cubo  com a coleção de imagens produz um cubo de dados raster regular contendo os metadados da coleção de imagens e a geometria da view <code>raster_cube()</code> .</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span> cube.overview &lt;-  <span style="color:#447fcf">raster_cube</span>(S2_collection, v.overview) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> cube.overview
+</span></span></code></pre></div><pre tabindex="0"><code>## A data cube proxy object
 ## 
 ## Dimensions:
 ##                low             high count pixel_size chunk_size
@@ -289,114 +283,99 @@ v.overview </code></pre>
 ## 12  B12      0 1e-04    NaN     
 ## 13  B8A      0 1e-04    NaN     
 ## 14  SCL      0 1e+00    NaN     
-## 15  WVP      0 1e+00    NaN</code></pre>
-<p><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/cubeview_plot-1.png" width="150%" /></p>
+## 15  WVP      0 1e+00    NaN
+</code></pre><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/cubeview_plot-1.png" width="150%" />
 <p>A região da cena compreende uma área ocupada predominantemente por pastagens extensivas e reflorestamento de eucalipto. Podemos obter o NDVI da série para e definir uma região específica para observar um povoamento de Eucalyptus Urograndis.</p>
-<pre><code>## Warning in plot.cube(., zlim = c(0, 1200), rgb = 3:1, key.pos = 1, ncol = 1, :
-## Ignoring key.pos for RGB plots</code></pre>
-<p><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_rgb-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>O produto <a href="https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/">L2A</a> inclui bandas de máscara e sinalizadores de qualidade de pixels, entre outras camadas que podem ser usadas para filtrar pixels espúrios ou atender determinada análise.</p>
+<pre tabindex="0"><code>## Warning in plot.cube(., zlim = c(0, 1200), rgb = 3:1, key.pos = 1, ncol = 1, :
+## Ignoring key.pos for RGB plots
+</code></pre><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_rgb-1.png" width="100%" style="display: block; margin: auto;" />
+<p>O produto <a href="https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/">L2A</a> inclui bandas de máscara e  sinalizadores de qualidade de pixels, entre outras camadas que podem ser usadas para filtrar pixels espúrios ou atender determinada análise.</p>
 <p>As máscaras são aplicadas em imagens e não em cubos. Os valores mascarados não contribuirão para a agregação de pixels.</p>
-<pre class="r"><code>s2.clear.mask &lt;- image_mask(&quot;SCL&quot;, values= c(0,1,2,3,5,6,7,8,9,10,11 )) # Vegetação</code></pre>
-<pre class="r"><code>v.euc = cube_view(
-  extent=list(S2_collection, left=321434.9, right=326500,
-              bottom=7813432, top=7819363,
-             t0=&quot;2020-02-15&quot;, t1=&quot;2020-07-31&quot;),
-            dt=&quot;P1M&quot;, dx=100, dy=100, srs=&quot;EPSG:31982&quot;,
-            aggregation = &quot;median&quot;, resampling = &quot;bilinear&quot;)
-
-
-# NDVI
-
-month_euc_ndvi &lt;- raster_cube( S2_collection, v.euc, mask = s2.clear.mask) %&gt;%
-   select_bands(c(&quot;B04&quot;,&quot;B08&quot;, &quot;SCL&quot;)) %&gt;%
-  apply_pixel(c(&quot;(B08-B04)/(B08+B04)&quot;), names=&quot;NDVI&quot;) 
-
-# kNDVI
-
-month_euc_kndvi &lt;- raster_cube( S2_collection, v.euc, mask = s2.clear.mask) %&gt;%
-   select_bands(c(&quot;B04&quot;,&quot;B04&quot;,&quot;B08&quot;, &quot;SCL&quot;)) %&gt;% 
- apply_pixel(&quot;tanh(((B08-B04)/(B08+B04))^2)&quot;, &quot;kNDVI&quot;) 
-
-library(viridis)
-month_euc_ndvi %&gt;%  filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;% # filtra outros usos
-  plot(zlim=c(0.55, .9), key.pos=1,  ncol =3, nrow=2, col=viridis)</code></pre>
-<p><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_ndvi-1.png" width="150%" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>month_euc_ndvi %&gt;% filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;% 
-  reduce_space(#&quot;sum(NDVI)&quot;,
-               &quot;mean(NDVI)&quot;,
-               &quot;min(NDVI)&quot;,
-               &quot;max(NDVI)&quot;,
-               &quot;median(NDVI)&quot;,
-               &quot;sd(NDVI))&quot;, 
-                &quot;count(NDVI)&quot;, 
-               &quot;var(NDVI)&quot;) %&gt;%
-  plot(ncol =4, nrow=2)</code></pre>
-<p><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/reduce_space_ndvi-1.png" width="95%" style="display: block; margin: auto;" /></p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>s2.clear.mask &lt;- <span style="color:#447fcf">image_mask</span>(<span style="color:#ed9d13">&#34;SCL&#34;</span>, values= <span style="color:#447fcf">c</span>(<span style="color:#3677a9">0</span>,<span style="color:#3677a9">1</span>,<span style="color:#3677a9">2</span>,<span style="color:#3677a9">3</span>,<span style="color:#3677a9">5</span>,<span style="color:#3677a9">6</span>,<span style="color:#3677a9">7</span>,<span style="color:#3677a9">8</span>,<span style="color:#3677a9">9</span>,<span style="color:#3677a9">10</span>,<span style="color:#3677a9">11</span> )) <span style="color:#999;font-style:italic"># Vegetação</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>v.euc = <span style="color:#447fcf">cube_view</span>(
+</span></span><span style="display:flex;"><span>  extent=<span style="color:#447fcf">list</span>(S2_collection, left=<span style="color:#3677a9">321434.9</span>, right=<span style="color:#3677a9">326500</span>,
+</span></span><span style="display:flex;"><span>              bottom=<span style="color:#3677a9">7813432</span>, top=<span style="color:#3677a9">7819363</span>,
+</span></span><span style="display:flex;"><span>             t0=<span style="color:#ed9d13">&#34;2020-02-15&#34;</span>, t1=<span style="color:#ed9d13">&#34;2020-07-31&#34;</span>),
+</span></span><span style="display:flex;"><span>            dt=<span style="color:#ed9d13">&#34;P1M&#34;</span>, dx=<span style="color:#3677a9">100</span>, dy=<span style="color:#3677a9">100</span>, srs=<span style="color:#ed9d13">&#34;EPSG:31982&#34;</span>,
+</span></span><span style="display:flex;"><span>            aggregation = <span style="color:#ed9d13">&#34;median&#34;</span>, resampling = <span style="color:#ed9d13">&#34;bilinear&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># NDVI</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>month_euc_ndvi &lt;- <span style="color:#447fcf">raster_cube</span>( S2_collection, v.euc, mask = s2.clear.mask) %&gt;%
+</span></span><span style="display:flex;"><span>   <span style="color:#447fcf">select_bands</span>(<span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;B04&#34;</span>,<span style="color:#ed9d13">&#34;B08&#34;</span>, <span style="color:#ed9d13">&#34;SCL&#34;</span>)) %&gt;%
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">apply_pixel</span>(<span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;(B08-B04)/(B08+B04)&#34;</span>), names=<span style="color:#ed9d13">&#34;NDVI&#34;</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># kNDVI</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>month_euc_kndvi &lt;- <span style="color:#447fcf">raster_cube</span>( S2_collection, v.euc, mask = s2.clear.mask) %&gt;%
+</span></span><span style="display:flex;"><span>   <span style="color:#447fcf">select_bands</span>(<span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;B04&#34;</span>,<span style="color:#ed9d13">&#34;B04&#34;</span>,<span style="color:#ed9d13">&#34;B08&#34;</span>, <span style="color:#ed9d13">&#34;SCL&#34;</span>)) %&gt;% 
+</span></span><span style="display:flex;"><span> <span style="color:#447fcf">apply_pixel</span>(<span style="color:#ed9d13">&#34;tanh(((B08-B04)/(B08+B04))^2)&#34;</span>, <span style="color:#ed9d13">&#34;kNDVI&#34;</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(viridis)
+</span></span><span style="display:flex;"><span>month_euc_ndvi %&gt;%  <span style="color:#447fcf">filter_pixel</span>(<span style="color:#ed9d13">&#34;NDVI &gt; 0.7&#34;</span>) %&gt;% <span style="color:#999;font-style:italic"># filtra outros usos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">plot</span>(zlim=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">0.55</span>, <span style="color:#3677a9">.9</span>), key.pos=<span style="color:#3677a9">1</span>,  ncol =<span style="color:#3677a9">3</span>, nrow=<span style="color:#3677a9">2</span>, col=viridis)
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_ndvi-1.png" width="150%" style="display: block; margin: auto;" />
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>month_euc_ndvi %&gt;% <span style="color:#447fcf">filter_pixel</span>(<span style="color:#ed9d13">&#34;NDVI &gt; 0.7&#34;</span>) %&gt;% 
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">reduce_space</span>(<span style="color:#999;font-style:italic">#&#34;sum(NDVI)&#34;,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34;mean(NDVI)&#34;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34;min(NDVI)&#34;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34;max(NDVI)&#34;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34;median(NDVI)&#34;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34;sd(NDVI))&#34;</span>, 
+</span></span><span style="display:flex;"><span>                <span style="color:#ed9d13">&#34;count(NDVI)&#34;</span>, 
+</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34;var(NDVI)&#34;</span>) %&gt;%
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">plot</span>(ncol =<span style="color:#3677a9">4</span>, nrow=<span style="color:#3677a9">2</span>)
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/reduce_space_ndvi-1.png" width="95%" style="display: block; margin: auto;" />
 <p>Os dados do NDVI seguem a tendência esperada para o período seco caracteristico da região para o intervalo analisado. É de se esperar que quanto mais próximo do auge do período seco os fatores climáticos afetem o metabolismo das plantas, resultando em valores menores para o NDVI.</p>
-<p>Os <a href="https://tempo.inmet.gov.br/GraficosAnuais">dados do INMET</a> apontam para uma condição típica do clima da região, onde os máximos da temperatura são alcançados no inverno do hemisfério sul, coincindindo com os mínimos de umidade do ar e longos períodos de estiagem.</p>
+<p>Os <a href="https://tempo.inmet.gov.br/GraficosAnuais">dados do INMET</a> apontam para uma condição típica do clima da região para o período, coincindindo com os mínimos de umidade do ar e longos períodos de estiagem.</p>
 <div class="figure" style="text-align: center">
-<img src="images/estao-agua-clara-a756%20(6).png" alt="Precipitação (mm) para estação Água Clara (A758)." width="60%" />
-<p class="caption">
-(#fig:fig_precp_AC)Precipitação (mm) para estação Água Clara (A758).
-</p>
+<img src="./images/estao-agua-clara-a756 (6).png" alt="Precipitação (mm) para estação Água Clara (A758)." width="60%" />
+<p class="caption">(\#fig:fig_precp_AC)Precipitação (mm) para estação Água Clara (A758).</p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="images/estao-agua-clara-a756%20(2).png" alt="Umidade do ar (%) para estação Água Clara (A758)." width="60%" />
-<p class="caption">
-(#fig:fig_umid_AC)Umidade do ar (%) para estação Água Clara (A758).
-</p>
+<img src="./images/estao-agua-clara-a756 (2).png" alt="Umidade do ar (%) para estação Água Clara (A758)." width="60%" />
+<p class="caption">(\#fig:fig_umid_AC)Umidade do ar (%) para estação Água Clara (A758).</p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="images/estao-agua-clara-a756%20(1).png" alt="Temperatura do ar (ºC) para estação Água Clara (A758)." width="60%" />
-<p class="caption">
-(#fig:fig_temp_AC)Temperatura do ar (ºC) para estação Água Clara (A758).
-</p>
+<img src="./images/estao-agua-clara-a756 (1).png" alt="Temperatura do ar (ºC) para estação Água Clara (A758)." width="60%" />
+<p class="caption">(\#fig:fig_temp_AC)Temperatura do ar (ºC) para estação Água Clara (A758).</p>
 </div>
 <p>Dado esse contexto, uma pergunta interessante de ser respondida é se:</p>
 <p>Mesmo havendo uma tendência de global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por vento, pragas ou doenças ou fatores fisiológicos da planta?</p>
-<p>Ao analisar o comportamento da média e da mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo abril-junho, com uma inflexão no mês de maio.</p>
+<p>Ao analisar o comportamento da média e da  mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo abril-junho, com uma inflexão no mês de maio.</p>
 <div class="figure" style="text-align: center">
 <img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/reduce_space_ndvi2-1.png" alt="Média e a mediana da série mensal." width="75%" />
-<p class="caption">
-(#fig:reduce_space_ndvi2)Média e a mediana da série mensal.
-</p>
+<p class="caption">(\#fig:reduce_space_ndvi2)Média e a mediana da série mensal.</p>
 </div>
-</div>
-<div id="detecção-de-mudanças" class="section level2">
-<h2>Detecção de mudanças</h2>
-<p>Podemos derivar as diferenças mensais para analisar o comportamento da diminuição do valor do NDVI no decorrer dos meses Tt - T (t-1). A função <code>window_time()</code> aplica o filtro de diferença de kernel para a série mensal.</p>
-<pre class="r"><code># Diferença mensal
-
-month_euc_ndvi %&gt;%  filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;% 
-  window_time(kernel=c(-1,1), window=c(1,0)) %&gt;%
-  plot(zlim=c(-.13, .15), key.pos=1,   col= viridis,  t = 2:6, ncol = 3 )</code></pre>
-<p><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_change-1.png" width="150%" style="display: block; margin: auto;" /></p>
+<h2 id="detecção-de-mudanças">Detecção de mudanças</h2>
+<p>Podemos derivar as diferenças mensais para analisar o comportamento da diminuição do valor do NDVI no decorrer dos meses Tt - T (t-1).   A função  <code>window_time()</code>  aplica o filtro de diferença de kernel para a série mensal.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Diferença mensal</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>month_euc_ndvi %&gt;%  <span style="color:#447fcf">filter_pixel</span>(<span style="color:#ed9d13">&#34;NDVI &gt; 0.7&#34;</span>) %&gt;% 
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">window_time</span>(kernel=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">-1</span>,<span style="color:#3677a9">1</span>), window=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">1</span>,<span style="color:#3677a9">0</span>)) %&gt;%
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">plot</span>(zlim=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">-.13</span>, <span style="color:#3677a9">.15</span>), key.pos=<span style="color:#3677a9">1</span>,   col= viridis,  t = <span style="color:#3677a9">2</span>:<span style="color:#3677a9">6</span>, ncol = <span style="color:#3677a9">3</span> )
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_change-1.png" width="150%" style="display: block; margin: auto;" />
 <div class="figure" style="text-align: center">
 <img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/reduce_space_change-1.png" alt="Média e a Mediana da diferença simples para a série mensal Tt - T(t-1)" width="75%" />
-<p class="caption">
-(#fig:reduce_space_change)Média e a Mediana da diferença simples para a série mensal Tt - T(t-1)
-</p>
+<p class="caption">(\#fig:reduce_space_change)Média e a Mediana da diferença simples para a série mensal Tt - T(t-1)</p>
 </div>
 <p>A média e a mediana da diferença simples mostram uma estagnação da tendência de diminuição do NDVI, com o valor da média da diferença superior a mediana da diferença no mês de junho. Esse comportamento aponta para a diminuição da magnitude da taxa de mudança que pode indicar uma redução na intensidade dessa tendência, o que ser observado no gráfico entre os mêses de maio e junho.</p>
-<p>A mudança positiva no intervalo fevereiro-março pode ser decorrente das chuvas que ocorreram durante o período, o que não pode ser observado para o intervalo seguinte mesmo com a continuação de eventos de chuva no mês de abril. Isso poderia estar relacionado a algum ‘fator externo’ aos dados analisados até aqui?</p>
+<p>A mudança positiva no intervalo fevereiro-março pode ser decorrente das chuvas que ocorreram durante o período, o que não pode ser observado para o intervalo seguinte mesmo com a continuação de eventos de chuva no mês de abril. Isso poderia estar relacionado a algum &lsquo;fator externo&rsquo; aos dados analisados até aqui?</p>
 <p>Observando o gráfico da média e da mediana da diferença podemos considerar três padrões de tendência, representados no gráfico pelos intervalos (1) março-abril, (2) abril-junho, (3) junho-julho.</p>
-<p>A inclinação do intervalo (3) junho-julho é menor que a do intervalo (1) março-abril, o que é contrário a tendência das variáveis climáticas, enquanto a série avança para o auge do período seco do ano, com os mínimos da umidade do ar entre agosto e outubro.</p>
+<p>A inclinação do intervalo (3) junho-julho  é menor que a do intervalo (1) março-abril, o que é contrário a tendência das variáveis climáticas, enquanto a série avança para o auge do período seco do ano, com os mínimos da umidade do ar entre agosto e outubro.</p>
 <p>Diferenças abslutas menores do NDVI ocorreram de maneira significativa na área analisada, entre os meses de abril e junho, consecutivamente (maio - abril ; junho - maio). Existe algum padrão ou arranjo espacial dos valores da diferença simples. Orientação preferencial SO-NE?</p>
-<pre class="r"><code>month_euc_ndvi %&gt;%  filter_pixel(&quot;NDVI &gt; 0.7&quot;) %&gt;% 
-  window_time(kernel=c(-1,1), window=c(1,0)) %&gt;%
-  filter_pixel(&quot;NDVI &gt; 0.0&quot;) %&gt;% 
-  plot(zlim=c(0.0, .12), key.pos=1,   col= viridis,  t = 2:6, ncol = 3 )</code></pre>
-<p><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_change_filt-1.png" width="150%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="considerações-finais" class="section level2">
-<h2>Considerações finais</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>month_euc_ndvi %&gt;%  <span style="color:#447fcf">filter_pixel</span>(<span style="color:#ed9d13">&#34;NDVI &gt; 0.7&#34;</span>) %&gt;% 
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">window_time</span>(kernel=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">-1</span>,<span style="color:#3677a9">1</span>), window=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">1</span>,<span style="color:#3677a9">0</span>)) %&gt;%
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">filter_pixel</span>(<span style="color:#ed9d13">&#34;NDVI &gt; 0.0&#34;</span>) %&gt;% 
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">plot</span>(zlim=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">0.0</span>, <span style="color:#3677a9">.12</span>), key.pos=<span style="color:#3677a9">1</span>,   col= viridis,  t = <span style="color:#3677a9">2</span>:<span style="color:#3677a9">6</span>, ncol = <span style="color:#3677a9">3</span> )
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_change_filt-1.png" width="150%" style="display: block; margin: auto;" />
+<h2 id="considerações-finais">Considerações finais</h2>
 <p>Essa análise foi motivada por uma intervenção de manejo em um povoamento adulto de Eucalipytus. Onde no mês de Maio foi empregado um agente como medida de controle sobre a população da <em>Glena bipennaria bipennaria</em> (lagarta desfolhadora).</p>
 <p>° Em uma coleção de imagens aplicou-se uma redução temporal da série para um intervalo mensal.</p>
 <p>° Foi criado um cubo de dados raster contendo 6 imagens correspondendo ao intervalo mês a mês da série e calculado o índice de vegetação de diferença normalizada NDVI.</p>
 <p>° No cubo de dados foi aplicado uma função redutora em uma janela móvel sobre a dimensão do tempo. Filtro de kernel da diferença simples Tt - T (t-1).</p>
 <p>A diferença consecutiva mês a mês para o intervalo mostrou uma atenuação na intensidade de tendência de diminuição do NDVI, com inflexões em maio e junho. Uma análise de tendências e anomalias pode fornecer uma abordagem complementar de maneira a validar os valores encontrados para a diferença simples.</p>
-</div>
 
     </div>
 
