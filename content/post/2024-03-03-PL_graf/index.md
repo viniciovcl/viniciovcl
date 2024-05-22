@@ -11,8 +11,6 @@ tags: ["linear-programming", "modeling", "ggplot", "lpsolve"]
 Esse caderno contém um exemplo de solução de um problema de programação linear pelo método gráfico.
 O Problema utilizado como exemplo foi apresentado na disciplina PCF508 (Pesquisa operacional para fins florestais).
 
-Sou iniciante em Pesquisa Operacional, ficarei grato se puder contribuir caso encontre algum equívoco.
-
 
 
 Em fábrica de pasta celulósica localizada em uma pequena cidade... (adaptado de _Buongiorno e Gilles_): 
