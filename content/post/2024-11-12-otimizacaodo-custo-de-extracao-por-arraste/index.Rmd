@@ -11,11 +11,19 @@ output:
 ---
   
   
-  A extração por arraste é uma etapa crucial da colheita florestal, onde as toras são transportadas da área de corte até os pátios de estocagem ou a estrada. Esse processo apresenta desafios significativos, como o desgaste do maquinário, a necessidade de minimizar a distância percorrida e o tempo de operação, além de reduzir os impactos ambientais, como a compactação do solo e a abertura de trilhas temporárias.
+  A extração por arraste é uma etapa da colheita florestal onde as toras são transportadas da área de corte até a margem do talhão, estrada ou pátio intermediário.
+  
+  A distância de extração tem impacto direto nos custos da operação de colheita florestal. Quanto maior a distância entre a área de corte e o pátio de estocagem, maior é o tempo gasto e o consumo de combustível dos equipamentos de arraste, o que eleva os custos operacionais. Além disso, distâncias maiores aumentam o desgaste das máquinas e a necessidade de manutenção, além de prolongarem o ciclo de trabalho, reduzindo a produtividade da equipe.
+  
+  Otimizar a localização das pilhas de estocagem para minimizar essas distâncias é essencial para uma operação mais econômica e eficiente.
+  
+ O método da p-mediana é amplamente utilizado em problemas de localização, como a seleção de pátios de estocagem na colheita florestal, em que é necessário escolher p locais que minimizem a distância total (ou custo) entre os pontos de demanda (como áreas de corte) e os pontos de suprimento (como pátios).
+ 
+ Esse post é um caderno cujo o intuito foi de desenvolver e explorar habilidades envolvendo a utilização de ferramentas de Geoprocessamento e de Programação Linear aplicado ao problema de otimização da localização de pilhas na colheita florestal. O custo foi calculado a partir da distância euclidiana com o trânsito das máquinas sobre os tocos na linha de plantio não sendo incluido como restrição. 
+ 
+Esse esforço me permitiu exercitar o aprendizado em modelagem, onde descobri ferramentas de modelagem e solvers livres e de código aberto, que permitem resolver o problema sem nenhum custo. As bibliotecas ROI e OMPR possibilitam padronizar a contrução dos modelos pois são compatíveis com diferentes solvers, incluindo softwares proprietários (excelente!). Não foi preciso aprender como o mesmo modelo deve ser passado para cada solvers à depender do solver que está utilizando. Apliquei o mesmo modelo nos solvers SYMPONHY e glpk e tudo funcionou bem.   
+  
 
-  Otimizar essa operação é essencial para manter os custos sob controle e garantir uma colheita eficiente. Uma das formas de otimização é através da programação linear, com métodos como o da p-mediana, que ajuda a definir o número e a localização ideal dos pátios de estocagem. Essa abordagem minimiza as distâncias e os custos de arraste, resultando em uma operação mais econômica e sustentável, além de melhorar a logística e reduzir o tempo de transporte. Em um contexto florestal, a aplicação de tais soluções representa um avanço na gestão eficiente dos recursos naturais.
-  
-  
   
 ## 1)  Problema proposto
   
