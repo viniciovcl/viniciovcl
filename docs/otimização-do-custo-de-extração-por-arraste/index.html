@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1"><title>Otimização do Custo de Extração por Arraste - Vinicio Coelho Lima</title>
+<meta property="og:title" content="Otimização do Custo de Extração por Arraste - Vinicio Coelho Lima">
+<meta property="og:type" content="article">
+
+
+<meta property="og:image" content="">
+
+<meta property="og:url" content="https://viniciovcl.github.io/viniciovcl/otimiza%C3%A7%C3%A3o-do-custo-de-extra%C3%A7%C3%A3o-por-arraste/"><meta property="og:description" content="Página pessoal">
+<meta name="Description" property="description" content="Página pessoal">
+
+
+<meta property="keywords" content ="linear-programming, modeling, r-markdown">
+
+
+
+<link rel="stylesheet" href="https://viniciovcl.github.io/viniciovcl/css/style.min.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://viniciovcl.github.io/viniciovcl/index.xml" type="application/atom+xml" rel="alternate" title="Sitewide Atom feed" />
+<meta name="theme-color" content="#ffffff">
+
+
+<script>function updateMode(){localStorage.theme==="dark"||!("theme"in localStorage)&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")}function toggleMode(){localStorage.theme==="dark"?localStorage.theme="light":localStorage.theme="dark",updateMode()}window.onload=updateMode();function toggleMenu(){let e=document.getElementById("navbar-default");e.classList.contains("hidden")?e.classList.remove("hidden"):e.classList.add("hidden")}</script>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+
+  </head>
+  <body>
+    <header class="md:px-0 px-2">
+        <nav >
+  <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="nav-main my-2.5">
+      <a href="https://viniciovcl.github.io/viniciovcl/" class="nav-title py-2.5 text-2xl
+               text-zinc-600 dark:text-zinc-300 hover:border-b-0">Vinicio Coelho Lima</a>
+    </div>
+    <button type="button"
+            onclick="toggleMenu()"
+            class="inline-flex items-center p-2 ml-3
+                  text-sm text-gray-500
+                  rounded-lg md:hidden hover:bg-gray-100
+                  focus:outline-none focus:ring-2
+                  focus:ring-gray-200 dark:text-gray-400
+                  dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-default"
+            aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor"
+             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1
+                           0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0
+                           01-1-1z" clip-rule="evenodd"></path>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="grid md:grid-flow-col items-center justify-between text-lg
+                 my-2.5 grid-cols-1 pl-0 text-center">
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/post/">Posts</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/tags/">Interesses</a>
+        </li>
+        
+        <li class="p-2.5 md:first:pl-0 md:border-none border-b dark:border-zinc-500 list-none">
+          <a class="text-zinc-600 dark:text-zinc-300
+                    hover:border-b-0" href="/viniciovcl/about/">contato</a>
+        </li>
+        
+        <li class="h-7 pl-2.5 pr-0 list-none">
+          <button type="button" onclick="toggleMode()" class="h-full"  aria-label="Toggle between dark and light mode">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 hidden dark:inline"
+                 id="ligh-mode-button-img"
+                 alt="A sun icon for switching to light mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/light_mode.svg">
+            <img class="h-7 w-7 max-h-full mb-1.5 p-1.5 inline dark:hidden"
+                 id="dark-mode-button-img"
+                 alt="A moon icon for switching to dark mode"
+                 src="https://viniciovcl.github.io/viniciovcl/img/dark_mode.svg">
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    </header>
+    <main class="content h-card container mt-2 m-auto
+                 leading-loose md:px-0 px-2 z-0"
+          role="main">
+    
+<article class="article h-entry" itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="title-container">
+        <h1 class="article-title p-name" itemprop="name">Otimização do Custo de Extração por Arraste</h1>
+        
+        <div class="flex justify-between items-center">
+            
+            <a class="text-lg text-gray-600 dark:text-gray-400 border-none u-url" href="https://viniciovcl.github.io/viniciovcl/otimiza%C3%A7%C3%A3o-do-custo-de-extra%C3%A7%C3%A3o-por-arraste/">
+                <time itemprop="datePublished" class="dt-published"
+                    datetime="2024-11-12T00:00:00Z"
+                    content="2024-11-12T00:00:00Z">
+                    2024.11.12
+                </time>
+            </a>
+            
+            
+                
+                <a class="text-gray-600 dark:text-gray-400 text-right border-none p-author h-card" rel="author" href="https://viniciovcl.github.io/viniciovcl/" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Vinício C. Lima</span></a>
+                
+            
+        </div>
+        
+    </div>
+
+    <div class="article-content e-content" itemprop="articleBody">
+        <h1 id="1--problema-proposto">1)  Problema proposto</h1>
+<p>A área a ser trabalhada pela equipe de planejamento florestal encontra-se localizada no projeto Ferradura, sendo selecionado apenas talhões
+com idade superiora a 5 anos. O mapa na Figura 1 é uma representação da área
+em análise, que compreende um total de 90 talhões e 4.561 ha com plantio de
+Eucaliptus spp.</p>
+<img src="./images/img_prj_ferradura.png" width="70%" style="display: block; margin: auto;" />
+<p>O objetivo é definir a localização e a quantidade de pátios de estocagem
+necessários para a colheita de um talhão do projeto, tendo em
+vista o menor custo da operação de extração por arraste.</p>
+<h2 id="especificações">Especificações:</h2>
+<p>a) Capacidade de armazenamento de madeira por pilha: 200 m³;</p>
+<p>b) Distância mínima entre pilhas: 25 m;</p>
+<p>c) considere que não há restrições à instalação das pilhas de estocagem de
+madeira nas bordas do talhão avaliado, e</p>
+<p>d) o número de pilhas de estocagem será definido pela razão entre o volume
+total de madeira do talhão e a capacidade de armazenamento de madeira na
+pilha, cujo resultado será acrescido de mais uma pilha.</p>
+<h1 id="2--preparando-os-dados">2)  Preparando os dados</h1>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(sf)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(rgdal)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(spatialEco)
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># library(rgeos)</span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(tidyr)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(dplyr)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(raster)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(terra)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(igraph)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ggplot2)
+</span></span></code></pre></div><h2 id="área-do-projeto">Área do projeto</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>prj &lt;-
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">st_read</span>(<span style="color:#ed9d13">&#34;/home/vinicio/Documentos/PCF-508/PESQUISA OPERACIONAL PCF-508 VINICIO LIMA/P_Mediana/Dados/Projeto.ferradura.shp&#34;</span>)
+</span></span><span style="display:flex;"><span>prj$Sitio &lt;- <span style="color:#447fcf">paste0</span>(<span style="color:#ed9d13">&#39;S&#39;</span>, prj$Sitio)
+</span></span><span style="display:flex;"><span>prj &lt;- prj %&gt;% <span style="color:#447fcf">filter</span>(idade &gt; <span style="color:#3677a9">3</span>)
+</span></span></code></pre></div><h2 id="idade-e-sítio">Idade e sítio</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>tabela_1 = <span style="color:#447fcf">data.frame</span>(
+</span></span><span style="display:flex;"><span>  Idade = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">4</span>, <span style="color:#3677a9">5</span>, <span style="color:#3677a9">6</span>, <span style="color:#3677a9">7</span>, <span style="color:#3677a9">8</span>, <span style="color:#3677a9">9</span>, <span style="color:#3677a9">10</span>),
+</span></span><span style="display:flex;"><span>  S1 = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">250</span>, <span style="color:#3677a9">300</span>, <span style="color:#3677a9">348</span>, <span style="color:#3677a9">394</span>, <span style="color:#3677a9">439</span>, <span style="color:#3677a9">483</span>, <span style="color:#3677a9">526</span>),
+</span></span><span style="display:flex;"><span>  S2 = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">200</span>, <span style="color:#3677a9">240</span>, <span style="color:#3677a9">278</span>, <span style="color:#3677a9">316</span>, <span style="color:#3677a9">352</span>, <span style="color:#3677a9">387</span>, <span style="color:#3677a9">421</span>),
+</span></span><span style="display:flex;"><span>  S3 = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">180</span>, <span style="color:#3677a9">216</span>, <span style="color:#3677a9">251</span>, <span style="color:#3677a9">284</span>, <span style="color:#3677a9">316</span>, <span style="color:#3677a9">348</span>, <span style="color:#3677a9">379</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tabela_1 = tabela_1 %&gt;% <span style="color:#447fcf">pivot_longer</span>(
+</span></span><span style="display:flex;"><span>  cols = <span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#39;S1&#39;</span>, <span style="color:#ed9d13">&#39;S2&#39;</span>, <span style="color:#ed9d13">&#39;S3&#39;</span>),
+</span></span><span style="display:flex;"><span>  names_to = <span style="color:#ed9d13">&#39;Sitio&#39;</span>,
+</span></span><span style="display:flex;"><span>  values_to = <span style="color:#ed9d13">&#34;Volume&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><h2 id="quantidade-de-pilhas-por-talhão">Quantidade de pilhas por talhão</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>prj_c &lt;- <span style="color:#447fcf">left_join</span>(prj, tabela_1, by = <span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;Sitio&#34;</span> = <span style="color:#ed9d13">&#34;Sitio&#34;</span>, <span style="color:#ed9d13">&#34;idade&#34;</span> = <span style="color:#ed9d13">&#34;Idade&#34;</span>)) %&gt;%
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">mutate</span>(n_pilhas = <span style="color:#447fcf">round</span>((Volume * area / <span style="color:#3677a9">200</span>) + <span style="color:#3677a9">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prj_c[1:<span style="color:#3677a9">4</span>,] <span style="color:#999;font-style:italic"># prj_c = projeto colheita </span>
+</span></span></code></pre></div><pre tabindex="0"><code>## Simple feature collection with 4 features and 7 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 503495 ymin: 7651331 xmax: 509493.7 ymax: 7653584
+## Projected CRS: SAD69 / UTM zone 23S
+##   Id area idade Talhao Sitio Volume                       geometry n_pilhas
+## 1  0   19     5      5    S3    216 POLYGON ((503841.5 7652307,...       22
+## 2  0   39     6      7    S3    251 POLYGON ((503929.5 7652152,...       50
+## 3  0   36     6     10    S3    251 POLYGON ((508861 7652259, 5...       46
+## 4  0   27     7     11    S1    394 POLYGON ((503919.5 7653290,...       54
+</code></pre><h2 id="selecionar-um-talhão">Selecionar um talhão</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># prj_t = prj_c %&gt;% sample_n(1)</span>
+</span></span><span style="display:flex;"><span>prj_t = prj_c %&gt;% <span style="color:#447fcf">filter</span>(Talhao == <span style="color:#3677a9">67</span>) <span style="color:#999;font-style:italic"># prj_t = talhao  selecionado</span>
+</span></span></code></pre></div><h2 id="definindo-a-área-que-uma-pilha-vai-ocupar-no-talhão---25m-x-25m">Definindo a área que uma pilha vai ocupar no talhão - 25m x 25m</h2>
+<h3 id="alocando-as-pilhas-de-madeira-na-borda-do-talhão">Alocando as pilhas de madeira na borda do talhão</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>r &lt;- <span style="color:#447fcf">rast</span>(<span style="color:#447fcf">ext</span>(prj_t), res = <span style="color:#3677a9">10</span>) 
+</span></span><span style="display:flex;"><span>rast &lt;- <span style="color:#447fcf">rasterize</span>(<span style="color:#447fcf">vect</span>(prj_t), r, values=<span style="color:#3677a9">1</span>, background=<span style="color:#3677a9">0</span>)
+</span></span><span style="display:flex;"><span>r2 = <span style="color:#447fcf">raster</span>(rast)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">crs</span>(r2) &lt;- <span style="color:#ed9d13">&#34;+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs&#34;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>perimetro &lt;- prj_t %&gt;% <span style="color:#447fcf">st_cast</span>(to = <span style="color:#ed9d13">&#34;LINESTRING&#34;</span>)
+</span></span><span style="display:flex;"><span>r3 &lt;- <span style="color:#447fcf">rast</span>(<span style="color:#447fcf">ext</span>(prj_t),
+</span></span><span style="display:flex;"><span>           nrow = <span style="color:#3677a9">23</span>,
+</span></span><span style="display:flex;"><span>           ncol = <span style="color:#3677a9">39</span>,
+</span></span><span style="display:flex;"><span>           res = <span style="color:#3677a9">25</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>per &lt;- <span style="color:#447fcf">raster</span>(<span style="color:#447fcf">rasterize</span>(
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">vect</span>(perimetro),
+</span></span><span style="display:flex;"><span>  r3,
+</span></span><span style="display:flex;"><span>  values = <span style="color:#3677a9">1</span>,
+</span></span><span style="display:flex;"><span>  background = <span style="color:#3677a9">0</span>,
+</span></span><span style="display:flex;"><span>  touches = <span style="color:#6ab825;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tbl_per = <span style="color:#447fcf">rasterToPolygons</span>(
+</span></span><span style="display:flex;"><span>  per,
+</span></span><span style="display:flex;"><span>  fun = <span style="color:#6ab825;font-weight:bold">NULL</span>,
+</span></span><span style="display:flex;"><span>  n = <span style="color:#3677a9">4</span>,
+</span></span><span style="display:flex;"><span>  na.rm = <span style="color:#6ab825;font-weight:bold">TRUE</span>,
+</span></span><span style="display:flex;"><span>  digits = <span style="color:#3677a9">12</span>,
+</span></span><span style="display:flex;"><span>  dissolve = <span style="color:#6ab825;font-weight:bold">FALSE</span>
+</span></span><span style="display:flex;"><span>) %&gt;% <span style="color:#447fcf">st_as_sf</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># filtra somente bordadura</span>
+</span></span><span style="display:flex;"><span>tbl_1 = tbl_per %&gt;% <span style="color:#447fcf">filter</span>(layer == <span style="color:#3677a9">1</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">st_crs</span>(tbl_1) &lt;- <span style="color:#ed9d13">&#34;+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs&#34;</span> 
+</span></span></code></pre></div><h3 id="garantindo-a-distância-de-25m-entre-pilhas">Garantindo a distância de 25m entre pilhas.</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>my_graph &lt;- <span style="color:#447fcf">graph_from_adj_list</span>(<span style="color:#447fcf">st_touches</span>(tbl_1)) <span style="color:#999;font-style:italic"># input perimetro grid 25x25</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>id_to_be_ignored &lt;- <span style="color:#447fcf">ego</span>(my_graph, order = <span style="color:#3677a9">1</span>, nodes = <span style="color:#3677a9">1</span>)[[1]]
+</span></span><span style="display:flex;"><span>all_second_order_neighbours &lt;- <span style="color:#447fcf">ego</span>(my_graph, order = <span style="color:#3677a9">2</span>, nodes = <span style="color:#3677a9">1</span>)[[1]]
+</span></span><span style="display:flex;"><span>final_sample &lt;- <span style="color:#447fcf">difference</span>(all_second_order_neighbours, id_to_be_ignored)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>i &lt;- <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">while </span>(<span style="color:#6ab825;font-weight:bold">TRUE</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">if </span>(i &gt; <span style="color:#447fcf">length</span>(final_sample)) break
+</span></span><span style="display:flex;"><span>  id &lt;- final_sample[[i]]
+</span></span><span style="display:flex;"><span>  ego1_id &lt;- <span style="color:#447fcf">ego</span>(my_graph, order = <span style="color:#3677a9">1</span>, nodes = id)[[1]]
+</span></span><span style="display:flex;"><span>  id_to_be_ignored &lt;- <span style="color:#447fcf">union</span>(id_to_be_ignored, <span style="color:#447fcf">difference</span>(ego1_id, <span style="color:#447fcf">V</span>(my_graph)[id]))
+</span></span><span style="display:flex;"><span>  ego2_id &lt;- <span style="color:#447fcf">difference</span>(<span style="color:#447fcf">ego</span>(my_graph, order = <span style="color:#3677a9">2</span>, nodes = id)[[1]],  ego1_id )
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  final_sample &lt;- <span style="color:#447fcf">difference</span>(<span style="color:#447fcf">union</span>(final_sample, ego2_id), id_to_be_ignored)
+</span></span><span style="display:flex;"><span>  i &lt;- i + <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pilhas = tbl_1<span style="color:#447fcf">[c</span>(<span style="color:#3677a9">1</span>, <span style="color:#447fcf">as.integer</span>(final_sample)), ]
+</span></span></code></pre></div><h2 id="parcelas-talhão---grid-10m-x10m">Parcelas talhão - Grid 10m x10m</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>r.grid &lt;- <span style="color:#447fcf">rast</span>(<span style="color:#447fcf">ext</span>(prj_t), res = <span style="color:#3677a9">10</span>) 
+</span></span><span style="display:flex;"><span>tal &lt;- <span style="color:#447fcf">raster</span>(<span style="color:#447fcf">rasterize</span>(<span style="color:#447fcf">vect</span>(prj_t), r.grid, values=<span style="color:#3677a9">1</span>, background=<span style="color:#3677a9">0</span>, touches = <span style="color:#6ab825;font-weight:bold">FALSE</span>))
+</span></span><span style="display:flex;"><span>tal_mask = <span style="color:#447fcf">mask</span>(tal, prj_t)
+</span></span><span style="display:flex;"><span>tal_mask[!<span style="color:#447fcf">is.na</span>(tal_mask)][] &lt;- <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x = <span style="color:#447fcf">rasterToPolygons</span>(
+</span></span><span style="display:flex;"><span>  tal_mask, fun = <span style="color:#6ab825;font-weight:bold">NULL</span>, n = <span style="color:#3677a9">4</span>,  na.rm = <span style="color:#6ab825;font-weight:bold">TRUE</span>,  digits = <span style="color:#3677a9">12</span>,  dissolve = <span style="color:#6ab825;font-weight:bold">FALSE</span>
+</span></span><span style="display:flex;"><span>)  %&gt;% <span style="color:#447fcf">st_as_sf</span>()
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">st_crs</span>(x) &lt;- <span style="color:#ed9d13">&#34;+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs&#34;</span>
+</span></span></code></pre></div><h2 id="distribuição-das-pilhas-no-talhão-selecionado">Distribuição das pilhas no talhão selecionado</h2>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>pilhas_point = <span style="color:#447fcf">st_centroid</span>(pilhas)
+</span></span><span style="display:flex;"><span>x_point = <span style="color:#447fcf">st_centroid</span>(x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">plot</span>(<span style="color:#447fcf">st_geometry</span>(<span style="color:#447fcf">st_centroid</span>(x_point)),
+</span></span><span style="display:flex;"><span>     pch = <span style="color:#3677a9">3</span>,  col = <span style="color:#ed9d13">&#39;black&#39;</span>, cex = <span style="color:#3677a9">2</span>. ,  axes = <span style="color:#6ab825;font-weight:bold">TRUE</span>,
+</span></span><span style="display:flex;"><span>     main = <span style="color:#ed9d13">&#34;Distribuição das pilhas no talhão&#34;</span>, 
+</span></span><span style="display:flex;"><span>     sub = <span style="color:#ed9d13">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">plot</span>(<span style="color:#447fcf">st_geometry</span>(pilhas_point),pch = <span style="color:#3677a9">24</span>,  cex = <span style="color:#3677a9">1.5</span>,  col = <span style="color:#ed9d13">&#34;blue&#34;</span>,
+</span></span><span style="display:flex;"><span>     bg = <span style="color:#ed9d13">&#34;red&#34;</span>,  lwd = <span style="color:#3677a9">1</span> ,
+</span></span><span style="display:flex;"><span>     add = <span style="color:#6ab825;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/otimiza%C3%A7%C3%A3o-do-custo-de-extra%C3%A7%C3%A3o-por-arraste/index_files/figure-html/distribui_pilhas-1.png" width="90%" />
+
+    </div>
+
+    
+<ul class="list-none pl-0 font-sm align-left">
+
+<hr>
+<li class="list-none">
+    Categories:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/categories/r">
+    <span class="tag-item dark:bg-zinc-900 dark:hover:bg-zinc-700
+                 hover:bg-zinc-200 bg-zinc-100
+                 dark:border-zinc-600 py-0.5
+                 px-1 rounded-t border-b-2 border-zinc-300
+                 hover:border-zinc-500">
+    R
+    </span>
+</a>
+</li >
+
+
+<li class="list-none">
+    Tags:
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/linear-programming">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            linear-programming
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/modeling">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            modeling
+        </span>
+    </a>
+    
+    <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
+       href="/viniciovcl/tags/r-markdown">
+        <span class="flex flex-row justify-start items-center
+                     dark:bg-zinc-900 dark:hover:bg-zinc-700
+                     hover:bg-zinc-300 bg-zinc-200
+                     dark:border-zinc-600 py-0.5
+                     px-1 rounded-t border-b-2 border-zinc-300
+                     hover:border-zinc-500">
+            
+            <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
+                 alt="Logo of a tag: indicates that a tag item follows.">
+            r-markdown
+        </span>
+    </a>
+    
+</li>
+
+</ul>
+
+
+    
+
+    
+    <div class="text-neutral-500 mb-4">
+        Last modified <span itemprop="dateModified"
+                            datetime="2024-11-12T00:00:00Z"
+                            content="2024-11-12T00:00:00Z">
+        2024.11.12
+        </span>
+    </div>
+    
+</article>
+
+    </main>
+    <footer class="footer container h-10 text-center mt-1">
+<hr class="my-4">
+  <ul class="pl-0 mt-1">
+    
+    <li class="ml-2 first:before:content-none before:content-['•']
+               inline-block list-none">
+      <a class="ml-2 text-neutral-800
+                dark:text-neutral-400 border-none"
+          href="https://github.com/hugcis/hugo-astatine-theme">Code</a>
+    </li>
+    <li class="ml-2 first:before:content-none before:content-['•']
+                text-neutral-800 dark:text-neutral-400 inline-block list-none">
+      <span class="ml-2">© viniciovcl 2024</span>
+    </li>
+  </ul>
+</footer>
+
+
+
+  </body>
+</html>

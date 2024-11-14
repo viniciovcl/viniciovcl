@@ -1,0 +1,247 @@
+---
+title: "Otimização do Custo de Extração por Arraste"
+author: "Vinício C. Lima"
+date: 2024-11-12
+categories: ["R"]
+tags: ["linear-programming", "modeling", "r-markdown"]
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3  # Ajuste o nível conforme a profundidade desejada
+---
+  
+  # 1)  Problema proposto
+  
+  A área a ser trabalhada pela equipe de planejamento florestal encontra-se localizada no projeto Ferradura, sendo selecionado apenas talhões
+com idade superiora a 5 anos. O mapa na Figura 1 é uma representação da área 
+em análise, que compreende um total de 90 talhões e 4.561 ha com plantio de
+Eucaliptus spp.
+
+
+
+
+```{r fig1, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("./images/img_prj_ferradura.png", error = FALSE)
+```
+
+
+O objetivo é definir a localização e a quantidade de pátios de estocagem
+necessários para a colheita de um talhão do projeto, tendo em
+vista o menor custo da operação de extração por arraste.
+
+
+
+##  Especificações: 
+
+a) Capacidade de armazenamento de madeira por pilha: 200 m³;
+
+b) Distância mínima entre pilhas: 25 m; 
+
+c) considere que não há restrições à instalação das pilhas de estocagem de
+madeira nas bordas do talhão avaliado, e 
+
+d) o número de pilhas de estocagem será definido pela razão entre o volume
+total de madeira do talhão e a capacidade de armazenamento de madeira na
+pilha, cujo resultado será acrescido de mais uma pilha. 
+
+
+
+
+# 2)  Preparando os dados 
+
+
+```{r bibliotecas, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+library(sf)
+library(rgdal)
+library(spatialEco)
+# library(rgeos)
+library(tidyr)
+library(dplyr)
+library(raster)
+library(terra)
+library(igraph)
+library(ggplot2)
+```
+
+##  Área do projeto
+
+
+```{r area_projeto, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, results= FALSE}
+
+prj <-
+  st_read("/home/vinicio/Documentos/PCF-508/PESQUISA OPERACIONAL PCF-508 VINICIO LIMA/P_Mediana/Dados/Projeto.ferradura.shp")
+prj$Sitio <- paste0('S', prj$Sitio)
+prj <- prj %>% filter(idade > 3)
+
+
+```
+
+
+
+##  Idade e sítio
+
+```{r idade_sitio, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+
+tabela_1 = data.frame(
+  Idade = c(4, 5, 6, 7, 8, 9, 10),
+  S1 = c(250, 300, 348, 394, 439, 483, 526),
+  S2 = c(200, 240, 278, 316, 352, 387, 421),
+  S3 = c(180, 216, 251, 284, 316, 348, 379)
+)
+
+tabela_1 = tabela_1 %>% pivot_longer(
+  cols = c('S1', 'S2', 'S3'),
+  names_to = 'Sitio',
+  values_to = "Volume"
+)
+
+
+
+```
+
+
+
+##  Quantidade de pilhas por talhão
+
+
+```{r pilhas_talhao, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+
+prj_c <- left_join(prj, tabela_1, by = c("Sitio" = "Sitio", "idade" = "Idade")) %>%
+  mutate(n_pilhas = round((Volume * area / 200) + 1))
+
+prj_c[1:4,] # prj_c = projeto colheita 
+
+```
+
+
+
+
+## Selecionar um talhão
+
+
+
+```{r seleciona_talhao, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+
+# prj_t = prj_c %>% sample_n(1)
+prj_t = prj_c %>% filter(Talhao == 67) # prj_t = talhao  selecionado
+
+```
+
+
+
+## Definindo a área que uma pilha vai ocupar no talhão - 25m x 25m
+
+### Alocando as pilhas de madeira na borda do talhão
+
+
+```{r alocar_pilhas, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+
+r <- rast(ext(prj_t), res = 10) 
+rast <- rasterize(vect(prj_t), r, values=1, background=0)
+r2 = raster(rast)
+crs(r2) <- "+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs" 
+
+perimetro <- prj_t %>% st_cast(to = "LINESTRING")
+r3 <- rast(ext(prj_t),
+           nrow = 23,
+           ncol = 39,
+           res = 25)
+
+
+per <- raster(rasterize(
+  vect(perimetro),
+  r3,
+  values = 1,
+  background = 0,
+  touches = TRUE
+))
+
+
+tbl_per = rasterToPolygons(
+  per,
+  fun = NULL,
+  n = 4,
+  na.rm = TRUE,
+  digits = 12,
+  dissolve = FALSE
+) %>% st_as_sf()
+
+# filtra somente bordadura
+tbl_1 = tbl_per %>% filter(layer == 1) 
+st_crs(tbl_1) <- "+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs" 
+
+
+```
+
+
+
+### Garantindo a distância de 25m entre pilhas. 
+
+
+
+```{r distancia_pilhas, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+
+my_graph <- graph_from_adj_list(st_touches(tbl_1)) # input perimetro grid 25x25
+
+id_to_be_ignored <- ego(my_graph, order = 1, nodes = 1)[[1]]
+all_second_order_neighbours <- ego(my_graph, order = 2, nodes = 1)[[1]]
+final_sample <- difference(all_second_order_neighbours, id_to_be_ignored)
+
+i <- 1
+while (TRUE) {
+  if (i > length(final_sample)) break
+  id <- final_sample[[i]]
+  ego1_id <- ego(my_graph, order = 1, nodes = id)[[1]]
+  id_to_be_ignored <- union(id_to_be_ignored, difference(ego1_id, V(my_graph)[id]))
+  ego2_id <- difference(ego(my_graph, order = 2, nodes = id)[[1]],  ego1_id )
+  
+  final_sample <- difference(union(final_sample, ego2_id), id_to_be_ignored)
+  i <- i + 1
+}
+
+pilhas = tbl_1[c(1, as.integer(final_sample)), ]
+
+```
+
+
+
+
+## Parcelas talhão - Grid 10m x10m
+
+
+
+```{r grid_talhao, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+
+r.grid <- rast(ext(prj_t), res = 10) 
+tal <- raster(rasterize(vect(prj_t), r.grid, values=1, background=0, touches = FALSE))
+tal_mask = mask(tal, prj_t)
+tal_mask[!is.na(tal_mask)][] <- 0
+
+x = rasterToPolygons(
+  tal_mask, fun = NULL, n = 4,  na.rm = TRUE,  digits = 12,  dissolve = FALSE
+)  %>% st_as_sf()
+st_crs(x) <- "+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs"
+
+```
+
+
+
+## Distribuição das pilhas no talhão selecionado
+
+```{r distribui_pilhas, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, out.width = '90%', warning=FALSE}
+
+pilhas_point = st_centroid(pilhas)
+x_point = st_centroid(x)
+
+plot(st_geometry(st_centroid(x_point)),
+     pch = 3,  col = 'black', cex = 2. ,  axes = TRUE,
+     main = "Distribuição das pilhas no talhão", 
+     sub = ""
+)
+
+plot(st_geometry(pilhas_point),pch = 24,  cex = 1.5,  col = "blue",
+     bg = "red",  lwd = 1 ,
+     add = TRUE
+)
+
+```
