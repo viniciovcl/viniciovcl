@@ -8,20 +8,20 @@
     <language>en-us</language>
     <lastBuildDate>Tue, 12 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://viniciovcl.github.io/viniciovcl/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>linear-programming</title>
-      <link>https://viniciovcl.github.io/viniciovcl/tags/linear-programming/</link>
+      <title>geoprocessing</title>
+      <link>https://viniciovcl.github.io/viniciovcl/tags/geoprocessing/</link>
       <pubDate>Tue, 12 Nov 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://viniciovcl.github.io/viniciovcl/tags/linear-programming/</guid>
+      <guid>https://viniciovcl.github.io/viniciovcl/tags/geoprocessing/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>modeling</title>
-      <link>https://viniciovcl.github.io/viniciovcl/tags/modeling/</link>
+      <title>ggplot</title>
+      <link>https://viniciovcl.github.io/viniciovcl/tags/ggplot/</link>
       <pubDate>Tue, 12 Nov 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://viniciovcl.github.io/viniciovcl/tags/modeling/</guid>
+      <guid>https://viniciovcl.github.io/viniciovcl/tags/ggplot/</guid>
       <description></description>
     </item>
     
@@ -35,11 +35,11 @@
     </item>
     
     <item>
-      <title>ggplot</title>
-      <link>https://viniciovcl.github.io/viniciovcl/tags/ggplot/</link>
+      <title>linear-programming</title>
+      <link>https://viniciovcl.github.io/viniciovcl/tags/linear-programming/</link>
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://viniciovcl.github.io/viniciovcl/tags/ggplot/</guid>
+      <guid>https://viniciovcl.github.io/viniciovcl/tags/linear-programming/</guid>
       <description></description>
     </item>
     
@@ -49,6 +49,15 @@
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
       
       <guid>https://viniciovcl.github.io/viniciovcl/tags/lpsolve/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>modeling</title>
+      <link>https://viniciovcl.github.io/viniciovcl/tags/modeling/</link>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://viniciovcl.github.io/viniciovcl/tags/modeling/</guid>
       <description></description>
     </item>
     
@@ -85,15 +94,6 @@
       <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
       
       <guid>https://viniciovcl.github.io/viniciovcl/tags/image-processing/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>time-series</title>
-      <link>https://viniciovcl.github.io/viniciovcl/tags/time-series/</link>
-      <pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://viniciovcl.github.io/viniciovcl/tags/time-series/</guid>
       <description></description>
     </item>
     
