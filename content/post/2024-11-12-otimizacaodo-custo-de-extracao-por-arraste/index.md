@@ -3,7 +3,7 @@ title: "Otimização do custo de extração por arraste"
 author: "@viniciovcl"
 date: 2024-11-12
 categories: ["R"]
-tags: ["linear-programming", "modeling", "r-markdown"]
+tags: ["geoprocessing", "ggplot", "r-markdown"]
 output:
   blogdown::html_page:
     toc: true
@@ -19,11 +19,10 @@ output:
   
  O método da p-mediana é amplamente utilizado em problemas de localização, como a seleção de pátios de estocagem na colheita florestal, em que é necessário escolher p locais que minimizem a distância total (ou custo) entre os pontos de demanda (como áreas de corte) e os pontos de suprimento (como pátios).
  
- Esse post é um caderno cujo o intuito foi de desenvolver e explorar habilidades envolvendo a utilização de ferramentas de Geoprocessamento e de Programação Linear aplicado ao problema de otimização da localização de pilhas na colheita florestal. O custo foi calculado a partir da distância euclidiana com o trânsito das máquinas sobre os tocos na linha de plantio não sendo incluido como restrição. 
+O post a seguir é um caderno cujo o intuito foi de desenvolver e explorar novas habilidades  envolvendo a utilização de ferramentas de Geoprocessamento e de Programação Linear Inteira aplicado ao problema de otimização da localização de pilhas na colheita florestal. O custo foi calculado a partir da distância euclidiana, com o trânsito das máquinas sobre os tocos na linha de plantio não sendo incluído como restrição. 
  
-Esse esforço me permitiu exercitar o aprendizado em modelagem, onde descobri ferramentas de modelagem e solvers livres e de código aberto, que permitem resolver o problema sem nenhum custo. As bibliotecas ROI e OMPR possibilitam padronizar a contrução dos modelos pois são compatíveis com diferentes solvers, incluindo softwares proprietários (excelente!). Não foi preciso aprender como o mesmo modelo deve ser passado para cada solvers à depender do solver que está utilizando. Apliquei o mesmo modelo nos solvers SYMPONHY e glpk e tudo funcionou bem.   
+Esse esforço me permitiu exercitar o aprendizado em modelagem, onde descobri ferramentas de modelagem e solvers de código aberto e livres, que permitem resolver problemas de PL sem nenhum custo. As bibliotecas ROI e OMPR possibilitam padronizar o código dos modelos já que são compatíveis com diferentes solvers, incluindo softwares proprietários. Isso foi ótimo pois não precisei reescrever o modelo para um novo código à depender do solver que estava utilizando. Apliquei o mesmo modelo nos solvers symphony e glpk e tudo funcionou bem.   
   
-
   
 ## 1)  Problema proposto
   
@@ -269,10 +268,9 @@ plot(st_geometry(pilhas_point),pch = 24,  cex = 1.5,  col = "blue",
 
 
 
-## 3) Modelo conceitual (reduzindo o problema)
+## 3) Reduzindo o problema 
 
-Exemplo hipotético a parir de um subset dos dados originais do problema com
-a finalidade de testar e validar os modelos em menor escala.
+Exemplo simplificado para abstração do problema a partir de um subset dos dados originais. O objetivo é testar e validar a funcionalidade do modelo em uma escala menor.
 
 
 ### Amostragem aleatória
@@ -939,7 +937,9 @@ Após validar o comportamento dos modelos podemos aplicar o modelo da p-mediana 
 minimizar o custo da extração por arraste no talhão 67 do projeto Ferradura.
 
 O talhão foi dividido em parcelas (grids) de 10m x 10m e um total de 55 pilhas 
-distribuídas nas bordas do talhão, com a distância mínima de 25m entre as pilhas. (Item 2 - Preparando os dados)
+distribuídas nas bordas do talhão, com a distância mínima de 25m entre as pilhas (item 2 - Preparando os dados). 
+
+A quantidade de pilhas estipulada pela área de planejamento foi de 46 + 1 pilha. 
 
 
 ```r
@@ -997,10 +997,10 @@ matchs <- get_solution(m_pvalue,ship[i, j]) %>%
   filter(value > 0) %>% as.data.frame()
 ```
 
-Infelizmente o tempo de processamento foi muito longo! Maior que 5 horas..... :/
+Infelizmente o tempo de processamento foi muito longo..... :/
 
 
-A saída foi reduzir a quantidade de parcelas e o número de pilhas para obter a solução em 
+A saída encontrada foi reduzir a quantidade de parcelas e o número de pilhas para obter uma solução em 
 um tempo razoável. 
 
 
@@ -1047,9 +1047,8 @@ plot(st_geometry(pil), pch = 24, cex=3, col="blue", bg="red", lwd=2, add = TRUE 
 
 
 
-Dado a nova situação posso considerar a capacidade de 750 m³ por pilha. E que de acordo
-com o que foi estipulado pela equipe de planejamento florestal serão ativadas apenas 15 das 
-23 pilhas possíveis (Valor de p). 
+Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decisão tomada
+pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis (valor de P = 15). 
 
 
 
@@ -1203,6 +1202,45 @@ ggsave(
 
 
 
+
+```r
+# Starting Preprocessing...
+# Preprocessing finished...
+# with no modifications...
+# Problem has
+# 1313 constraints
+# 1212 variables
+# 4812 nonzero coefficients
+
+# Total Presolve Time: 0.008235...
+# 
+# Solving...
+# 
+# granularity set at 1.000000
+# solving root lp relaxation
+# The LP value is: 14659.008 [0,325]
+# 
+# 
+# ****** Found Better Feasible Solution !
+#   ****** Cost: 15677.000000
+# 
+# warning: poor lpetol used while branching
+# warning: poor lpetol used while branching
+# 
+# ****** Found Better Feasible Solution !
+#   ****** Cost: 14950.000000
+
+
+# **************************************************
+# 
+#    Optimal Solution Found
+#   Now displaying stats and best solution found...
+# **************************************************
+```
+
+
+
+
 ```r
 info = sessionInfo()
 info
@@ -1260,7 +1298,9 @@ info
 
 
 
+
 ```r
-# Renderizar documento
-rmarkdown::render('pmediana_vinicio.R')
+rmarkdown::render('pmediana_vinicio.R',
+                  output_format = c("html_document", "pdf_document"))
 ```
+
