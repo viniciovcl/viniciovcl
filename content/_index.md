@@ -30,9 +30,9 @@ address:
 ---
 
 
-Sou Geógrafo, Analista de Geoprocessamento. Trabalho aplicando ferramentas de geoprocessamento e sensoriamento remoto para auxiliar na implantação, cadastro, mensuração, monitoramento e manutenção de plantios florestais.
+Sou Geógrafo, Analista de Geoprocessamento. Trabalho aplicando ferramentas de Geoprocessamento e Sensoriamento Remoto para auxiliar na implantação, cadastro, mensuração, monitoramento e manutenção de plantios florestais.
 
-Essa página é dedicada a compartilhar ferramentas de software livre e de código aberto.
+Essa página é dedicada a compartilhar experiências e análises usando ferramentas de software livre e de código aberto.
 
 
 
