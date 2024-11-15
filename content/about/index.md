@@ -26,8 +26,7 @@ StackExchange: [viniciovcl](https://gis.stackexchange.com/users/129911/viniciovc
 Linkedin: [Vinicio Lima](https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3Bl1%2FEX52aQzu496LdsjovLA%3D%3D)
 
 
-
-Uma versão PDF do meu currículo está disponivel [aqui](https://github.com/viniciovcl/Vinicio-Vitae/blob/master/Vitae%20Vinicio/Vitae-Vinicio.pdf) para download. 
+cv: [Vitae-Vinicio](https://github.com/viniciovcl/Vinicio-Vitae/blob/master/Vitae%20Vinicio/Vitae-Vinicio.pdf)
 
 
 
