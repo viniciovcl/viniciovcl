@@ -1,6 +1,6 @@
 ---
 title: "Otimização do custo de extração por arraste"
-author: "@viniciovcl"
+author: "Vinicio C. Lima"
 date: 2024-11-12
 categories: ["R"]
 tags: ["geoprocessing", "ggplot", "r-markdown"]
@@ -74,7 +74,8 @@ library(igraph)
 library(ggplot2)
 ```
 
-###  Área do projeto
+
+Área do projeto.
 
 
 
@@ -87,7 +88,7 @@ prj <- prj %>% filter(idade > 3)
 
 
 
-###  Idade e sítio
+Idade e sítio.
 
 
 ```r
@@ -107,7 +108,7 @@ tabela_1 = tabela_1 %>% pivot_longer(
 
 
 
-###  Quantidade de pilhas por talhão
+Quantidade de pilhas por talhão.
 
 
 
@@ -134,8 +135,7 @@ prj_c[1:4,] # prj_c = projeto colheita
 
 
 
-### Selecionar um talhão
-
+Selecionar um talhão.
 
 
 
@@ -151,10 +151,9 @@ prj_t %>% st_drop_geometry()
 ```
 
 
+#### Definindo a área que uma pilha vai ocupar no talhão  (25m x 25m).
 
-### Definindo a área que uma pilha vai ocupar no talhão - 25m x 25m
-
-#### Alocando as pilhas de madeira na borda do talhão
+Alocando as pilhas de madeira na borda do talhão.
 
 
 
@@ -196,7 +195,7 @@ st_crs(tbl_1) <- "+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs"
 
 
 
-#### Garantindo a distância de 25m entre pilhas. 
+Garantindo a distância de 25m entre pilhas. 
 
 
 
@@ -226,7 +225,7 @@ pilhas = tbl_1[c(1, as.integer(final_sample)), ]
 
 
 
-### Parcelas do talhão - Grid 10m x 10m
+Parcelas do talhão  (Grid 10m x 10m).
 
 
 
@@ -245,7 +244,8 @@ st_crs(x) <- "+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs"
 
 
 
-### Distribuição das pilhas no talhão selecionado
+Distribuição das pilhas no talhão selecionado.
+
 
 
 ```r
@@ -325,7 +325,7 @@ Distância euclidiana entre as parcelas (grids) e os pátios.
 #                          as(grids, "Spatial") , byid = TRUE) 
 
 cost = st_distance(pil, grids)
-cost[1:3,1:1 ] %>% t()
+cost[1:3,1:1 ] %>% t() # Exemplo da saída da matriz de custo 
 ```
 
 ```
@@ -848,7 +848,7 @@ m3 <- MIPModel() %>%
   solve_model(with_ROI(solver = "symphony", verbosity = 1))
 
 cat("Status:",solver_status(m3),"\n")
-cat("Objective:",objective_value(m3),"\n")
+cat("Objective:", objective_value(m3),"\n")
 
 matchs_m3 <- get_solution(m3,ship[i, j]) %>%
   filter(value > 0) %>% as.data.frame()
@@ -971,16 +971,18 @@ p = prj_t$n_pilhas + 1 # restrição (d) do problema
 ### Modelo 
 
 
-
 ```r
-m_pvalue <- MIPModel() %>%
+# Função
+
+pmediana <- function(){
+solucao <- MIPModel() %>%
   add_variable(ship[i, j],
                i = 1:num_depots,
                j = 1:num_cust,
-               type = "binary") %>% # ok
+               type = "binary") %>% 
   add_variable(y[i],  i = 1:num_depots, type = "binary") %>%
   add_constraint(sum_expr(demand[j] * ship[i, j],  j = 1:num_cust) <= capacity[i],
-                 i = 1:num_depots) %>% # ok
+                 i = 1:num_depots) %>%
   add_constraint(sum_expr(ship[i, j], i = 1:num_depots) == 1, j = 1:num_cust) %>%
   set_objective(
     sum_expr(cost[i, j] * ship[i, j], i = 1:num_depots, j = 1:num_cust) +
@@ -989,19 +991,35 @@ m_pvalue <- MIPModel() %>%
   ) %>%
   add_constraint(ship[i, j] <= y[i], i = 1:num_depots, j = 1:num_cust) %>%
   add_constraint(sum_expr(y[i],   i = 1:num_depots) <= p) %>%
-  solve_model(with_ROI(solver = "symphony", verbosity = 1))
+  solve_model(with_ROI(
+    solver = "symphony",
+    verbosity = 1,
+    first_feasible = TRUE
+  ))
 
-cat("Status:",solver_status(m_pvalue),"\n")
-cat("Objective:",objective_value(m_pvalue),"\n")
-matchs <- get_solution(m_pvalue,ship[i, j]) %>%
-  filter(value > 0) %>% as.data.frame()
+return(solucao)
+
+}
 ```
+
+
+
+```r
+# Aplica
+
+start.time <- Sys.time()
+m_pvalue <- pmediana()
+end.time <- Sys.time()
+time.taken <- end.time - start.time
+time.taken
+```
+
 
 Infelizmente o tempo de processamento foi muito longo..... :/
 
 
 A saída encontrada foi reduzir a quantidade de parcelas e o número de pilhas para obter uma solução em 
-um tempo razoável. 
+um tempo menor. 
 
 
 
@@ -1043,16 +1061,15 @@ plot(st_geometry(st_centroid(grids)), pch = 3, col = 'black', cex= 2, axes = TRU
 plot(st_geometry(pil), pch = 24, cex=3, col="blue", bg="red", lwd=2, add = TRUE )
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/reduz_res_probl_origin-1.png" width="672" />
-
 
 
 Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decisão tomada
 pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis (valor de P = 15). 
 
 
-
 ```r
+# Matiz de Custo
+
 # rggeos - Obsoleto
 # cost =  rgeos::gDistance(as(pil, "Spatial"), as(grids, "Spatial") , byid = TRUE) 
 # cost <- cost %>% t() %>% as.vector() %>% round()
@@ -1060,55 +1077,43 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
 cost = st_distance(pil, grids)
 cost <- cost %>% as.vector() %>% round()
 
+# Restrições
+
 num_depots = nrow(pil)
 num_cust = nrow(grids)
 custo.fixo = 10 # Custo para ativar um pátio
 volume.t = prj_t$area * prj_t$Volume 
 demanda <- volume.t/((prj_t$area)/(res(r.grid)[1]^2/10000)) # Demanda em m³ de uma parcela
-#capacidade <- 200 # Capacidade do pátio de estocagem
-capacidade <- 750 # subset # considera um total de 15 pilhas
+capacidade <- 750 #  considera um total de 15 pilhas
 
 cost <- matrix(cost, num_depots, num_cust )
 demand = rep(demanda, nrow(grids))
 fixedcost =  rep(custo.fixo, nrow(pil))
-# fixedcost = c( 50000, 10, 10, 10,3000)
 capacity = rep(capacidade, nrow(pil))
 #p = prj_t$n_pilhas
 p = 15 # Valor P
 
+# Solução
 start.time <- Sys.time()
-m_pvalue <- MIPModel() %>%
-  add_variable(ship[i, j],
-               i = 1:num_depots,
-               j = 1:num_cust,
-               type = "binary") %>% 
-  add_variable(y[i],  i = 1:num_depots, type = "binary") %>%
-  add_constraint(sum_expr(demand[j] * ship[i, j],  j = 1:num_cust) <= capacity[i],
-                 i = 1:num_depots) %>%
-  add_constraint(sum_expr(ship[i, j], i = 1:num_depots) == 1, j = 1:num_cust) %>%
-  set_objective(
-    sum_expr(cost[i, j] * ship[i, j], i = 1:num_depots, j = 1:num_cust) +
-      sum_over(fixedcost[i] * y[i], i = 1:num_depots),
-    "min"
-  ) %>%
-  add_constraint(ship[i, j] <= y[i], i = 1:num_depots, j = 1:num_cust) %>%
-  add_constraint(sum_expr(y[i],   i = 1:num_depots) <= p) %>%
-  solve_model(with_ROI(
-    solver = "symphony",
-    verbosity = 1,
-    first_feasible = TRUE
-  ))
+m_pvalue <- pmediana()
 end.time <- Sys.time()
 time.taken <- end.time - start.time
-time.taken
+
+# cat("Status:",solver_status(m_pvalue),"\n")
+# cat("Objective:",objective_value(m_pvalue),"\n")
+```
 
 
-cat("Status:",solver_status(m_pvalue),"\n")
-cat("Objective:",objective_value(m_pvalue),"\n")
+
+
+### Cria o mapa para a solução
+
+
+
+```r
 matchs <- get_solution(m_pvalue,ship[i, j]) %>%
   filter(value > 0) %>% as.data.frame()
 
-# matchs
 
 grids$id <- 1:nrow(grids)
 grids$id_grid <- grids$id
@@ -1159,6 +1164,7 @@ colnames(tal_df) <- c("value", "x", "y")
 ```
 
 
+### Plot
 
 
 
@@ -1167,23 +1173,33 @@ library(ggthemes)
 
 tal_67 = 
   ggplot() +  
-  geom_tile(data=tal_df, aes(x=x, y=y, fill=value), alpha=0.8) + 
+  geom_tile(data=tal_df, aes(x=x, y=y, fill= value), alpha=0.8) + 
   geom_sf() +
   geom_sf(data = plot_pilhas, color = "red", shape = 17, size= 5) + 
   ggrepel::geom_label_repel(data  = plot_pilhas, 
                aes(x=X, y=Y, label= paste0(
-               "Capacidade:", costs, "m³", "; Volume ocupado: ", total, " m³")),
-                            size = 2, nudge_y = 20)+
+               " Volume ocupado: ", total, " m³")),
+                            size = 2, nudge_y = 24)+
   coord_sf(xlim = c(st_bbox(plot_pilhas)[1] , st_bbox(plot_pilhas)[3]),
            ylim = c(st_bbox(plot_pilhas)[2], st_bbox(plot_pilhas)[4] ), expand = TRUE) + 
   scale_fill_gradientn(colours = c("white", "black"), values = c(0, 1)) + 
   theme(panel.grid = element_blank())+
   theme_bw()+
-  theme(legend.position="none")+
-  labs(title = "Talhão 67 - 196 parcelas e 23 pilhas", 
-       subtitle =  "P = 15  50x50 m", 
-       caption = "Tempo de processamento = 5.094781 secs
-                Solver = Symphony")
+  theme(legend.position="none",
+        axis.text.y = element_text(angle = 90, vjust = 0.5, hjust=1),
+         axis.text = element_text(size = 5.5),          
+        ) +
+  labs(title = "Mapa de localização das pilhas ", 
+       subtitle =  "p-mediana = 15", 
+       caption = "Mapa de localização da solução ótima encontrada para minimização do custo de extração por
+       arraste usando o modelo da p-mediana. Atribui cada parcela do talhão para a pilha de menor distância
+       a ser percorrida pela máquina, considerando p locais disponíveis para a instalação dos pátios.
+                   Solver: Symphony") + 
+   theme(
+    plot.title = element_text(size = 11, face = "bold"),       # Controle do título
+    plot.subtitle = element_text(size = 8, face = "italic"), # Controle do subtítulo
+    plot.caption = element_text(size = 5.5, face = "plain")    # Controle da fonte
+  )
 
 
 ggsave(
@@ -1193,50 +1209,125 @@ ggsave(
   height = 15,
   units = "cm", 
   device = "png"
-)
+  )
 ```
 
 
 
-<img src="./images/p_mediana_T67.png" width="110%" style="display: block; margin: auto;" />
+<img src="./images/p_mediana_T67_post2.png" width="110%" style="display: block; margin: auto;" />
 
 
 
 
 ```r
-# Starting Preprocessing...
-# Preprocessing finished...
-# with no modifications...
-# Problem has
-# 1313 constraints
-# 1212 variables
-# 4812 nonzero coefficients
+Starting Preprocessing...
+Preprocessing finished...
+ 	 with no modifications...
+Problem has 
+	 4728 constraints 
+	 4531 variables 
+	 18055 nonzero coefficients
 
-# Total Presolve Time: 0.008235...
-# 
-# Solving...
-# 
-# granularity set at 1.000000
-# solving root lp relaxation
-# The LP value is: 14659.008 [0,325]
-# 
-# 
-# ****** Found Better Feasible Solution !
-#   ****** Cost: 15677.000000
-# 
-# warning: poor lpetol used while branching
-# warning: poor lpetol used while branching
-# 
-# ****** Found Better Feasible Solution !
-#   ****** Cost: 14950.000000
+Total Presolve Time: 0.051709...
+
+Solving...
+
+granularity set at 1.000000
+solving root lp relaxation
+The LP value is: 23942.000 [0,377]
 
 
-# **************************************************
-# 
-#    Optimal Solution Found
-#   Now displaying stats and best solution found...
-# **************************************************
+****** Found Better Feasible Solution !
+****** Cost: 23942.000000
+
+
+****************************************************
+* Stopping After Finding First Feasible Solution   *
+* Now displaying stats and best solution found...  *
+****************************************************
+
+======================= CP Timing ===========================
+  Cut Pool                  0.000
+====================== LP/CG Timing =========================
+  LP Solution Time          0.019
+  LP Setup Time             0.001
+  Variable Fixing           0.000
+  Pricing                   0.000
+  Strong Branching          0.000
+  Separation                0.000
+  Primal Heuristics         0.000
+  Communication             0.000
+=================== Parallel Overhead ======================
+  Communication         0.000
+  Ramp Up Time (TM)     0.053
+  Ramp Down Time        0.000
+  Total User Time              0.019
+  Total Wallclock Time         0.074
+
+====================== Statistics =========================
+Number of created nodes :       1
+Number of analyzed nodes:       1
+Depth of tree:                  0
+Size of the tree:               1
+Number of solutions found:      1
+Number of solutions in pool:    1
+Number of Chains:               1
+Number of Diving Halts:         0
+Number of cuts in cut pool:     0
+Lower Bound in Root:            23942.000
+
+======================= LP Solver =========================
+Number of times LP solver called:                 1
+Number of calls from feasibility pump:            0
+Number of calls from strong branching:            0
+Number of solutions found by LP solve:            1
+Number of bounds changed by strong branching:     0
+Number of nodes pruned by strong branching:       0
+Number of bounds changed by branching presolver:  0
+Number of nodes pruned by branching presolver:    0
+
+==================== Primal Heuristics ====================
+                             Time      #Called   #Solutions
+Rounding I                   0.00                           
+Rounding II                  0.00                           
+Diving                       0.00 
+Feasibility Pump             0.00 
+Local Search                 0.01            1            0 
+Restricted Search            0.00 
+Rins Search                  0.00 
+Local Branching              0.00 
+
+=========================== Cuts ==========================
+Accepted:                         0
+Added to LPs:                     0
+Deleted from LPs:                 0
+Removed because of bad coeffs:    0
+Removed because of duplicacy:     0
+Insufficiently violated:          0
+In root:                          0
+
+Time in cut generation:              0.00
+Time in checking quality and adding: 0.00
+
+                   Time     #Called     In Root       Total
+Gomory             0.00 
+Knapsack           0.00 
+Clique             0.00 
+Probing            0.00 
+Flowcover          0.00 
+Twomir             0.00 
+Oddhole            0.00 
+Mir                0.00 
+Rounding           0.00 
+LandP-I            0.00 
+LandP-II           0.00 
+Redsplit           0.00 
+
+===========================================================
+Solution Found: Node 0, Level 0
+Solution Cost: 23942.0000000000
 ```
+
 
 
 

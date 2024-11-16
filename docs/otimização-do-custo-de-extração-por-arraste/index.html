@@ -130,7 +130,7 @@
             
             
                 
-                <a class="text-gray-600 dark:text-gray-400 text-right border-none p-author h-card" rel="author" href="https://viniciovcl.github.io/viniciovcl/" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">@viniciovcl</span></a>
+                <a class="text-gray-600 dark:text-gray-400 text-right border-none p-author h-card" rel="author" href="https://viniciovcl.github.io/viniciovcl/" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Vinicio C. Lima</span></a>
                 
             
         </div>
@@ -170,12 +170,12 @@ pilha, cujo resultado será acrescido de mais uma pilha.</p>
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(terra)
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(igraph)
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ggplot2)
-</span></span></code></pre></div><h3 id="área-do-projeto">Área do projeto</h3>
+</span></span></code></pre></div><p>Área do projeto.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>prj &lt;-
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">st_read</span>(<span style="color:#ed9d13">&#34;/home/vinicio/Documentos/PCF-508/PESQUISA OPERACIONAL PCF-508 VINICIO LIMA/P_Mediana/Dados/Projeto.ferradura.shp&#34;</span>)
 </span></span><span style="display:flex;"><span>prj$Sitio &lt;- <span style="color:#447fcf">paste0</span>(<span style="color:#ed9d13">&#39;S&#39;</span>, prj$Sitio)
 </span></span><span style="display:flex;"><span>prj &lt;- prj %&gt;% <span style="color:#447fcf">filter</span>(idade &gt; <span style="color:#3677a9">3</span>)
-</span></span></code></pre></div><h3 id="idade-e-sítio">Idade e sítio</h3>
+</span></span></code></pre></div><p>Idade e sítio.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>tabela_1 = <span style="color:#447fcf">data.frame</span>(
 </span></span><span style="display:flex;"><span>  Idade = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">4</span>, <span style="color:#3677a9">5</span>, <span style="color:#3677a9">6</span>, <span style="color:#3677a9">7</span>, <span style="color:#3677a9">8</span>, <span style="color:#3677a9">9</span>, <span style="color:#3677a9">10</span>),
 </span></span><span style="display:flex;"><span>  S1 = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">250</span>, <span style="color:#3677a9">300</span>, <span style="color:#3677a9">348</span>, <span style="color:#3677a9">394</span>, <span style="color:#3677a9">439</span>, <span style="color:#3677a9">483</span>, <span style="color:#3677a9">526</span>),
@@ -188,7 +188,7 @@ pilha, cujo resultado será acrescido de mais uma pilha.</p>
 </span></span><span style="display:flex;"><span>  names_to = <span style="color:#ed9d13">&#39;Sitio&#39;</span>,
 </span></span><span style="display:flex;"><span>  values_to = <span style="color:#ed9d13">&#34;Volume&#34;</span>
 </span></span><span style="display:flex;"><span>)
-</span></span></code></pre></div><h3 id="quantidade-de-pilhas-por-talhão">Quantidade de pilhas por talhão</h3>
+</span></span></code></pre></div><p>Quantidade de pilhas por talhão.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>prj_c &lt;- <span style="color:#447fcf">left_join</span>(prj, tabela_1, by = <span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;Sitio&#34;</span> = <span style="color:#ed9d13">&#34;Sitio&#34;</span>, <span style="color:#ed9d13">&#34;idade&#34;</span> = <span style="color:#ed9d13">&#34;Idade&#34;</span>)) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">mutate</span>(n_pilhas = <span style="color:#447fcf">round</span>((Volume * area / <span style="color:#3677a9">200</span>) + <span style="color:#3677a9">1</span>))
 </span></span><span style="display:flex;"><span>
@@ -203,14 +203,14 @@ pilha, cujo resultado será acrescido de mais uma pilha.</p>
 ## 2  0   39     6      7    S3    251 POLYGON ((503929.5 7652152,...       50
 ## 3  0   36     6     10    S3    251 POLYGON ((508861 7652259, 5...       46
 ## 4  0   27     7     11    S1    394 POLYGON ((503919.5 7653290,...       54
-</code></pre><h3 id="selecionar-um-talhão">Selecionar um talhão</h3>
+</code></pre><p>Selecionar um talhão.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># prj_t = prj_c %&gt;% sample_n(1)</span>
 </span></span><span style="display:flex;"><span>prj_t = prj_c %&gt;% <span style="color:#447fcf">filter</span>(Talhao == <span style="color:#3677a9">67</span>) <span style="color:#999;font-style:italic"># prj_t = talhao  selecionado</span>
 </span></span><span style="display:flex;"><span>prj_t %&gt;% <span style="color:#447fcf">st_drop_geometry</span>()
 </span></span></code></pre></div><pre tabindex="0"><code>##   Id area idade Talhao Sitio Volume n_pilhas
 ## 1  0   50     4     67    S3    180       46
-</code></pre><h3 id="definindo-a-área-que-uma-pilha-vai-ocupar-no-talhão---25m-x-25m">Definindo a área que uma pilha vai ocupar no talhão - 25m x 25m</h3>
-<h4 id="alocando-as-pilhas-de-madeira-na-borda-do-talhão">Alocando as pilhas de madeira na borda do talhão</h4>
+</code></pre><h4 id="definindo-a-área-que-uma-pilha-vai-ocupar-no-talhão--25m-x-25m">Definindo a área que uma pilha vai ocupar no talhão  (25m x 25m).</h4>
+<p>Alocando as pilhas de madeira na borda do talhão.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>r &lt;- <span style="color:#447fcf">rast</span>(<span style="color:#447fcf">ext</span>(prj_t), res = <span style="color:#3677a9">10</span>) 
 </span></span><span style="display:flex;"><span>rast &lt;- <span style="color:#447fcf">rasterize</span>(<span style="color:#447fcf">vect</span>(prj_t), r, values=<span style="color:#3677a9">1</span>, background=<span style="color:#3677a9">0</span>)
 </span></span><span style="display:flex;"><span>r2 = <span style="color:#447fcf">raster</span>(rast)
@@ -244,7 +244,7 @@ pilha, cujo resultado será acrescido de mais uma pilha.</p>
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># filtra somente bordadura</span>
 </span></span><span style="display:flex;"><span>tbl_1 = tbl_per %&gt;% <span style="color:#447fcf">filter</span>(layer == <span style="color:#3677a9">1</span>) 
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">st_crs</span>(tbl_1) &lt;- <span style="color:#ed9d13">&#34;+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs&#34;</span> 
-</span></span></code></pre></div><h4 id="garantindo-a-distância-de-25m-entre-pilhas">Garantindo a distância de 25m entre pilhas.</h4>
+</span></span></code></pre></div><p>Garantindo a distância de 25m entre pilhas.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>my_graph &lt;- <span style="color:#447fcf">graph_from_adj_list</span>(<span style="color:#447fcf">st_touches</span>(tbl_1)) <span style="color:#999;font-style:italic"># input perimetro grid 25x25</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>id_to_be_ignored &lt;- <span style="color:#447fcf">ego</span>(my_graph, order = <span style="color:#3677a9">1</span>, nodes = <span style="color:#3677a9">1</span>)[[1]]
@@ -264,7 +264,7 @@ pilha, cujo resultado será acrescido de mais uma pilha.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>pilhas = tbl_1<span style="color:#447fcf">[c</span>(<span style="color:#3677a9">1</span>, <span style="color:#447fcf">as.integer</span>(final_sample)), ]
-</span></span></code></pre></div><h3 id="parcelas-do-talhão---grid-10m-x-10m">Parcelas do talhão - Grid 10m x 10m</h3>
+</span></span></code></pre></div><p>Parcelas do talhão  (Grid 10m x 10m).</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>r.grid &lt;- <span style="color:#447fcf">rast</span>(<span style="color:#447fcf">ext</span>(prj_t), res = <span style="color:#3677a9">10</span>) 
 </span></span><span style="display:flex;"><span>tal &lt;- <span style="color:#447fcf">raster</span>(<span style="color:#447fcf">rasterize</span>(<span style="color:#447fcf">vect</span>(prj_t), r.grid, values=<span style="color:#3677a9">1</span>, background=<span style="color:#3677a9">0</span>, touches = <span style="color:#6ab825;font-weight:bold">FALSE</span>))
 </span></span><span style="display:flex;"><span>tal_mask = <span style="color:#447fcf">mask</span>(tal, prj_t)
@@ -274,7 +274,7 @@ pilha, cujo resultado será acrescido de mais uma pilha.</p>
 </span></span><span style="display:flex;"><span>  tal_mask, fun = <span style="color:#6ab825;font-weight:bold">NULL</span>, n = <span style="color:#3677a9">4</span>,  na.rm = <span style="color:#6ab825;font-weight:bold">TRUE</span>,  digits = <span style="color:#3677a9">12</span>,  dissolve = <span style="color:#6ab825;font-weight:bold">FALSE</span>
 </span></span><span style="display:flex;"><span>)  %&gt;% <span style="color:#447fcf">st_as_sf</span>()
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">st_crs</span>(x) &lt;- <span style="color:#ed9d13">&#34;+proj=utm +zone=23 +south +ellps=aust_SA +units=m +no_defs&#34;</span>
-</span></span></code></pre></div><h3 id="distribuição-das-pilhas-no-talhão-selecionado">Distribuição das pilhas no talhão selecionado</h3>
+</span></span></code></pre></div><p>Distribuição das pilhas no talhão selecionado.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>pilhas_point = <span style="color:#447fcf">st_centroid</span>(pilhas)
 </span></span><span style="display:flex;"><span>x_point = <span style="color:#447fcf">st_centroid</span>(x)
 </span></span><span style="display:flex;"><span>
@@ -315,7 +315,7 @@ pilha, cujo resultado será acrescido de mais uma pilha.</p>
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#                          as(grids, &#34;Spatial&#34;) , byid = TRUE) </span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>cost = <span style="color:#447fcf">st_distance</span>(pil, grids)
-</span></span><span style="display:flex;"><span>cost[1:<span style="color:#3677a9">3</span>,<span style="color:#3677a9">1</span>:<span style="color:#3677a9">1</span> ] %&gt;% <span style="color:#447fcf">t</span>()
+</span></span><span style="display:flex;"><span>cost[1:<span style="color:#3677a9">3</span>,<span style="color:#3677a9">1</span>:<span style="color:#3677a9">1</span> ] %&gt;% <span style="color:#447fcf">t</span>() <span style="color:#999;font-style:italic"># Exemplo da saída da matriz de custo </span>
 </span></span></code></pre></div><pre tabindex="0"><code>## Units: [m]
 ##          [,1]    [,2]     [,3]
 ## [1,] 290.6888 661.211 143.1782
@@ -767,7 +767,7 @@ ao menor custo total.</p>
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">solve_model</span>(<span style="color:#447fcf">with_ROI</span>(solver = <span style="color:#ed9d13">&#34;symphony&#34;</span>, verbosity = <span style="color:#3677a9">1</span>))
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">cat</span>(<span style="color:#ed9d13">&#34;Status:&#34;</span>,<span style="color:#447fcf">solver_status</span>(m3),<span style="color:#ed9d13">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#447fcf">cat</span>(<span style="color:#ed9d13">&#34;Objective:&#34;</span>,<span style="color:#447fcf">objective_value</span>(m3),<span style="color:#ed9d13">&#34;\n&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">cat</span>(<span style="color:#ed9d13">&#34;Objective:&#34;</span>, <span style="color:#447fcf">objective_value</span>(m3),<span style="color:#ed9d13">&#34;\n&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>matchs_m3 &lt;- <span style="color:#447fcf">get_solution</span>(m3,ship[i, j]) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">filter</span>(value &gt; <span style="color:#3677a9">0</span>) %&gt;% <span style="color:#447fcf">as.data.frame</span>()
@@ -853,14 +853,17 @@ distribuídas nas bordas do talhão, com a distância mínima de 25m entre as pi
 </span></span><span style="display:flex;"><span>capacity = <span style="color:#447fcf">rep</span>(capacidade, <span style="color:#447fcf">nrow</span>(pil))
 </span></span><span style="display:flex;"><span>p = prj_t$n_pilhas + <span style="color:#3677a9">1</span> <span style="color:#999;font-style:italic"># restrição (d) do problema</span>
 </span></span></code></pre></div><h3 id="modelo">Modelo</h3>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>m_pvalue &lt;- <span style="color:#447fcf">MIPModel</span>() %&gt;%
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Função</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pmediana &lt;- <span style="color:#447fcf">function</span>(){
+</span></span><span style="display:flex;"><span>solucao &lt;- <span style="color:#447fcf">MIPModel</span>() %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_variable</span>(ship[i, j],
 </span></span><span style="display:flex;"><span>               i = <span style="color:#3677a9">1</span>:num_depots,
 </span></span><span style="display:flex;"><span>               j = <span style="color:#3677a9">1</span>:num_cust,
-</span></span><span style="display:flex;"><span>               type = <span style="color:#ed9d13">&#34;binary&#34;</span>) %&gt;% <span style="color:#999;font-style:italic"># ok</span>
+</span></span><span style="display:flex;"><span>               type = <span style="color:#ed9d13">&#34;binary&#34;</span>) %&gt;% 
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_variable</span>(y[i],  i = <span style="color:#3677a9">1</span>:num_depots, type = <span style="color:#ed9d13">&#34;binary&#34;</span>) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(<span style="color:#447fcf">sum_expr</span>(demand[j] * ship[i, j],  j = <span style="color:#3677a9">1</span>:num_cust) &lt;= capacity[i],
-</span></span><span style="display:flex;"><span>                 i = <span style="color:#3677a9">1</span>:num_depots) %&gt;% <span style="color:#999;font-style:italic"># ok</span>
+</span></span><span style="display:flex;"><span>                 i = <span style="color:#3677a9">1</span>:num_depots) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(<span style="color:#447fcf">sum_expr</span>(ship[i, j], i = <span style="color:#3677a9">1</span>:num_depots) == <span style="color:#3677a9">1</span>, j = <span style="color:#3677a9">1</span>:num_cust) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">set_objective</span>(
 </span></span><span style="display:flex;"><span>    <span style="color:#447fcf">sum_expr</span>(cost[i, j] * ship[i, j], i = <span style="color:#3677a9">1</span>:num_depots, j = <span style="color:#3677a9">1</span>:num_cust) +
@@ -869,15 +872,25 @@ distribuídas nas bordas do talhão, com a distância mínima de 25m entre as pi
 </span></span><span style="display:flex;"><span>  ) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(ship[i, j] &lt;= y[i], i = <span style="color:#3677a9">1</span>:num_depots, j = <span style="color:#3677a9">1</span>:num_cust) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(<span style="color:#447fcf">sum_expr</span>(y[i],   i = <span style="color:#3677a9">1</span>:num_depots) &lt;= p) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">solve_model</span>(<span style="color:#447fcf">with_ROI</span>(solver = <span style="color:#ed9d13">&#34;symphony&#34;</span>, verbosity = <span style="color:#3677a9">1</span>))
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">solve_model</span>(<span style="color:#447fcf">with_ROI</span>(
+</span></span><span style="display:flex;"><span>    solver = <span style="color:#ed9d13">&#34;symphony&#34;</span>,
+</span></span><span style="display:flex;"><span>    verbosity = <span style="color:#3677a9">1</span>,
+</span></span><span style="display:flex;"><span>    first_feasible = <span style="color:#6ab825;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>  ))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#447fcf">cat</span>(<span style="color:#ed9d13">&#34;Status:&#34;</span>,<span style="color:#447fcf">solver_status</span>(m_pvalue),<span style="color:#ed9d13">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#447fcf">cat</span>(<span style="color:#ed9d13">&#34;Objective:&#34;</span>,<span style="color:#447fcf">objective_value</span>(m_pvalue),<span style="color:#ed9d13">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span>matchs &lt;- <span style="color:#447fcf">get_solution</span>(m_pvalue,ship[i, j]) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">filter</span>(value &gt; <span style="color:#3677a9">0</span>) %&gt;% <span style="color:#447fcf">as.data.frame</span>()
+</span></span><span style="display:flex;"><span><span style="color:#447fcf">return</span>(solucao)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Aplica</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>start.time &lt;- <span style="color:#447fcf">Sys.time</span>()
+</span></span><span style="display:flex;"><span>m_pvalue &lt;- <span style="color:#447fcf">pmediana</span>()
+</span></span><span style="display:flex;"><span>end.time &lt;- <span style="color:#447fcf">Sys.time</span>()
+</span></span><span style="display:flex;"><span>time.taken &lt;- end.time - start.time
+</span></span><span style="display:flex;"><span>time.taken
 </span></span></code></pre></div><p>Infelizmente o tempo de processamento foi muito longo&hellip;.. :/</p>
 <p>A saída encontrada foi reduzir a quantidade de parcelas e o número de pilhas para obter uma solução em
-um tempo razoável.</p>
+um tempo menor.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Grids</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>r.grid &lt;- <span style="color:#447fcf">rast</span>(<span style="color:#447fcf">ext</span>(prj_t), res = <span style="color:#3677a9">50</span>) 
@@ -913,65 +926,45 @@ um tempo razoável.</p>
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">plot</span>(<span style="color:#447fcf">st_geometry</span>(<span style="color:#447fcf">st_centroid</span>(grids)), pch = <span style="color:#3677a9">3</span>, col = <span style="color:#ed9d13">&#39;black&#39;</span>, cex= <span style="color:#3677a9">2</span>, axes = <span style="color:#6ab825;font-weight:bold">TRUE</span>,
 </span></span><span style="display:flex;"><span>     main = <span style="color:#ed9d13">&#34;196 Parcelas e 23 pilhas&#34;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">plot</span>(<span style="color:#447fcf">st_geometry</span>(pil), pch = <span style="color:#3677a9">24</span>, cex=<span style="color:#3677a9">3</span>, col=<span style="color:#ed9d13">&#34;blue&#34;</span>, bg=<span style="color:#ed9d13">&#34;red&#34;</span>, lwd=<span style="color:#3677a9">2</span>, add = <span style="color:#6ab825;font-weight:bold">TRUE</span> )
-</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/otimiza%C3%A7%C3%A3o-do-custo-de-extra%C3%A7%C3%A3o-por-arraste/index_files/figure-html/reduz_res_probl_origin-1.png" width="672" />
-<p>Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decisão tomada
+</span></span></code></pre></div><p>Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decisão tomada
 pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis (valor de P = 15).</p>
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># rggeos - Obsoleto</span>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Matiz de Custo</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># rggeos - Obsoleto</span>
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># cost =  rgeos::gDistance(as(pil, &#34;Spatial&#34;), as(grids, &#34;Spatial&#34;) , byid = TRUE) </span>
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># cost &lt;- cost %&gt;% t() %&gt;% as.vector() %&gt;% round()</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>cost = <span style="color:#447fcf">st_distance</span>(pil, grids)
 </span></span><span style="display:flex;"><span>cost &lt;- cost %&gt;% <span style="color:#447fcf">as.vector</span>() %&gt;% <span style="color:#447fcf">round</span>()
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Restrições</span>
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>num_depots = <span style="color:#447fcf">nrow</span>(pil)
 </span></span><span style="display:flex;"><span>num_cust = <span style="color:#447fcf">nrow</span>(grids)
 </span></span><span style="display:flex;"><span>custo.fixo = <span style="color:#3677a9">10</span> <span style="color:#999;font-style:italic"># Custo para ativar um pátio</span>
 </span></span><span style="display:flex;"><span>volume.t = prj_t$area * prj_t$Volume 
 </span></span><span style="display:flex;"><span>demanda &lt;- volume.t/((prj_t$area)/(<span style="color:#447fcf">res</span>(r.grid)[1]^2/<span style="color:#3677a9">10000</span>)) <span style="color:#999;font-style:italic"># Demanda em m³ de uma parcela</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#capacidade &lt;- 200 # Capacidade do pátio de estocagem</span>
-</span></span><span style="display:flex;"><span>capacidade &lt;- <span style="color:#3677a9">750</span> <span style="color:#999;font-style:italic"># subset # considera um total de 15 pilhas</span>
+</span></span><span style="display:flex;"><span>capacidade &lt;- <span style="color:#3677a9">750</span> <span style="color:#999;font-style:italic">#  considera um total de 15 pilhas</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>cost &lt;- <span style="color:#447fcf">matrix</span>(cost, num_depots, num_cust )
 </span></span><span style="display:flex;"><span>demand = <span style="color:#447fcf">rep</span>(demanda, <span style="color:#447fcf">nrow</span>(grids))
 </span></span><span style="display:flex;"><span>fixedcost =  <span style="color:#447fcf">rep</span>(custo.fixo, <span style="color:#447fcf">nrow</span>(pil))
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># fixedcost = c( 50000, 10, 10, 10,3000)</span>
 </span></span><span style="display:flex;"><span>capacity = <span style="color:#447fcf">rep</span>(capacidade, <span style="color:#447fcf">nrow</span>(pil))
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#p = prj_t$n_pilhas</span>
 </span></span><span style="display:flex;"><span>p = <span style="color:#3677a9">15</span> <span style="color:#999;font-style:italic"># Valor P</span>
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Solução</span>
 </span></span><span style="display:flex;"><span>start.time &lt;- <span style="color:#447fcf">Sys.time</span>()
-</span></span><span style="display:flex;"><span>m_pvalue &lt;- <span style="color:#447fcf">MIPModel</span>() %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_variable</span>(ship[i, j],
-</span></span><span style="display:flex;"><span>               i = <span style="color:#3677a9">1</span>:num_depots,
-</span></span><span style="display:flex;"><span>               j = <span style="color:#3677a9">1</span>:num_cust,
-</span></span><span style="display:flex;"><span>               type = <span style="color:#ed9d13">&#34;binary&#34;</span>) %&gt;% 
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_variable</span>(y[i],  i = <span style="color:#3677a9">1</span>:num_depots, type = <span style="color:#ed9d13">&#34;binary&#34;</span>) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(<span style="color:#447fcf">sum_expr</span>(demand[j] * ship[i, j],  j = <span style="color:#3677a9">1</span>:num_cust) &lt;= capacity[i],
-</span></span><span style="display:flex;"><span>                 i = <span style="color:#3677a9">1</span>:num_depots) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(<span style="color:#447fcf">sum_expr</span>(ship[i, j], i = <span style="color:#3677a9">1</span>:num_depots) == <span style="color:#3677a9">1</span>, j = <span style="color:#3677a9">1</span>:num_cust) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">set_objective</span>(
-</span></span><span style="display:flex;"><span>    <span style="color:#447fcf">sum_expr</span>(cost[i, j] * ship[i, j], i = <span style="color:#3677a9">1</span>:num_depots, j = <span style="color:#3677a9">1</span>:num_cust) +
-</span></span><span style="display:flex;"><span>      <span style="color:#447fcf">sum_over</span>(fixedcost[i] * y[i], i = <span style="color:#3677a9">1</span>:num_depots),
-</span></span><span style="display:flex;"><span>    <span style="color:#ed9d13">&#34;min&#34;</span>
-</span></span><span style="display:flex;"><span>  ) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(ship[i, j] &lt;= y[i], i = <span style="color:#3677a9">1</span>:num_depots, j = <span style="color:#3677a9">1</span>:num_cust) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">add_constraint</span>(<span style="color:#447fcf">sum_expr</span>(y[i],   i = <span style="color:#3677a9">1</span>:num_depots) &lt;= p) %&gt;%
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">solve_model</span>(<span style="color:#447fcf">with_ROI</span>(
-</span></span><span style="display:flex;"><span>    solver = <span style="color:#ed9d13">&#34;symphony&#34;</span>,
-</span></span><span style="display:flex;"><span>    verbosity = <span style="color:#3677a9">1</span>,
-</span></span><span style="display:flex;"><span>    first_feasible = <span style="color:#6ab825;font-weight:bold">TRUE</span>
-</span></span><span style="display:flex;"><span>  ))
+</span></span><span style="display:flex;"><span>m_pvalue &lt;- <span style="color:#447fcf">pmediana</span>()
 </span></span><span style="display:flex;"><span>end.time &lt;- <span style="color:#447fcf">Sys.time</span>()
 </span></span><span style="display:flex;"><span>time.taken &lt;- end.time - start.time
-</span></span><span style="display:flex;"><span>time.taken
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#447fcf">cat</span>(<span style="color:#ed9d13">&#34;Status:&#34;</span>,<span style="color:#447fcf">solver_status</span>(m_pvalue),<span style="color:#ed9d13">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#447fcf">cat</span>(<span style="color:#ed9d13">&#34;Objective:&#34;</span>,<span style="color:#447fcf">objective_value</span>(m_pvalue),<span style="color:#ed9d13">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span>matchs &lt;- <span style="color:#447fcf">get_solution</span>(m_pvalue,ship[i, j]) %&gt;%
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># cat(&#34;Status:&#34;,solver_status(m_pvalue),&#34;\n&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># cat(&#34;Objective:&#34;,objective_value(m_pvalue),&#34;\n&#34;)</span>
+</span></span></code></pre></div><h3 id="cria-o-mapa-para-a-solução">Cria o mapa para a solução</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>matchs &lt;- <span style="color:#447fcf">get_solution</span>(m_pvalue,ship[i, j]) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">filter</span>(value &gt; <span style="color:#3677a9">0</span>) %&gt;% <span style="color:#447fcf">as.data.frame</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># matchs</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>grids$id &lt;- <span style="color:#3677a9">1</span>:<span style="color:#447fcf">nrow</span>(grids)
 </span></span><span style="display:flex;"><span>grids$id_grid &lt;- grids$id
@@ -1019,27 +1012,38 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
 </span></span><span style="display:flex;"><span>tal_spdf &lt;- <span style="color:#447fcf">as</span>(raster_df, <span style="color:#ed9d13">&#39;SpatialPixelsDataFrame&#39;</span>)
 </span></span><span style="display:flex;"><span>tal_df &lt;- <span style="color:#447fcf">as.data.frame</span>(tal_spdf)
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">colnames</span>(tal_df) &lt;- <span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;value&#34;</span>, <span style="color:#ed9d13">&#34;x&#34;</span>, <span style="color:#ed9d13">&#34;y&#34;</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ggthemes)
+</span></span></code></pre></div><h3 id="plot">Plot</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ggthemes)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>tal_67 = 
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">ggplot</span>() +  
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_tile</span>(data=tal_df, <span style="color:#447fcf">aes</span>(x=x, y=y, fill=value), alpha=<span style="color:#3677a9">0.8</span>) + 
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_tile</span>(data=tal_df, <span style="color:#447fcf">aes</span>(x=x, y=y, fill= value), alpha=<span style="color:#3677a9">0.8</span>) + 
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_sf</span>() +
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">geom_sf</span>(data = plot_pilhas, color = <span style="color:#ed9d13">&#34;red&#34;</span>, shape = <span style="color:#3677a9">17</span>, size= <span style="color:#3677a9">5</span>) + 
 </span></span><span style="display:flex;"><span>  ggrepel::<span style="color:#447fcf">geom_label_repel</span>(data  = plot_pilhas, 
 </span></span><span style="display:flex;"><span>               <span style="color:#447fcf">aes</span>(x=X, y=Y, label= <span style="color:#447fcf">paste0</span>(
-</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34;Capacidade:&#34;</span>, costs, <span style="color:#ed9d13">&#34;m³&#34;</span>, <span style="color:#ed9d13">&#34;; Volume ocupado: &#34;</span>, total, <span style="color:#ed9d13">&#34; m³&#34;</span>)),
-</span></span><span style="display:flex;"><span>                            size = <span style="color:#3677a9">2</span>, nudge_y = <span style="color:#3677a9">20</span>)+
+</span></span><span style="display:flex;"><span>               <span style="color:#ed9d13">&#34; Volume ocupado: &#34;</span>, total, <span style="color:#ed9d13">&#34; m³&#34;</span>)),
+</span></span><span style="display:flex;"><span>                            size = <span style="color:#3677a9">2</span>, nudge_y = <span style="color:#3677a9">24</span>)+
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">coord_sf</span>(xlim = <span style="color:#447fcf">c</span>(<span style="color:#447fcf">st_bbox</span>(plot_pilhas)[1] , <span style="color:#447fcf">st_bbox</span>(plot_pilhas)[3]),
 </span></span><span style="display:flex;"><span>           ylim = <span style="color:#447fcf">c</span>(<span style="color:#447fcf">st_bbox</span>(plot_pilhas)[2], <span style="color:#447fcf">st_bbox</span>(plot_pilhas)[4] ), expand = <span style="color:#6ab825;font-weight:bold">TRUE</span>) + 
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">scale_fill_gradientn</span>(colours = <span style="color:#447fcf">c</span>(<span style="color:#ed9d13">&#34;white&#34;</span>, <span style="color:#ed9d13">&#34;black&#34;</span>), values = <span style="color:#447fcf">c</span>(<span style="color:#3677a9">0</span>, <span style="color:#3677a9">1</span>)) + 
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">theme</span>(panel.grid = <span style="color:#447fcf">element_blank</span>())+
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">theme_bw</span>()+
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">theme</span>(legend.position=<span style="color:#ed9d13">&#34;none&#34;</span>)+
-</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">labs</span>(title = <span style="color:#ed9d13">&#34;Talhão 67 - 196 parcelas e 23 pilhas&#34;</span>, 
-</span></span><span style="display:flex;"><span>       subtitle =  <span style="color:#ed9d13">&#34;P = 15  50x50 m&#34;</span>, 
-</span></span><span style="display:flex;"><span>       caption = <span style="color:#ed9d13">&#34;Tempo de processamento = 5.094781 secs
-</span></span></span><span style="display:flex;"><span><span style="color:#ed9d13">                Solver = Symphony&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">theme</span>(legend.position=<span style="color:#ed9d13">&#34;none&#34;</span>,
+</span></span><span style="display:flex;"><span>        axis.text.y = <span style="color:#447fcf">element_text</span>(angle = <span style="color:#3677a9">90</span>, vjust = <span style="color:#3677a9">0.5</span>, hjust=<span style="color:#3677a9">1</span>),
+</span></span><span style="display:flex;"><span>         axis.text = <span style="color:#447fcf">element_text</span>(size = <span style="color:#3677a9">5.5</span>),          
+</span></span><span style="display:flex;"><span>        ) +
+</span></span><span style="display:flex;"><span>  <span style="color:#447fcf">labs</span>(title = <span style="color:#ed9d13">&#34;Mapa de localização das pilhas &#34;</span>, 
+</span></span><span style="display:flex;"><span>       subtitle =  <span style="color:#ed9d13">&#34;p-mediana = 15&#34;</span>, 
+</span></span><span style="display:flex;"><span>       caption = <span style="color:#ed9d13">&#34;Mapa de localização da solução ótima encontrada para minimização do custo de extração por
+</span></span></span><span style="display:flex;"><span><span style="color:#ed9d13">       arraste usando o modelo da p-mediana. Atribui cada parcela do talhão para a pilha de menor distância
+</span></span></span><span style="display:flex;"><span><span style="color:#ed9d13">       a ser percorrida pela máquina, considerando p locais disponíveis para a instalação dos pátios.
+</span></span></span><span style="display:flex;"><span><span style="color:#ed9d13">                   Solver: Symphony&#34;</span>) + 
+</span></span><span style="display:flex;"><span>   <span style="color:#447fcf">theme</span>(
+</span></span><span style="display:flex;"><span>    plot.title = <span style="color:#447fcf">element_text</span>(size = <span style="color:#3677a9">11</span>, face = <span style="color:#ed9d13">&#34;bold&#34;</span>),       <span style="color:#999;font-style:italic"># Controle do título</span>
+</span></span><span style="display:flex;"><span>    plot.subtitle = <span style="color:#447fcf">element_text</span>(size = <span style="color:#3677a9">8</span>, face = <span style="color:#ed9d13">&#34;italic&#34;</span>), <span style="color:#999;font-style:italic"># Controle do subtítulo</span>
+</span></span><span style="display:flex;"><span>    plot.caption = <span style="color:#447fcf">element_text</span>(size = <span style="color:#3677a9">5.5</span>, face = <span style="color:#ed9d13">&#34;plain&#34;</span>)    <span style="color:#999;font-style:italic"># Controle da fonte</span>
+</span></span><span style="display:flex;"><span>  )
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">ggsave</span>(
@@ -1049,40 +1053,114 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
 </span></span><span style="display:flex;"><span>  height = <span style="color:#3677a9">15</span>,
 </span></span><span style="display:flex;"><span>  units = <span style="color:#ed9d13">&#34;cm&#34;</span>, 
 </span></span><span style="display:flex;"><span>  device = <span style="color:#ed9d13">&#34;png&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span></code></pre></div><img src="./images/p_mediana_T67.png" width="110%" style="display: block; margin: auto;" />
-<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Starting Preprocessing...</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Preprocessing finished...</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># with no modifications...</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Problem has</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># 1313 constraints</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># 1212 variables</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># 4812 nonzero coefficients</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="./images/p_mediana_T67_post2.png" width="110%" style="display: block; margin: auto;" />
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Starting Preprocessing...
+</span></span><span style="display:flex;"><span>Preprocessing finished...
+</span></span><span style="display:flex;"><span> 	 with no modifications...
+</span></span><span style="display:flex;"><span>Problem has 
+</span></span><span style="display:flex;"><span>	 <span style="color:#3677a9">4728</span> constraints 
+</span></span><span style="display:flex;"><span>	 <span style="color:#3677a9">4531</span> variables 
+</span></span><span style="display:flex;"><span>	 <span style="color:#3677a9">18055</span> nonzero coefficients
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Total Presolve Time: 0.008235...</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># </span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Solving...</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># </span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># granularity set at 1.000000</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># solving root lp relaxation</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># The LP value is: 14659.008 [0,325]</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># </span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># </span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># ****** Found Better Feasible Solution !</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#   ****** Cost: 15677.000000</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># </span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># warning: poor lpetol used while branching</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># warning: poor lpetol used while branching</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># </span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># ****** Found Better Feasible Solution !</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#   ****** Cost: 14950.000000</span>
+</span></span><span style="display:flex;"><span>Total Presolve Time: <span style="color:#3677a9">0.051709</span><span style="color:#6ab825;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Solving...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>granularity set at <span style="color:#3677a9">1.000000</span>
+</span></span><span style="display:flex;"><span>solving root lp relaxation
+</span></span><span style="display:flex;"><span>The LP value is: <span style="color:#3677a9">23942.000</span> [0,<span style="color:#3677a9">377</span>]
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># **************************************************</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># </span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#    Optimal Solution Found</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic">#   Now displaying stats and best solution found...</span>
-</span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># **************************************************</span>
+</span></span><span style="display:flex;"><span>****** Found Better Feasible Solution !
+</span></span><span style="display:flex;"><span>****** Cost: <span style="color:#3677a9">23942.000000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>****************************************************
+</span></span><span style="display:flex;"><span>* Stopping After Finding First Feasible Solution   *
+</span></span><span style="display:flex;"><span>* Now displaying stats and best solution found...  *
+</span></span><span style="display:flex;"><span>****************************************************
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>======================= CP Timing ===========================
+</span></span><span style="display:flex;"><span>  Cut Pool                  <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>====================== LP/CG Timing =========================
+</span></span><span style="display:flex;"><span>  LP Solution Time          <span style="color:#3677a9">0.019</span>
+</span></span><span style="display:flex;"><span>  LP Setup Time             <span style="color:#3677a9">0.001</span>
+</span></span><span style="display:flex;"><span>  Variable Fixing           <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>  Pricing                   <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>  Strong Branching          <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>  Separation                <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>  Primal Heuristics         <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>  Communication             <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>=================== Parallel Overhead ======================
+</span></span><span style="display:flex;"><span>  Communication         <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>  Ramp Up <span style="color:#447fcf">Time </span>(TM)     <span style="color:#3677a9">0.053</span>
+</span></span><span style="display:flex;"><span>  Ramp Down Time        <span style="color:#3677a9">0.000</span>
+</span></span><span style="display:flex;"><span>  Total User Time              <span style="color:#3677a9">0.019</span>
+</span></span><span style="display:flex;"><span>  Total Wallclock Time         <span style="color:#3677a9">0.074</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>====================== Statistics =========================
+</span></span><span style="display:flex;"><span>Number of created nodes :       <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Number of analyzed nodes:       <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Depth of tree:                  <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Size of the tree:               <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Number of solutions found:      <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Number of solutions in pool:    <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Number of Chains:               <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Number of Diving Halts:         <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Number of cuts in cut pool:     <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Lower Bound in Root:            <span style="color:#3677a9">23942.000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>======================= LP Solver =========================
+</span></span><span style="display:flex;"><span>Number of times LP solver called:                 <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Number of calls from feasibility pump:            <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Number of calls from strong branching:            <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Number of solutions found by LP solve:            <span style="color:#3677a9">1</span>
+</span></span><span style="display:flex;"><span>Number of bounds changed by strong branching:     <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Number of nodes pruned by strong branching:       <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Number of bounds changed by branching presolver:  <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Number of nodes pruned by branching presolver:    <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>==================== Primal Heuristics ====================
+</span></span><span style="display:flex;"><span>                             Time      <span style="color:#999;font-style:italic">#Called   #Solutions</span>
+</span></span><span style="display:flex;"><span>Rounding I                   <span style="color:#3677a9">0.00</span>                           
+</span></span><span style="display:flex;"><span>Rounding II                  <span style="color:#3677a9">0.00</span>                           
+</span></span><span style="display:flex;"><span>Diving                       <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Feasibility Pump             <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Local Search                 <span style="color:#3677a9">0.01</span>            <span style="color:#3677a9">1</span>            <span style="color:#3677a9">0</span> 
+</span></span><span style="display:flex;"><span>Restricted Search            <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Rins Search                  <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Local Branching              <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>=========================== Cuts ==========================
+</span></span><span style="display:flex;"><span>Accepted:                         <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Added to LPs:                     <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Deleted from LPs:                 <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Removed because of bad coeffs:    <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Removed because of duplicacy:     <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Insufficiently violated:          <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>In root:                          <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Time in cut generation:              <span style="color:#3677a9">0.00</span>
+</span></span><span style="display:flex;"><span>Time in checking quality and adding: <span style="color:#3677a9">0.00</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                   Time     <span style="color:#999;font-style:italic">#Called     In Root       Total</span>
+</span></span><span style="display:flex;"><span>Gomory             <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Knapsack           <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Clique             <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Probing            <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Flowcover          <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Twomir             <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Oddhole            <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Mir                <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Rounding           <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>LandP-I            <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>LandP-II           <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>Redsplit           <span style="color:#3677a9">0.00</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>===========================================================
+</span></span><span style="display:flex;"><span>Solution Found: Node <span style="color:#3677a9">0</span>, Level <span style="color:#3677a9">0</span>
+</span></span><span style="display:flex;"><span>Solution Cost: <span style="color:#3677a9">23942.0000000000</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>info = <span style="color:#447fcf">sessionInfo</span>()
 </span></span><span style="display:flex;"><span>info
 </span></span></code></pre></div><pre tabindex="0"><code>## R version 4.4.1 (2024-06-14)
