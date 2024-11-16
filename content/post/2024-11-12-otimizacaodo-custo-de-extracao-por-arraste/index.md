@@ -19,9 +19,10 @@ output:
   
  O método da p-mediana é amplamente utilizado em problemas de localização, como a seleção de pátios de estocagem na colheita florestal, em que é necessário escolher p locais que minimizem a distância total (ou custo) entre os pontos de demanda (como áreas de corte) e os pontos de suprimento (como pátios).
  
-O post a seguir é um caderno cujo o intuito foi de desenvolver e explorar novas habilidades  envolvendo a utilização de ferramentas de Geoprocessamento e de Programação Linear Inteira aplicado ao problema de otimização da localização de pilhas na colheita florestal. O custo foi calculado a partir da distância euclidiana, com o trânsito das máquinas sobre os tocos na linha de plantio não sendo incluído como restrição. 
- 
-Esse esforço me permitiu exercitar o aprendizado em modelagem, onde descobri ferramentas de modelagem e solvers de código aberto e livres, que permitem resolver problemas de PL sem nenhum custo. As bibliotecas ROI e OMPR possibilitam padronizar o código dos modelos já que são compatíveis com diferentes solvers, incluindo softwares proprietários. Isso foi ótimo pois não precisei reescrever o modelo para um novo código à depender do solver que estava utilizando. Apliquei o mesmo modelo nos solvers symphony e glpk e tudo funcionou bem.   
+Esse post é um caderno cujo o intuito foi de desenvolver e explorar novas habilidades  envolvendo a utilização de ferramentas de Geoprocessamento e de Programação Linear Inteira aplicado ao problema de otimização da localização de pilhas na colheita florestal. O custo foi calculado a partir da distância euclidiana, com o trânsito das máquinas sobre os tocos na linha de plantio não sendo incluído como restrição.
+
+
+A solução foi escrita usando ferramentas de modelagem e solvers de código aberto e livres, que permitem resolver problemas de PL sem nenhum custo. Com as bibliotecas ROI e OMPR foi possível padronizar o código dos modelos já que são compatíveis com diferentes solvers, incluindo softwares proprietários. Isso foi ótimo pois não precisei reescrever o modelo para um novo código à depender do solver que estava utilizando. Apliquei o mesmo modelo nos solvers symphony e glpk e tudo funcionou bem.   
   
   
 ## 1)  Problema proposto
@@ -336,7 +337,7 @@ cost[1:3,1:1 ] %>% t() # Exemplo da saída da matriz de custo
 
 
 
-### Tabelas para plotagem
+### Tabelas do mapa
 
 
 ```r
@@ -358,7 +359,7 @@ pil <- cbind(pil, XY.pil) %>% st_drop_geometry()
 ```
 
 
-## 5) Ferramentas de modelagem e Solvers
+## 5) Ferramentas de modelagem e solver
 
 ### OMPR
 
@@ -669,14 +670,14 @@ ggplot2::ggsave(
 )
 ```
 
-Em vermelho claro os pátios que não foram acionados em função do maior custo para ativação. Na prática esse modelo pode representar situações onde a região disponível para alocação de um pátio ou pilha de madeira pretende ser evitada. Por exemplo, maior custo para adequação de estradas, locais de maior risco para operação ou evitar o impacto em locais próximos a ambientes sensíveis (áreas de preservação).
+Em vermelho claro os pátios que não foram acionados em função do maior custo para ativação. Na prática esse modelo pode representar situações onde a região disponível para alocação de um pátio ou pilha de madeira pretende ser evitada. Por exemplo, maior custo para adequação de estradas, locais de maior risco para operação ou evitar o impacto em locais próximos a ambientes sensíveis, como áreas de preservação.
 
 <img src="./images/plot_Mod_2A.png" width="110%" style="display: block; margin: auto;" />
 
 
 ### Modelo 2.1
 
-Altera a capacidade para 80 m³ por pátio de madeira afim de comparar a sensibilidade do modelo para definir a ativação dos pátios em função da capacidade e custo.
+Altera a capacidade para 80 m³ por pátio de madeira afim de comparar a sensibilidade do modelo para definir a ativação dos pátios em função da capacidade e do custo.
 
 
 
@@ -813,7 +814,7 @@ ggsave(filename = "./plot/plot_Mod_2AB.png",
 
 
 
-### Modelo 3 P-Mediana
+### Modelo 3 P-mediana
 
 Adiciona a restrição de quantidade de pátios que serão ativados, valor de P. Testando o modelo para 5 pátios. 
 
@@ -933,10 +934,10 @@ ggsave(filename = "./plot/plot_Mod_3.png",
 
 ## 6) Retorna ao problema original 
 
-Após validar o comportamento dos modelos podemos aplicar o modelo da p-mediana para
+Após validar a funcionalidade dos modelos, podemos aplicar o modelo da p-mediana para
 minimizar o custo da extração por arraste no talhão 67 do projeto Ferradura.
 
-O talhão foi dividido em parcelas (grids) de 10m x 10m e um total de 55 pilhas 
+O talhão foi dividido em parcelas de 10m x 10m e um total de 55 pilhas 
 distribuídas nas bordas do talhão, com a distância mínima de 25m entre as pilhas (item 2 - Preparando os dados). 
 
 A quantidade de pilhas estipulada pela área de planejamento foi de 46 + 1 pilha. 
@@ -1015,7 +1016,7 @@ time.taken
 ```
 
 
-Infelizmente o tempo de processamento foi muito longo..... :/
+O tempo de processamento foi muito longo..... :/
 
 
 A saída encontrada foi reduzir a quantidade de parcelas e o número de pilhas para obter uma solução em 
