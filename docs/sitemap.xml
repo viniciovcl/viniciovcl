@@ -48,17 +48,7 @@
     </url>
     
     <url>
-        <loc>https://viniciovcl.github.io/viniciovcl/tags/linear-programming/</loc>
-        <lastmod>2024-03-03T00:00:00+00:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://viniciovcl.github.io/viniciovcl/tags/lpsolve/</loc>
-        <lastmod>2024-03-03T00:00:00+00:00</lastmod>
-    </url>
-    
-    <url>
-        <loc>https://viniciovcl.github.io/viniciovcl/tags/modeling/</loc>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/modelagem/</loc>
         <lastmod>2024-03-03T00:00:00+00:00</lastmod>
     </url>
     
@@ -68,17 +58,22 @@
     </url>
     
     <url>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/programa%C3%A7%C3%A3o-linear/</loc>
+        <lastmod>2024-03-03T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
         <loc>https://viniciovcl.github.io/viniciovcl/tags/changedetection/</loc>
         <lastmod>2024-02-18T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/</loc>
+        <loc>https://viniciovcl.github.io/viniciovcl/tags/cube-raster/</loc>
         <lastmod>2024-02-18T00:00:00+00:00</lastmod>
     </url>
     
     <url>
-        <loc>https://viniciovcl.github.io/viniciovcl/tags/data-cube/</loc>
+        <loc>https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/</loc>
         <lastmod>2024-02-18T00:00:00+00:00</lastmod>
     </url>
     

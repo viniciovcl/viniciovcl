@@ -3,7 +3,7 @@ title: "Programação Linear: exemplo de solução pelo método gráfico"
 author: "Vinicio C. Lima"
 date: 2024-03-03
 categories: ["R"]
-tags: ["linear-programming", "modeling", "ggplot", "lpsolve"]
+tags: ["programação-linear", "modelagem", "ggplot", "r-markdown"]
 ---
 <script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
 <link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />

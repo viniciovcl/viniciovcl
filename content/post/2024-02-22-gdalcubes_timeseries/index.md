@@ -3,7 +3,7 @@ title: "Cubos de dados para análise de séries de imagens de satélite"
 author: "Vinicio C. Lima "
 date: 2024-02-18
 categories: ["R"]
-tags: ["time-series", "image-processing", "data-cube", "changedetection", "gdalcubes", "r-markdown"]
+tags: ["time-series", "image-processing", "cube-raster", "changedetection", "gdalcubes", "r-markdown"]
 ---
 
 
