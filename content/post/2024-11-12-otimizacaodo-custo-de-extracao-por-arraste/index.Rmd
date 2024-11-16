@@ -3,7 +3,7 @@ title: "Otimização do custo de extração por arraste"
 author: "Vinicio C. Lima"
 date: 2024-11-12
 categories: ["R"]
-tags: ["geoprocessing", "ggplot", "r-markdown"]
+tags: ["geoprocessamento", "ggplot", "r-markdown"]
 output:
   blogdown::html_page:
     toc: true
@@ -1175,7 +1175,7 @@ A saída encontrada foi reduzir a quantidade de parcelas e o número de pilhas p
 um tempo menor. 
 
 
-```{r reduz_res_probl_origin, include=TRUE, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE }
+```{r reduz_res_probl_origin, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE }
 
 # Grids
 
@@ -1262,7 +1262,7 @@ time.taken <- end.time - start.time
 
 
 
-### Cria o mapa para a solução
+### Cria o mapa da solução
 
 
 ```{r cria_mapa, include=TRUE, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE }
@@ -1349,7 +1349,7 @@ tal_67 =
          axis.text = element_text(size = 5.5),          
         ) +
   labs(title = "Mapa de localização das pilhas ", 
-       subtitle =  "p-mediana = 15", 
+       subtitle =  "P = 15", 
        caption = "Mapa de localização da solução ótima encontrada para minimização do custo de extração por
        arraste usando o modelo da p-mediana. Atribui cada parcela do talhão para a pilha de menor distância
        a ser percorrida pela máquina, considerando p locais disponíveis para a instalação dos pátios.
@@ -1382,6 +1382,7 @@ knitr::include_graphics("./images/p_mediana_T67_post2.png")
 ```
 
 
+##### Relatório do solver 
 
 ```{r output_solver, include=TRUE, echo=TRUE, eval=FALSE, results='asis', warning=FALSE }
 
@@ -1496,8 +1497,10 @@ Solution Cost: 23942.0000000000
 
 
 
-
 ```{r sessioninfo, include=TRUE, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE }
+
+# Ambiente de execução
+
 info = sessionInfo()
 info
 ```

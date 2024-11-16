@@ -13,7 +13,7 @@
 <meta name="Description" property="description" content="Página pessoal">
 
 
-<meta property="keywords" content ="geoprocessing, ggplot, r-markdown">
+<meta property="keywords" content ="geoprocessamento, ggplot, r-markdown">
 
 
 
@@ -926,7 +926,8 @@ um tempo menor.</p>
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">plot</span>(<span style="color:#447fcf">st_geometry</span>(<span style="color:#447fcf">st_centroid</span>(grids)), pch = <span style="color:#3677a9">3</span>, col = <span style="color:#ed9d13">&#39;black&#39;</span>, cex= <span style="color:#3677a9">2</span>, axes = <span style="color:#6ab825;font-weight:bold">TRUE</span>,
 </span></span><span style="display:flex;"><span>     main = <span style="color:#ed9d13">&#34;196 Parcelas e 23 pilhas&#34;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#447fcf">plot</span>(<span style="color:#447fcf">st_geometry</span>(pil), pch = <span style="color:#3677a9">24</span>, cex=<span style="color:#3677a9">3</span>, col=<span style="color:#ed9d13">&#34;blue&#34;</span>, bg=<span style="color:#ed9d13">&#34;red&#34;</span>, lwd=<span style="color:#3677a9">2</span>, add = <span style="color:#6ab825;font-weight:bold">TRUE</span> )
-</span></span></code></pre></div><p>Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decisão tomada
+</span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/otimiza%C3%A7%C3%A3o-do-custo-de-extra%C3%A7%C3%A3o-por-arraste/index_files/figure-html/reduz_res_probl_origin-1.png" width="672" />
+<p>Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decisão tomada
 pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis (valor de P = 15).</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Matiz de Custo</span>
 </span></span><span style="display:flex;"><span>
@@ -961,7 +962,7 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># cat(&#34;Status:&#34;,solver_status(m_pvalue),&#34;\n&#34;)</span>
 </span></span><span style="display:flex;"><span><span style="color:#999;font-style:italic"># cat(&#34;Objective:&#34;,objective_value(m_pvalue),&#34;\n&#34;)</span>
-</span></span></code></pre></div><h3 id="cria-o-mapa-para-a-solução">Cria o mapa para a solução</h3>
+</span></span></code></pre></div><h3 id="cria-o-mapa-da-solução">Cria o mapa da solução</h3>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>matchs &lt;- <span style="color:#447fcf">get_solution</span>(m_pvalue,ship[i, j]) %&gt;%
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">filter</span>(value &gt; <span style="color:#3677a9">0</span>) %&gt;% <span style="color:#447fcf">as.data.frame</span>()
 </span></span><span style="display:flex;"><span>
@@ -1034,7 +1035,7 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
 </span></span><span style="display:flex;"><span>         axis.text = <span style="color:#447fcf">element_text</span>(size = <span style="color:#3677a9">5.5</span>),          
 </span></span><span style="display:flex;"><span>        ) +
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">labs</span>(title = <span style="color:#ed9d13">&#34;Mapa de localização das pilhas &#34;</span>, 
-</span></span><span style="display:flex;"><span>       subtitle =  <span style="color:#ed9d13">&#34;p-mediana = 15&#34;</span>, 
+</span></span><span style="display:flex;"><span>       subtitle =  <span style="color:#ed9d13">&#34;P = 15&#34;</span>, 
 </span></span><span style="display:flex;"><span>       caption = <span style="color:#ed9d13">&#34;Mapa de localização da solução ótima encontrada para minimização do custo de extração por
 </span></span></span><span style="display:flex;"><span><span style="color:#ed9d13">       arraste usando o modelo da p-mediana. Atribui cada parcela do talhão para a pilha de menor distância
 </span></span></span><span style="display:flex;"><span><span style="color:#ed9d13">       a ser percorrida pela máquina, considerando p locais disponíveis para a instalação dos pátios.
@@ -1055,6 +1056,7 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
 </span></span><span style="display:flex;"><span>  device = <span style="color:#ed9d13">&#34;png&#34;</span>
 </span></span><span style="display:flex;"><span>  )
 </span></span></code></pre></div><img src="./images/p_mediana_T67_post2.png" width="110%" style="display: block; margin: auto;" />
+<h5 id="relatório-do-solver">Relatório do solver</h5>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Starting Preprocessing...
 </span></span><span style="display:flex;"><span>Preprocessing finished...
 </span></span><span style="display:flex;"><span> 	 with no modifications...
@@ -1161,7 +1163,9 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
 </span></span><span style="display:flex;"><span>===========================================================
 </span></span><span style="display:flex;"><span>Solution Found: Node <span style="color:#3677a9">0</span>, Level <span style="color:#3677a9">0</span>
 </span></span><span style="display:flex;"><span>Solution Cost: <span style="color:#3677a9">23942.0000000000</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>info = <span style="color:#447fcf">sessionInfo</span>()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#999;font-style:italic"># Ambiente de execução</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>info = <span style="color:#447fcf">sessionInfo</span>()
 </span></span><span style="display:flex;"><span>info
 </span></span></code></pre></div><pre tabindex="0"><code>## R version 4.4.1 (2024-06-14)
 ## Platform: x86_64-pc-linux-gnu
@@ -1239,7 +1243,7 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
     Tags:
     
     <a class="inline-block mt-2 mr-2 border-none text-neutral-800 dark:text-neutral-200"
-       href="/viniciovcl/tags/geoprocessing">
+       href="/viniciovcl/tags/geoprocessamento">
         <span class="flex flex-row justify-start items-center
                      dark:bg-zinc-900 dark:hover:bg-zinc-700
                      hover:bg-zinc-300 bg-zinc-200
@@ -1249,7 +1253,7 @@ pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis 
             
             <img class="h-4 mr-2 inline" src="https://viniciovcl.github.io/viniciovcl/images/tag_logo.svg"
                  alt="Logo of a tag: indicates that a tag item follows.">
-            geoprocessing
+            geoprocessamento
         </span>
     </a>
     

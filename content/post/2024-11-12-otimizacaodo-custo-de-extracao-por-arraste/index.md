@@ -3,7 +3,7 @@ title: "Otimização do custo de extração por arraste"
 author: "Vinicio C. Lima"
 date: 2024-11-12
 categories: ["R"]
-tags: ["geoprocessing", "ggplot", "r-markdown"]
+tags: ["geoprocessamento", "ggplot", "r-markdown"]
 output:
   blogdown::html_page:
     toc: true
@@ -1061,6 +1061,8 @@ plot(st_geometry(st_centroid(grids)), pch = 3, col = 'black', cex= 2, axes = TRU
 plot(st_geometry(pil), pch = 24, cex=3, col="blue", bg="red", lwd=2, add = TRUE )
 ```
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/reduz_res_probl_origin-1.png" width="672" />
+
 
 
 Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decisão tomada
@@ -1106,7 +1108,7 @@ time.taken <- end.time - start.time
 
 
 
-### Cria o mapa para a solução
+### Cria o mapa da solução
 
 
 
@@ -1190,7 +1192,7 @@ tal_67 =
          axis.text = element_text(size = 5.5),          
         ) +
   labs(title = "Mapa de localização das pilhas ", 
-       subtitle =  "p-mediana = 15", 
+       subtitle =  "P = 15", 
        caption = "Mapa de localização da solução ótima encontrada para minimização do custo de extração por
        arraste usando o modelo da p-mediana. Atribui cada parcela do talhão para a pilha de menor distância
        a ser percorrida pela máquina, considerando p locais disponíveis para a instalação dos pátios.
@@ -1217,6 +1219,7 @@ ggsave(
 <img src="./images/p_mediana_T67_post2.png" width="110%" style="display: block; margin: auto;" />
 
 
+##### Relatório do solver 
 
 
 ```r
@@ -1331,8 +1334,9 @@ Solution Cost: 23942.0000000000
 
 
 
-
 ```r
+# Ambiente de execução
+
 info = sessionInfo()
 info
 ```
