@@ -1,5 +1,5 @@
 ---
-title: "Otimização do custo de extração por arraste"
+title: "Otimização da Localização de Pátios de Estocagem"
 author: "Vinicio C. Lima"
 date: 2024-11-12
 categories: ["R"]
@@ -7,11 +7,11 @@ tags: ["geoprocessamento", "ggplot", "r-markdown"]
 output:
   blogdown::html_page:
     toc: true
-    toc_depth: 3  # Ajuste o nível conforme a profundidade desejada
+    toc_depth: 3  
 ---
   
   
-  A extração por arraste é uma etapa da colheita florestal onde as toras são transportadas da área de corte até a margem do talhão, estrada ou pátio intermediário.
+  As operações de baldeio e arraste são uma etapa da colheita florestal onde as toras são transportadas da área de corte até a margem do talhão, estrada ou pátio intermediário.
   
   A distância de extração tem impacto direto nos custos da operação de colheita florestal. Quanto maior a distância entre a área de corte e o pátio de estocagem, maior é o tempo gasto e o consumo de combustível dos equipamentos de arraste, o que eleva os custos operacionais. Além disso, distâncias maiores aumentam o desgaste das máquinas e a necessidade de manutenção, além de prolongarem o ciclo de trabalho, reduzindo a produtividade da equipe.
   
@@ -19,7 +19,7 @@ output:
   
  O método da p-mediana é amplamente utilizado em problemas de localização, como a seleção de pátios de estocagem na colheita florestal, em que é necessário escolher p locais que minimizem a distância total (ou custo) entre os pontos de demanda (como áreas de corte) e os pontos de suprimento (como pátios).
  
-Esse post é um caderno cujo o intuito foi de desenvolver e explorar novas habilidades  envolvendo a utilização de ferramentas de Geoprocessamento e de Programação Linear Inteira aplicado ao problema de otimização da localização de pilhas na colheita florestal. O custo foi calculado a partir da distância euclidiana, com o trânsito das máquinas sobre os tocos na linha de plantio não sendo incluído como restrição.
+O código a seguir é um caderno cujo intuito foi desenvolver e explorar novas habilidades envolvendo autilização de ferramentas de Geoprocessamento e de Programação Linear Inteira aplicado ao problema de otimização da localização de pilhas na colheita florestal. O custo foi calculado a partir da distância euclidiana, com o trânsito das máquinas sobre os tocos na linha de plantio não sendo incluído como restrição.
 
 
 A solução foi escrita usando ferramentas de modelagem e solvers de código aberto e livres, que permitem resolver problemas de PL sem nenhum custo. Com as bibliotecas ROI e OMPR foi possível padronizar o código dos modelos já que são compatíveis com diferentes solvers, incluindo softwares proprietários. Isso foi ótimo pois não precisei reescrever o modelo para um novo código à depender do solver que estava utilizando. Apliquei o mesmo modelo nos solvers symphony e glpk e tudo funcionou bem.   
@@ -62,7 +62,7 @@ pilha, cujo resultado será acrescido de mais uma pilha.
 
 
 
-```r
+``` r
 library(sf)
 library(rgdal)
 library(spatialEco)
@@ -80,7 +80,7 @@ library(ggplot2)
 
 
 
-```r
+``` r
 prj <-
   st_read("/home/vinicio/Documentos/PCF-508/PESQUISA OPERACIONAL PCF-508 VINICIO LIMA/P_Mediana/Dados/Projeto.ferradura.shp")
 prj$Sitio <- paste0('S', prj$Sitio)
@@ -92,7 +92,7 @@ prj <- prj %>% filter(idade > 3)
 Idade e sítio.
 
 
-```r
+``` r
 tabela_1 = data.frame(
   Idade = c(4, 5, 6, 7, 8, 9, 10),
   S1 = c(250, 300, 348, 394, 439, 483, 526),
@@ -113,7 +113,7 @@ Quantidade de pilhas por talhão.
 
 
 
-```r
+``` r
 prj_c <- left_join(prj, tabela_1, by = c("Sitio" = "Sitio", "idade" = "Idade")) %>%
   mutate(n_pilhas = round((Volume * area / 200) + 1))
 
@@ -140,7 +140,7 @@ Selecionar um talhão.
 
 
 
-```r
+``` r
 # prj_t = prj_c %>% sample_n(1)
 prj_t = prj_c %>% filter(Talhao == 67) # prj_t = talhao  selecionado
 prj_t %>% st_drop_geometry()
@@ -158,7 +158,7 @@ Alocando as pilhas de madeira na borda do talhão.
 
 
 
-```r
+``` r
 r <- rast(ext(prj_t), res = 10) 
 rast <- rasterize(vect(prj_t), r, values=1, background=0)
 r2 = raster(rast)
@@ -201,7 +201,7 @@ Garantindo a distância de 25m entre pilhas.
 
 
 
-```r
+``` r
 my_graph <- graph_from_adj_list(st_touches(tbl_1)) # input perimetro grid 25x25
 
 id_to_be_ignored <- ego(my_graph, order = 1, nodes = 1)[[1]]
@@ -231,7 +231,7 @@ Parcelas do talhão  (Grid 10m x 10m).
 
 
 
-```r
+``` r
 r.grid <- rast(ext(prj_t), res = 10) 
 tal <- raster(rasterize(vect(prj_t), r.grid, values=1, background=0, touches = FALSE))
 tal_mask = mask(tal, prj_t)
@@ -249,7 +249,7 @@ Distribuição das pilhas no talhão selecionado.
 
 
 
-```r
+``` r
 pilhas_point = st_centroid(pilhas)
 x_point = st_centroid(x)
 
@@ -280,7 +280,7 @@ Problema reduzido contendo 100 parcelas e 12 pátios de estocagem.
 
 
 
-```r
+``` r
 rownames(x_point) <- as.integer(row.names(x_point))
 x_point$point_name <- as.integer(row.names(x_point))
 ```
@@ -288,7 +288,7 @@ x_point$point_name <- as.integer(row.names(x_point))
 
 
 
-```r
+``` r
 grids =  subsample.distance(
 as(x_point, "Spatial"), # SpatialEco agora recebe objeto sf
   x_point,
@@ -306,7 +306,7 @@ size = 12, d = 25) # %>%  st_as_sf() # 12 pátios
 
 
 
-```r
+``` r
 plot(st_geometry(st_centroid(grids)), pch = 3, col = 'black', cex= 2. , axes = TRUE, 
      main = "Exemplo hipotético para modelagem do problema")
 plot(st_geometry(pil), pch = 24, cex=3, col="blue", bg="red", lwd=2,   add = TRUE )
@@ -320,7 +320,7 @@ plot(st_geometry(pil), pch = 24, cex=3, col="blue", bg="red", lwd=2,   add = TRU
 Distância euclidiana entre as parcelas (grids) e os pátios. 
 
 
-```r
+``` r
 # Obsoleto - rgeos
 # cost =  rgeos::gDistance(as(pil, "Spatial"),
 #                          as(grids, "Spatial") , byid = TRUE) 
@@ -340,7 +340,7 @@ cost[1:3,1:1 ] %>% t() # Exemplo da saída da matriz de custo
 ### Tabelas do mapa
 
 
-```r
+``` r
 grids$id <- 1:nrow(grids)
 grids$id_grid <- grids$id
 grids$grids_name <- rownames(grids)
@@ -369,7 +369,7 @@ Julia. (Fonte:  https://dirkschumacher.github.io/ompr/)
 
 
 
-```r
+``` r
 library(ompr)
 ```
 
@@ -383,7 +383,7 @@ fornece uma infraestrutura extensível para modelar problemas de otimização
 linear, quadrática, cônica e geral de maneira consistente. (Fonte: https://roi.r-forge.r-project.org/index.html)
 
 
-```r
+``` r
 library(ROI)
 library(ompr.roi)
 ```
@@ -396,7 +396,7 @@ adicionam os solucionadores ao ROI. Entre os solvers disponíveis estão
 
  
 
-```r
+``` r
 plugins <- ROI_available_solvers()[,c("Package", "Repository")]
 plugins <- aggregate(Repository ~ Package,  data = plugins, 
                      FUN = paste, collapse = ", ")
@@ -440,7 +440,7 @@ linear inteira mista (MILPs). (Fonte: https://github.com/coin-or/SYMPHONY)
 
 
 
-```r
+``` r
 library(ROI.plugin.symphony)
 ```
 
@@ -450,7 +450,7 @@ library(ROI.plugin.symphony)
 Atribiu uma parcela para cada pátio. Não leva em consideração a diferença de custo para ativar os pátios. 
 
 
-```r
+``` r
 num_depots = nrow(pil)
 num_cust = nrow(grids)
 custo.fixo = 10  # arbitrário pra todos os pátios # Custo para ativar um pátio # 
@@ -466,7 +466,7 @@ capacity = rep(capacidade, nrow(pil))
 
 
 
-```r
+``` r
 m <- MIPModel() %>%
   add_variable(ship[i, j],
                i = 1:num_depots,
@@ -489,7 +489,7 @@ matchs <- get_solution(m,ship[i, j]) %>%
 
 
 
-```r
+``` r
 p <- ggplot(grids, aes( X , Y)) + 
   geom_point() + 
   geom_point(data = pil, color = "red", alpha = 0.5, shape = 17, size= 2) 
@@ -505,7 +505,7 @@ grids_count # Total de atribuições
 
 
 
-```r
+``` r
 plot_pilhas<- pil %>% 
   mutate(costs = capacity) %>% 
   inner_join(grids_count, by = "pil_name") %>% 
@@ -562,7 +562,7 @@ ao menor custo total.
 
 
 
-```r
+``` r
 # Custo para ativação dos pátios. 
 v_cost = c(10, 800, 50000, 1000, 300, 3000, 500, 2000, 600, 10, 400, 10) # Variável 
 
@@ -596,7 +596,7 @@ matchs <- get_solution(m2, ship[i, j]) %>%
 
 
 
-```r
+``` r
 plot_assignment = matchs %>%
   inner_join(grids, by = c("j" = "id")) %>%
   inner_join(pil, by = c("i" = "id"))
@@ -611,7 +611,7 @@ grids_count <-
 
 
 
-```r
+``` r
 grids_count
 
 A tibble: 6 × 2
@@ -628,7 +628,7 @@ pil_name       n
 
 
 
-```r
+``` r
 plot_pilhas <- pil %>%
   mutate(costs = capacity) %>%
   inner_join(grids_count, by = "pil_name") %>%
@@ -681,7 +681,7 @@ Altera a capacidade para 80 m³ por pátio de madeira afim de comparar a sensibi
 
 
 
-```r
+``` r
 capacidade <- 80 # Capacidade do pátio de estocagem
 capacity = rep(capacidade, nrow(pil))
 cost <- matrix(cost/1000, num_depots, num_cust ) # custo em km
@@ -689,7 +689,7 @@ cost <- matrix(cost/1000, num_depots, num_cust ) # custo em km
 
 
 
-```r
+``` r
 m2b <- MIPModel() %>%
   add_variable(ship[i, j],
                i = 1:num_depots,
@@ -720,7 +720,7 @@ matchs <- get_solution(m2b,ship[i, j]) %>%
 
 
 
-```r
+``` r
 plot_assignment = matchs %>% 
   inner_join(grids, by = c("j" = "id")) %>% 
   inner_join(pil, by = c("i" = "id"))
@@ -735,7 +735,7 @@ grids_count <- plot_assignment %>% group_by(pil_name) %>% summarise(n = n())
 
 
 
-```r
+``` r
 grids_count
 
  A tibble: 3 × 2
@@ -749,7 +749,7 @@ grids_count
 
 
 
-```r
+``` r
 plot_pilhas<- pil %>% 
   mutate(costs = capacity) %>% 
   inner_join(grids_count, by = "pil_name") %>% 
@@ -799,7 +799,7 @@ ggplot2::ggsave(
 
 
 
-```r
+``` r
 library(cowplot)
 png_plot_p2a <- cowplot::ggdraw() + cowplot::draw_image("./plot/plot_Mod_2A.png", scale = 0.9)
 png_plot_p2b <- cowplot::ggdraw() + cowplot::draw_image("./plot/plot_Mod_2B.png", scale = 0.9)
@@ -820,7 +820,7 @@ Adiciona a restrição de quantidade de pátios que serão ativados, valor de P.
 
 
 
-```r
+``` r
 capacidade <- 50 # Capacidade das pilhas de estocagem em m³
 capacity = rep(capacidade, nrow(pil))
 cost <- matrix(cost, num_depots, num_cust) # matriz de custo - dist. 
@@ -829,7 +829,7 @@ cost <- matrix(cost, num_depots, num_cust) # matriz de custo - dist.
 
 
 
-```r
+``` r
 m3 <- MIPModel() %>%
   add_variable(ship[i, j],
                i = 1:num_depots,
@@ -859,7 +859,7 @@ matchs_m3 <- get_solution(m3,ship[i, j]) %>%
 
 
 
-```r
+``` r
 plot_assignment_m3 = matchs_m3 %>% 
   inner_join(grids, by = c("j" = "id")) %>% 
   inner_join(pil, by = c("i" = "id"))
@@ -870,7 +870,7 @@ grids_count_m3 <- plot_assignment_m3 %>% group_by(pil_name) %>% summarise(n = n(
 #### Total de atribuições Modelo 3
 
 
-```r
+``` r
 grids_count_m3 
 
  A tibble: 5 × 2
@@ -886,7 +886,7 @@ grids_count_m3
 
 
 
-```r
+``` r
 plot_pilhas_m3 <- pil %>% 
   mutate(costs = capacity) %>% 
   inner_join(grids_count_m3, by = "pil_name") %>% 
@@ -943,7 +943,7 @@ distribuídas nas bordas do talhão, com a distância mínima de 25m entre as pi
 A quantidade de pilhas estipulada pela área de planejamento foi de 46 + 1 pilha. 
 
 
-```r
+``` r
 grids =  x_point 
 pil  = pilhas_point
 
@@ -972,7 +972,7 @@ p = prj_t$n_pilhas + 1 # restrição (d) do problema
 ### Modelo 
 
 
-```r
+``` r
 # Função
 
 pmediana <- function(){
@@ -1005,7 +1005,7 @@ return(solucao)
 
 
 
-```r
+``` r
 # Aplica
 
 start.time <- Sys.time()
@@ -1024,7 +1024,7 @@ um tempo menor.
 
 
 
-```r
+``` r
 # Grids
 
 r.grid <- rast(ext(prj_t), res = 50) 
@@ -1070,7 +1070,7 @@ Dado o novo cenário considerei a capacidade de 750 m³ por pilha e que a decis�
 pela equipe de planejamento florestal foi de ativar 15 das 23 pilhas possíveis (valor de P = 15). 
 
 
-```r
+``` r
 # Matiz de Custo
 
 # rggeos - Obsoleto
@@ -1113,7 +1113,7 @@ time.taken <- end.time - start.time
 
 
 
-```r
+``` r
 matchs <- get_solution(m_pvalue,ship[i, j]) %>%
   filter(value > 0) %>% as.data.frame()
 
@@ -1171,7 +1171,7 @@ colnames(tal_df) <- c("value", "x", "y")
 
 
 
-```r
+``` r
 library(ggthemes)
 
 tal_67 = 
@@ -1223,7 +1223,7 @@ ggsave(
 ##### Relatório do solver 
 
 
-```r
+``` r
 Starting Preprocessing...
 Preprocessing finished...
  	 with no modifications...
@@ -1335,7 +1335,7 @@ Solution Cost: 23942.0000000000
 
 
 
-```r
+``` r
 # Ambiente de execução
 
 info = sessionInfo()
@@ -1343,7 +1343,7 @@ info
 ```
 
 ```
-## R version 4.4.1 (2024-06-14)
+## R version 4.4.2 (2024-10-31)
 ## Platform: x86_64-pc-linux-gnu
 ## Running under: Ubuntu 20.04.6 LTS
 ## 
@@ -1375,16 +1375,16 @@ info
 ## [13] sp_2.1-4                  sf_1.0-16                
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] gtable_0.3.5       xfun_0.43          bslib_0.7.0        lattice_0.22-5    
-##  [5] vctrs_0.6.5        tools_4.4.1        generics_0.1.3     tibble_3.2.1      
+##  [1] gtable_0.3.5       xfun_0.49          bslib_0.7.0        lattice_0.22-5    
+##  [5] vctrs_0.6.5        tools_4.4.2        generics_0.1.3     tibble_3.2.1      
 ##  [9] proxy_0.4-27       fansi_1.0.6        highr_0.10         pkgconfig_2.0.3   
-## [13] Matrix_1.6-5       KernSmooth_2.23-24 data.table_1.15.4  checkmate_2.3.2   
-## [17] listcomp_0.4.1     lifecycle_1.0.4    compiler_4.4.1     munsell_0.5.1     
+## [13] Matrix_1.7-1       KernSmooth_2.23-24 data.table_1.15.4  checkmate_2.3.2   
+## [17] listcomp_0.4.1     lifecycle_1.0.4    compiler_4.4.2     munsell_0.5.1     
 ## [21] codetools_0.2-19   htmltools_0.5.8.1  class_7.3-22       sass_0.4.9        
 ## [25] yaml_2.3.8         lazyeval_0.2.2     pillar_1.9.0       jquerylib_0.1.4   
 ## [29] classInt_0.4-10    cachem_1.0.8       tidyselect_1.2.1   digest_0.6.35     
 ## [33] slam_0.1-54        purrr_1.0.2        bookdown_0.39      fastmap_1.1.1     
-## [37] grid_4.4.1         colorspace_2.1-0   cli_3.6.2          magrittr_2.0.3    
+## [37] grid_4.4.2         colorspace_2.1-0   cli_3.6.2          magrittr_2.0.3    
 ## [41] utf8_1.2.4         e1071_1.7-14       withr_3.0.0        scales_1.3.0      
 ## [45] backports_1.4.1    Rsymphony_0.1-33   registry_0.5-1     rmarkdown_2.26    
 ## [49] blogdown_1.19      evaluate_0.23      knitr_1.46         rlang_1.1.3       
@@ -1395,7 +1395,7 @@ info
 
 
 
-```r
+``` r
 rmarkdown::render('pmediana_vinicio.R',
                   output_format = c("html_document", "pdf_document"))
 ```
