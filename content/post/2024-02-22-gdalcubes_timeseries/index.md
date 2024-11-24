@@ -11,7 +11,7 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 
 
 
-<img src="./images/fig-cube-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="./images/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
 
 
 Na estrutura de um cubo de dados raster também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.
@@ -36,7 +36,7 @@ O conjunto de dados contém 19 cenas de uma área de Cerrado do Estado de Mato G
 
 
 
-```r
+``` r
 path_file <- "/home/vinicio/Documentos/Codigo/TS_gdalcubes/Sentinel2_15bands/"
 
 s2_files <- list.files( paste(path_file,  "raw", sep="/"),
@@ -69,7 +69,7 @@ s2_files
 
 
 
-```r
+``` r
 files.size <- sum(file.size(s2_files)) / 1000^3 # gigabytes
 
 files.size # gigabytes
@@ -89,7 +89,7 @@ files.size # gigabytes
 
 
 
-```r
+``` r
 library(magrittr)
 library(gdalcubes)
 packageVersion("gdalcubes")
@@ -101,7 +101,7 @@ packageVersion("gdalcubes")
 
 
 
-```r
+``` r
 # Cria uma coleção de imagens gdalcubes
 
 if(!file.exists(file.path(path_file, "S2_collection.db" ))){
@@ -117,7 +117,7 @@ if(!file.exists(file.path(path_file, "S2_collection.db" ))){
 
 
 
-```r
+``` r
 S2_collection <- image_collection(file.path(
   path_file, "S2_collection.db"))  
 
@@ -173,7 +173,7 @@ Por exemplo, podemos criar uma view que aplica uma reamostragem dos pixels para 
 
 
 
-```r
+``` r
  # Visão geral da cena
 v.overview = cube_view(
   extent=S2_collection, 
@@ -207,7 +207,7 @@ A combinação de uma visualização `cube_view()` da geometria do cubo  com a c
 
 
 
-```r
+``` r
  cube.overview <-  raster_cube(S2_collection, v.overview) 
 
  cube.overview
@@ -263,14 +263,14 @@ As máscaras são aplicadas em imagens e não em cubos. Os valores mascarados n�
 
 
 
-```r
+``` r
 s2.clear.mask <- image_mask("SCL", values= c(0,1,2,3,5,6,7,8,9,10,11 )) # Vegetação
 ```
 
 
 
 
-```r
+``` r
 v.euc = cube_view(
   extent=list(S2_collection, left=321434.9, right=326500,
               bottom=7813432, top=7819363,
@@ -300,7 +300,7 @@ month_euc_ndvi %>%  filter_pixel("NDVI > 0.7") %>% # filtra outros usos
 
 
 
-```r
+``` r
 month_euc_ndvi %>% filter_pixel("NDVI > 0.7") %>% 
   reduce_space(#"sum(NDVI)",
                "mean(NDVI)",
@@ -348,7 +348,7 @@ Os [dados do INMET](https://tempo.inmet.gov.br/GraficosAnuais) apontam para uma 
 
 Dado esse contexto, uma pergunta interessante de ser respondida é se:
 
-Mesmo havendo uma tendência de global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por vento, pragas ou doenças ou fatores fisiológicos da planta?
+Mesmo havendo uma tendência global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por ventos, pragas e doenças ou fatores fisiológicos da planta?
 
 
 Ao analisar o comportamento da média e da  mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo abril-junho, com uma inflexão no mês de maio. 
@@ -369,7 +369,7 @@ Ao analisar o comportamento da média e da  mediana no período é possível obs
 Podemos derivar as diferenças mensais para analisar o comportamento da diminuição do valor do NDVI no decorrer dos meses Tt - T (t-1).   A função  `window_time()`  aplica o filtro de diferença de kernel para a série mensal. 
 
 
-```r
+``` r
 # Diferença mensal
 
 month_euc_ndvi %>%  filter_pixel("NDVI > 0.7") %>% 
@@ -404,7 +404,7 @@ Diferenças abslutas menores do NDVI ocorreram de maneira significativa na área
 
 
 
-```r
+``` r
 month_euc_ndvi %>%  filter_pixel("NDVI > 0.7") %>% 
   window_time(kernel=c(-1,1), window=c(1,0)) %>%
   filter_pixel("NDVI > 0.0") %>% 
@@ -416,7 +416,7 @@ month_euc_ndvi %>%  filter_pixel("NDVI > 0.7") %>%
 
 ## Considerações finais
 
-Essa análise foi motivada por uma intervenção de manejo em um povoamento adulto de Eucalipytus. Onde no mês de Maio foi empregado um agente como medida de controle sobre a população da _Glena bipennaria bipennaria_ (lagarta desfolhadora).
+Essa análise foi motivada por uma intervenção de manejo em um povoamento adulto de Eucalyptus, realizada no mês de maio, na qual foi empregado um agente como medida de controle sobre a população da Glena bipennaria bipennaria (lagarta desfolhadora).
 
 
 ° Em uma coleção de imagens aplicou-se uma redução temporal da série para um intervalo mensal.

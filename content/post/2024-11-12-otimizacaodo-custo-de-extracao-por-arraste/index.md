@@ -447,7 +447,7 @@ library(ROI.plugin.symphony)
 
 ### Modelo 1 - Custo fixo 
 
-Atribiu uma parcela para cada pátio. Não leva em consideração a diferença de custo para ativar os pátios. 
+Atribui uma parcela para cada pátio. Não leva em consideração a diferença de custo para ativar os pátios. 
 
 
 ``` r

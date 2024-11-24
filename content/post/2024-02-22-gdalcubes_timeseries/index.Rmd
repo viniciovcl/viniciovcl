@@ -11,7 +11,7 @@ No contexto de sensoriamento remoto e observação da Terra, _spatiotemporal arr
 
 
 
-```{r fig1, echo=FALSE, out.width="100%", fig.align='center'}
+```{r fig1, echo=FALSE, out.width="60%", fig.align='center'}
 knitr::include_graphics("./images/fig-cube-1.png", error = FALSE)
 ```
 
@@ -282,7 +282,7 @@ knitr::include_graphics('./images/estao-agua-clara-a756 (1).png')
 
 Dado esse contexto, uma pergunta interessante de ser respondida é se:
 
-Mesmo havendo uma tendência de global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por vento, pragas ou doenças ou fatores fisiológicos da planta?
+Mesmo havendo uma tendência global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por ventos, pragas e doenças ou fatores fisiológicos da planta?
 
 
 Ao analisar o comportamento da média e da  mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo abril-junho, com uma inflexão no mês de maio. 
@@ -384,7 +384,7 @@ month_euc_ndvi %>%  filter_pixel("NDVI > 0.7") %>%
 
 ## Considerações finais
 
-Essa análise foi motivada por uma intervenção de manejo em um povoamento adulto de Eucalipytus. Onde no mês de Maio foi empregado um agente como medida de controle sobre a população da _Glena bipennaria bipennaria_ (lagarta desfolhadora).
+Essa análise foi motivada por uma intervenção de manejo em um povoamento adulto de Eucalyptus, realizada no mês de maio, na qual foi empregado um agente como medida de controle sobre a população da Glena bipennaria bipennaria (lagarta desfolhadora).
 
 
 ° Em uma coleção de imagens aplicou-se uma redução temporal da série para um intervalo mensal.

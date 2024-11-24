@@ -481,7 +481,7 @@ extensível para implementação de solucionadores personalizados para programa�
 linear inteira mista (MILPs). (Fonte: <a href="https://github.com/coin-or/SYMPHONY">https://github.com/coin-or/SYMPHONY</a>)</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#447fcf">library</span>(ROI.plugin.symphony)
 </span></span></code></pre></div><h3 id="modelo-1---custo-fixo">Modelo 1 - Custo fixo</h3>
-<p>Atribiu uma parcela para cada pátio. Não leva em consideração a diferença de custo para ativar os pátios.</p>
+<p>Atribui uma parcela para cada pátio. Não leva em consideração a diferença de custo para ativar os pátios.</p>
 <div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>num_depots = <span style="color:#447fcf">nrow</span>(pil)
 </span></span><span style="display:flex;"><span>num_cust = <span style="color:#447fcf">nrow</span>(grids)
 </span></span><span style="display:flex;"><span>custo.fixo = <span style="color:#3677a9">10</span>  <span style="color:#999;font-style:italic"># arbitrário pra todos os pátios # Custo para ativar um pátio # </span>

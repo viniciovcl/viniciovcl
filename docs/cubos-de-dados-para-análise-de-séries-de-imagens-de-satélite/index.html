@@ -139,7 +139,7 @@
 
     <div class="article-content e-content" itemprop="articleBody">
         <p>No contexto de sensoriamento remoto e observação da Terra, <em>spatiotemporal array</em> refere-se a matrizes multidimensionais onde duas dimensões representam as dimensões  espaciais do raster e o terceiro o tempo (ou a banda). Essa abordagem permite otimizar o acesso e a recuperação de informações específicas em determinados momentos ou locais para séries espaço-temporais.</p>
-<img src="./images/fig-cube-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="./images/fig-cube-1.png" width="60%" style="display: block; margin: auto;" />
 <p>Na estrutura de um cubo de dados raster também são considerados cubos de dimensões superiores (hipercubos), como um cubo de cinco dimensões onde, além do tempo, a banda espectral e o sensor formam dimensões.</p>
 <img src="./images/cube.png" width="100%" style="display: block; margin: auto;" />
 <p>É uma estrutura eficiente para a manipulação de séries temporais de dados raster, permitindo declarar operações algébricas e aplicar funções a um conjunto limitado de dimensões para realizar cálculos e transformações pixel a pixel e criar novas representações dos dados.</p>
@@ -342,7 +342,7 @@
 <p class="caption">(\#fig:fig_temp_AC)Temperatura do ar (ºC) para estação Água Clara (A758).</p>
 </div>
 <p>Dado esse contexto, uma pergunta interessante de ser respondida é se:</p>
-<p>Mesmo havendo uma tendência de global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por vento, pragas ou doenças ou fatores fisiológicos da planta?</p>
+<p>Mesmo havendo uma tendência global de diminuição do valor do NDVI nos dados analisados, seria possível detectar anomalias da atividade da fotossíntese correspondendo a fatores externos ao clima, como intervenções de manejo ou estresse causado por ventos, pragas e doenças ou fatores fisiológicos da planta?</p>
 <p>Ao analisar o comportamento da média e da  mediana no período é possível observar uma atenuação da tendência de diminuição do NDVI no intervalo abril-junho, com uma inflexão no mês de maio.</p>
 <div class="figure" style="text-align: center">
 <img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/reduce_space_ndvi2-1.png" alt="Média e a mediana da série mensal." width="75%" />
@@ -371,7 +371,7 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#447fcf">plot</span>(zlim=<span style="color:#447fcf">c</span>(<span style="color:#3677a9">0.0</span>, <span style="color:#3677a9">.12</span>), key.pos=<span style="color:#3677a9">1</span>,   col= viridis,  t = <span style="color:#3677a9">2</span>:<span style="color:#3677a9">6</span>, ncol = <span style="color:#3677a9">3</span> )
 </span></span></code></pre></div><img src="https://viniciovcl.github.io/viniciovcl/cubos-de-dados-para-an%C3%A1lise-de-s%C3%A9ries-de-imagens-de-sat%C3%A9lite/index_files/figure-html/euc_change_filt-1.png" width="150%" style="display: block; margin: auto;" />
 <h2 id="considerações-finais">Considerações finais</h2>
-<p>Essa análise foi motivada por uma intervenção de manejo em um povoamento adulto de Eucalipytus. Onde no mês de Maio foi empregado um agente como medida de controle sobre a população da <em>Glena bipennaria bipennaria</em> (lagarta desfolhadora).</p>
+<p>Essa análise foi motivada por uma intervenção de manejo em um povoamento adulto de Eucalyptus, realizada no mês de maio, na qual foi empregado um agente como medida de controle sobre a população da Glena bipennaria bipennaria (lagarta desfolhadora).</p>
 <p>° Em uma coleção de imagens aplicou-se uma redução temporal da série para um intervalo mensal.</p>
 <p>° Foi criado um cubo de dados raster contendo 6 imagens correspondendo ao intervalo mês a mês da série e calculado o índice de vegetação de diferença normalizada NDVI.</p>
 <p>° No cubo de dados foi aplicado uma função redutora em uma janela móvel sobre a dimensão do tempo. Filtro de kernel da diferença simples Tt - T (t-1).</p>
